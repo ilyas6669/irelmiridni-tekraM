@@ -1,20 +1,23 @@
 //
-//  ViewController.swift
+//  TabBar.swift
 //  Market indirimleri
 //
-//  Created by İlyas Abiyev on 4/23/20.
+//  Created by İlyas Abiyev on 4/24/20.
 //  Copyright © 2020 İlyas Abiyev. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class TabBar: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+       
     }
+    
 
+   
+   
 
 }
-

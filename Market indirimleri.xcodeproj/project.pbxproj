@@ -3,29 +3,89 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		006E374024533C9000E31FC6 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006E373F24533C9000E31FC6 /* TabBar.swift */; };
+		0073F4942454AE3200AD8095 /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4932454AE3200AD8095 /* StatusBar.swift */; };
+		0073F49824550F2A00AD8095 /* Marketler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F49724550F2A00AD8095 /* Marketler.swift */; };
+		0073F4A1245519AB00AD8095 /* MarketlerCel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F49F245519AB00AD8095 /* MarketlerCel.swift */; };
+		0073F4A2245519AB00AD8095 /* MarketlerCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0073F4A0245519AB00AD8095 /* MarketlerCel.xib */; };
+		0073F4A524551E4700AD8095 /* Urunler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4A424551E4700AD8095 /* Urunler.swift */; };
+		0073F4AD2455269E00AD8095 /* BegendigimMarketler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4AC2455269E00AD8095 /* BegendigimMarketler.swift */; };
+		0073F4B124552E2200AD8095 /* AramaPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4B024552E2200AD8095 /* AramaPop.swift */; };
+		0073F4B324553EE700AD8095 /* SettingPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4B224553EE700AD8095 /* SettingPop.swift */; };
+		0073F4B524555CC200AD8095 /* WelcomeSayfa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4B424555CC200AD8095 /* WelcomeSayfa.swift */; };
+		0073F4B724555CE300AD8095 /* GecisController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4B624555CE300AD8095 /* GecisController.swift */; };
+		0073F4B924556B4300AD8095 /* SelectCityPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4B824556B4300AD8095 /* SelectCityPop.swift */; };
+		0073F4BC2455717100AD8095 /* SehirlerCel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4BA2455717100AD8095 /* SehirlerCel.swift */; };
+		0073F4BD2455717100AD8095 /* SehirlerCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0073F4BB2455717100AD8095 /* SehirlerCel.xib */; };
+		0073F4C024557C9F00AD8095 /* UrunSayfasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4BF24557C9F00AD8095 /* UrunSayfasi.swift */; };
+		0073F4C22455886A00AD8095 /* MarketSayfasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4C12455886A00AD8095 /* MarketSayfasi.swift */; };
 		008DEE112451F9E9003ACEB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE102451F9E9003ACEB2 /* AppDelegate.swift */; };
 		008DEE132451F9E9003ACEB2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE122451F9E9003ACEB2 /* SceneDelegate.swift */; };
-		008DEE152451F9E9003ACEB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE142451F9E9003ACEB2 /* ViewController.swift */; };
+		008DEE152451F9E9003ACEB2 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE142451F9E9003ACEB2 /* SplashView.swift */; };
 		008DEE182451F9E9003ACEB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008DEE162451F9E9003ACEB2 /* Main.storyboard */; };
 		008DEE1B2451F9E9003ACEB2 /* Market_indirimleri.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE192451F9E9003ACEB2 /* Market_indirimleri.xcdatamodeld */; };
 		008DEE1D2451F9EE003ACEB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 008DEE1C2451F9EE003ACEB2 /* Assets.xcassets */; };
 		008DEE202451F9EE003ACEB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008DEE1E2451F9EE003ACEB2 /* LaunchScreen.storyboard */; };
+		008DEE292451FBD7003ACEB2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE282451FBD7003ACEB2 /* UIColor.swift */; };
+		008DEE2B2452028C003ACEB2 /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE2A2452028C003ACEB2 /* Constraints.swift */; };
+		008DEE2D24521DDA003ACEB2 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE2C24521DDA003ACEB2 /* Alert.swift */; };
+		008DEE3324523B12003ACEB2 /* HomeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3224523B12003ACEB2 /* HomeBar.swift */; };
+		008DEE3524523B23003ACEB2 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3424523B23003ACEB2 /* SearchBar.swift */; };
+		008DEE3724523BBB003ACEB2 /* CartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3624523BBB003ACEB2 /* CartBar.swift */; };
+		008DEE3924523BD7003ACEB2 /* ProfilBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3824523BD7003ACEB2 /* ProfilBar.swift */; };
+		00A85A9024534F000046E484 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85A8F24534F000046E484 /* UIScrollView.swift */; };
+		00A85A9D2453E2F00046E484 /* MarketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85A9B2453E2F00046E484 /* MarketCell.swift */; };
+		00A85A9E2453E2F00046E484 /* MarketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00A85A9C2453E2F00046E484 /* MarketCell.xib */; };
+		00CA3C5A2453EB6B00F76E49 /* FiyatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CA3C582453EB6B00F76E49 /* FiyatCell.swift */; };
+		00CA3C5B2453EB6B00F76E49 /* FiyatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00CA3C592453EB6B00F76E49 /* FiyatCell.xib */; };
+		E7898922F749761648B299A5 /* Pods_Market_indirimleri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C52F0BB40B6700FF74046F4 /* Pods_Market_indirimleri.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		006E373F24533C9000E31FC6 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		0073F4932454AE3200AD8095 /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
+		0073F49724550F2A00AD8095 /* Marketler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marketler.swift; sourceTree = "<group>"; };
+		0073F49F245519AB00AD8095 /* MarketlerCel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketlerCel.swift; sourceTree = "<group>"; };
+		0073F4A0245519AB00AD8095 /* MarketlerCel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketlerCel.xib; sourceTree = "<group>"; };
+		0073F4A424551E4700AD8095 /* Urunler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Urunler.swift; sourceTree = "<group>"; };
+		0073F4AC2455269E00AD8095 /* BegendigimMarketler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BegendigimMarketler.swift; sourceTree = "<group>"; };
+		0073F4B024552E2200AD8095 /* AramaPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AramaPop.swift; sourceTree = "<group>"; };
+		0073F4B224553EE700AD8095 /* SettingPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPop.swift; sourceTree = "<group>"; };
+		0073F4B424555CC200AD8095 /* WelcomeSayfa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeSayfa.swift; sourceTree = "<group>"; };
+		0073F4B624555CE300AD8095 /* GecisController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GecisController.swift; sourceTree = "<group>"; };
+		0073F4B824556B4300AD8095 /* SelectCityPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCityPop.swift; sourceTree = "<group>"; };
+		0073F4BA2455717100AD8095 /* SehirlerCel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerCel.swift; sourceTree = "<group>"; };
+		0073F4BB2455717100AD8095 /* SehirlerCel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SehirlerCel.xib; sourceTree = "<group>"; };
+		0073F4BF24557C9F00AD8095 /* UrunSayfasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrunSayfasi.swift; sourceTree = "<group>"; };
+		0073F4C12455886A00AD8095 /* MarketSayfasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketSayfasi.swift; sourceTree = "<group>"; };
 		008DEE0D2451F9E9003ACEB2 /* Market indirimleri.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Market indirimleri.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		008DEE102451F9E9003ACEB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		008DEE122451F9E9003ACEB2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		008DEE142451F9E9003ACEB2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		008DEE142451F9E9003ACEB2 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		008DEE172451F9E9003ACEB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		008DEE1A2451F9E9003ACEB2 /* Market_indirimleri.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Market_indirimleri.xcdatamodel; sourceTree = "<group>"; };
 		008DEE1C2451F9EE003ACEB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		008DEE1F2451F9EE003ACEB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		008DEE212451F9EE003ACEB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		008DEE282451FBD7003ACEB2 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		008DEE2A2452028C003ACEB2 /* Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
+		008DEE2C24521DDA003ACEB2 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		008DEE3224523B12003ACEB2 /* HomeBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBar.swift; sourceTree = "<group>"; };
+		008DEE3424523B23003ACEB2 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		008DEE3624523BBB003ACEB2 /* CartBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBar.swift; sourceTree = "<group>"; };
+		008DEE3824523BD7003ACEB2 /* ProfilBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilBar.swift; sourceTree = "<group>"; };
+		00A85A8F24534F000046E484 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
+		00A85A9B2453E2F00046E484 /* MarketCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCell.swift; sourceTree = "<group>"; };
+		00A85A9C2453E2F00046E484 /* MarketCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketCell.xib; sourceTree = "<group>"; };
+		00CA3C582453EB6B00F76E49 /* FiyatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiyatCell.swift; sourceTree = "<group>"; };
+		00CA3C592453EB6B00F76E49 /* FiyatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FiyatCell.xib; sourceTree = "<group>"; };
+		5BBC28772B70BEC10C5511CE /* Pods-Market indirimleri.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Market indirimleri.debug.xcconfig"; path = "Target Support Files/Pods-Market indirimleri/Pods-Market indirimleri.debug.xcconfig"; sourceTree = "<group>"; };
+		6C52F0BB40B6700FF74046F4 /* Pods_Market_indirimleri.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Market_indirimleri.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B63256A7421F652E9FD8419B /* Pods-Market indirimleri.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Market indirimleri.release.xcconfig"; path = "Target Support Files/Pods-Market indirimleri/Pods-Market indirimleri.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +93,60 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7898922F749761648B299A5 /* Pods_Market_indirimleri.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0073F4A324551D8300AD8095 /* ProfilBar */ = {
+			isa = PBXGroup;
+			children = (
+				008DEE3824523BD7003ACEB2 /* ProfilBar.swift */,
+				0073F49724550F2A00AD8095 /* Marketler.swift */,
+				0073F49F245519AB00AD8095 /* MarketlerCel.swift */,
+				0073F4A0245519AB00AD8095 /* MarketlerCel.xib */,
+				0073F4A424551E4700AD8095 /* Urunler.swift */,
+				0073F4AC2455269E00AD8095 /* BegendigimMarketler.swift */,
+			);
+			path = ProfilBar;
+			sourceTree = "<group>";
+		};
+		0073F4AE245527CB00AD8095 /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				008DEE3424523B23003ACEB2 /* SearchBar.swift */,
+				0073F4B024552E2200AD8095 /* AramaPop.swift */,
+				0073F4B224553EE700AD8095 /* SettingPop.swift */,
+			);
+			path = SearchBar;
+			sourceTree = "<group>";
+		};
+		0073F4AF245527DC00AD8095 /* CartBar */ = {
+			isa = PBXGroup;
+			children = (
+				008DEE3624523BBB003ACEB2 /* CartBar.swift */,
+			);
+			path = CartBar;
+			sourceTree = "<group>";
+		};
+		0073F4BE24557C4500AD8095 /* UrunSayfasi */ = {
+			isa = PBXGroup;
+			children = (
+				0073F4BF24557C9F00AD8095 /* UrunSayfasi.swift */,
+				0073F4C12455886A00AD8095 /* MarketSayfasi.swift */,
+			);
+			path = UrunSayfasi;
+			sourceTree = "<group>";
+		};
 		008DEE042451F9E8003ACEB2 = {
 			isa = PBXGroup;
 			children = (
 				008DEE0F2451F9E9003ACEB2 /* Market indirimleri */,
 				008DEE0E2451F9E9003ACEB2 /* Products */,
+				D8FFEED22E82506EA0E6A61D /* Pods */,
+				27306DFEF739D783EB8FA00F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,14 +163,83 @@
 			children = (
 				008DEE102451F9E9003ACEB2 /* AppDelegate.swift */,
 				008DEE122451F9E9003ACEB2 /* SceneDelegate.swift */,
-				008DEE142451F9E9003ACEB2 /* ViewController.swift */,
 				008DEE162451F9E9003ACEB2 /* Main.storyboard */,
-				008DEE1C2451F9EE003ACEB2 /* Assets.xcassets */,
 				008DEE1E2451F9EE003ACEB2 /* LaunchScreen.storyboard */,
+				008DEE1C2451F9EE003ACEB2 /* Assets.xcassets */,
 				008DEE212451F9EE003ACEB2 /* Info.plist */,
 				008DEE192451F9E9003ACEB2 /* Market_indirimleri.xcdatamodeld */,
+				008DEE2F24523A4E003ACEB2 /* SplashView */,
+				008DEE2E24523A32003ACEB2 /* TabBar */,
+				0073F4BE24557C4500AD8095 /* UrunSayfasi */,
+				008DEE272451FBAE003ACEB2 /* Extension */,
 			);
 			path = "Market indirimleri";
+			sourceTree = "<group>";
+		};
+		008DEE272451FBAE003ACEB2 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				008DEE282451FBD7003ACEB2 /* UIColor.swift */,
+				008DEE2A2452028C003ACEB2 /* Constraints.swift */,
+				008DEE2C24521DDA003ACEB2 /* Alert.swift */,
+				00A85A8F24534F000046E484 /* UIScrollView.swift */,
+				0073F4932454AE3200AD8095 /* StatusBar.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		008DEE2E24523A32003ACEB2 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				006E373F24533C9000E31FC6 /* TabBar.swift */,
+				00A85A9A2453E2C60046E484 /* HomeBar */,
+				0073F4AE245527CB00AD8095 /* SearchBar */,
+				0073F4AF245527DC00AD8095 /* CartBar */,
+				0073F4A324551D8300AD8095 /* ProfilBar */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		008DEE2F24523A4E003ACEB2 /* SplashView */ = {
+			isa = PBXGroup;
+			children = (
+				008DEE142451F9E9003ACEB2 /* SplashView.swift */,
+				0073F4B424555CC200AD8095 /* WelcomeSayfa.swift */,
+				0073F4B624555CE300AD8095 /* GecisController.swift */,
+				0073F4B824556B4300AD8095 /* SelectCityPop.swift */,
+				0073F4BA2455717100AD8095 /* SehirlerCel.swift */,
+				0073F4BB2455717100AD8095 /* SehirlerCel.xib */,
+			);
+			path = SplashView;
+			sourceTree = "<group>";
+		};
+		00A85A9A2453E2C60046E484 /* HomeBar */ = {
+			isa = PBXGroup;
+			children = (
+				008DEE3224523B12003ACEB2 /* HomeBar.swift */,
+				00A85A9B2453E2F00046E484 /* MarketCell.swift */,
+				00A85A9C2453E2F00046E484 /* MarketCell.xib */,
+				00CA3C582453EB6B00F76E49 /* FiyatCell.swift */,
+				00CA3C592453EB6B00F76E49 /* FiyatCell.xib */,
+			);
+			path = HomeBar;
+			sourceTree = "<group>";
+		};
+		27306DFEF739D783EB8FA00F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6C52F0BB40B6700FF74046F4 /* Pods_Market_indirimleri.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8FFEED22E82506EA0E6A61D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5BBC28772B70BEC10C5511CE /* Pods-Market indirimleri.debug.xcconfig */,
+				B63256A7421F652E9FD8419B /* Pods-Market indirimleri.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +249,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 008DEE242451F9EE003ACEB2 /* Build configuration list for PBXNativeTarget "Market indirimleri" */;
 			buildPhases = (
+				ACE934A5B53CD1276E4F644A /* [CP] Check Pods Manifest.lock */,
 				008DEE092451F9E9003ACEB2 /* Sources */,
 				008DEE0A2451F9E9003ACEB2 /* Frameworks */,
 				008DEE0B2451F9E9003ACEB2 /* Resources */,
+				90A0D54AA9EDA4AE1F271D5D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,20 +305,90 @@
 				008DEE202451F9EE003ACEB2 /* LaunchScreen.storyboard in Resources */,
 				008DEE1D2451F9EE003ACEB2 /* Assets.xcassets in Resources */,
 				008DEE182451F9E9003ACEB2 /* Main.storyboard in Resources */,
+				0073F4BD2455717100AD8095 /* SehirlerCel.xib in Resources */,
+				00A85A9E2453E2F00046E484 /* MarketCell.xib in Resources */,
+				00CA3C5B2453EB6B00F76E49 /* FiyatCell.xib in Resources */,
+				0073F4A2245519AB00AD8095 /* MarketlerCel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		90A0D54AA9EDA4AE1F271D5D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Market indirimleri/Pods-Market indirimleri-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Market indirimleri/Pods-Market indirimleri-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Market indirimleri/Pods-Market indirimleri-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ACE934A5B53CD1276E4F644A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Market indirimleri-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		008DEE092451F9E9003ACEB2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				008DEE152451F9E9003ACEB2 /* ViewController.swift in Sources */,
+				0073F4B324553EE700AD8095 /* SettingPop.swift in Sources */,
+				0073F4B124552E2200AD8095 /* AramaPop.swift in Sources */,
+				008DEE152451F9E9003ACEB2 /* SplashView.swift in Sources */,
+				0073F4B924556B4300AD8095 /* SelectCityPop.swift in Sources */,
+				00A85A9D2453E2F00046E484 /* MarketCell.swift in Sources */,
 				008DEE112451F9E9003ACEB2 /* AppDelegate.swift in Sources */,
+				0073F4C22455886A00AD8095 /* MarketSayfasi.swift in Sources */,
+				0073F4942454AE3200AD8095 /* StatusBar.swift in Sources */,
 				008DEE1B2451F9E9003ACEB2 /* Market_indirimleri.xcdatamodeld in Sources */,
+				0073F49824550F2A00AD8095 /* Marketler.swift in Sources */,
+				0073F4C024557C9F00AD8095 /* UrunSayfasi.swift in Sources */,
+				006E374024533C9000E31FC6 /* TabBar.swift in Sources */,
 				008DEE132451F9E9003ACEB2 /* SceneDelegate.swift in Sources */,
+				008DEE3324523B12003ACEB2 /* HomeBar.swift in Sources */,
+				0073F4A1245519AB00AD8095 /* MarketlerCel.swift in Sources */,
+				008DEE2B2452028C003ACEB2 /* Constraints.swift in Sources */,
+				008DEE3524523B23003ACEB2 /* SearchBar.swift in Sources */,
+				008DEE292451FBD7003ACEB2 /* UIColor.swift in Sources */,
+				008DEE3724523BBB003ACEB2 /* CartBar.swift in Sources */,
+				008DEE2D24521DDA003ACEB2 /* Alert.swift in Sources */,
+				0073F4BC2455717100AD8095 /* SehirlerCel.swift in Sources */,
+				008DEE3924523BD7003ACEB2 /* ProfilBar.swift in Sources */,
+				0073F4A524551E4700AD8095 /* Urunler.swift in Sources */,
+				00CA3C5A2453EB6B00F76E49 /* FiyatCell.swift in Sources */,
+				0073F4AD2455269E00AD8095 /* BegendigimMarketler.swift in Sources */,
+				0073F4B524555CC200AD8095 /* WelcomeSayfa.swift in Sources */,
+				00A85A9024534F000046E484 /* UIScrollView.swift in Sources */,
+				0073F4B724555CE300AD8095 /* GecisController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +530,7 @@
 		};
 		008DEE252451F9EE003ACEB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5BBC28772B70BEC10C5511CE /* Pods-Market indirimleri.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -295,7 +540,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ilyas666.Market-indirimleri";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Market indirimleri";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -303,6 +548,7 @@
 		};
 		008DEE262451F9EE003ACEB2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B63256A7421F652E9FD8419B /* Pods-Market indirimleri.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -312,7 +558,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ilyas666.Market-indirimleri";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Market indirimleri";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
