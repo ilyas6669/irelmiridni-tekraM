@@ -30,7 +30,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAK-4I-i54">
-                        <rect key="frame" x="8" y="290" width="334" height="17"/>
+                        <rect key="frame" x="8" y="288" width="334" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -51,7 +51,7 @@
                 <constraint firstItem="fcZ-rw-cB7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5dz-o5-djw"/>
                 <constraint firstAttribute="trailing" secondItem="fcZ-rw-cB7" secondAttribute="trailing" id="IjP-SN-5sW"/>
                 <constraint firstItem="JLR-NQ-sgg" firstAttribute="top" secondItem="fcZ-rw-cB7" secondAttribute="bottom" id="U2a-7D-cAQ"/>
-                <constraint firstItem="XAK-4I-i54" firstAttribute="top" secondItem="QcY-Uh-apG" secondAttribute="bottom" constant="5" id="Zti-Yu-IGi"/>
+                <constraint firstItem="XAK-4I-i54" firstAttribute="top" secondItem="QcY-Uh-apG" secondAttribute="bottom" constant="3" id="Zti-Yu-IGi"/>
                 <constraint firstItem="fcZ-rw-cB7" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="p6V-DO-3hl"/>
                 <constraint firstAttribute="trailing" secondItem="JLR-NQ-sgg" secondAttribute="trailing" constant="8" id="s9D-eC-kLl"/>
                 <constraint firstAttribute="trailing" secondItem="QcY-Uh-apG" secondAttribute="trailing" constant="8" id="ur0-bT-Acf"/>

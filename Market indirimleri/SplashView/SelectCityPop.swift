@@ -1,18 +1,37 @@
-//
-//  SelectCityPop.swift
-//  Market indirimleri
-//
-//  Created by İlyas Abiyev on 4/26/20.
-//  Copyright © 2020 İlyas Abiyev. All rights reserved.
-//
-
 import UIKit
+import CoreData
+
+struct WebsiteDescription : Codable {
+    let count : Int
+   let results: [Result]
+}
+
+struct Result: Codable {
+    let id: Int
+    let name, detail: String
+    let storeSet: [Int]
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, detail
+        case storeSet = "store_set"
+    }
+}
 
 class SelectCityPop: UIView {
-
     
+    var countryNameArr = ["Afghanistan", "Albania", "Algeria", "American Samoa"]
+    
+    
+    var searchCountry = [String]()
+    var searching = false
+    
+    var countryList = [Result]()
+    
+    var selectedcountry = ""
+    var selectedcountryid = ""
+        
     let viewSehirSec : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -20,7 +39,7 @@ class SelectCityPop: UIView {
     }()
     
     let lblSehirSec : UILabel = {
-       let lbl = UILabel()
+        let lbl = UILabel()
         lbl.text = "Şehir Seç"
         lbl.textColor = .black
         lbl.textAlignment = . center
@@ -30,14 +49,14 @@ class SelectCityPop: UIView {
     }()
     
     let searchBar : UISearchBar = {
-       let search = UISearchBar()
+        let search = UISearchBar()
         search.searchBarStyle = .minimal
         search.translatesAutoresizingMaskIntoConstraints = false
         return search
     }()
     
     let altView : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -63,7 +82,43 @@ class SelectCityPop: UIView {
     let sehirTableView = UITableView()
     
     override init(frame: CGRect) {
-           super.init(frame: frame)
+        super.init(frame: frame)
+        layoutDuzenle()
+        tableViewDuzenle()
+        
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/cities/?format=json"
+        
+         guard let url = URL(string: jsonUrlString) else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //perhaps check err
+            guard let data = data else {return}
+            
+          
+            do {
+
+                let websiteDescription = try JSONDecoder().decode(WebsiteDescription.self, from: data)
+                self.countryList = websiteDescription.results
+                
+                print(self.countryList[0].name)
+                print(self.countryList[0].id)
+
+                                
+                
+            } catch let jsonError {
+                print("Error serializing json:", jsonError)
+                
+                
+            }
+            
+            
+        }.resume()
+       
+        
+        
+    }
+    
+    func layoutDuzenle() {
         backgroundColor = .white
         layer.cornerRadius = 10
         
@@ -83,46 +138,127 @@ class SelectCityPop: UIView {
         btnTamam.rightAnchor.constraint(equalTo: altView.rightAnchor,constant: -10).isActive = true
         _ = sehirTableView.anchor(top: searchBar.bottomAnchor, bottom: altView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor)
         
+        
+        
+    }
+    
+    func tableViewDuzenle() {
+        
         sehirTableView.separatorColor = .white
         sehirTableView.delegate = self
         sehirTableView.dataSource = self
         sehirTableView.register(UINib(nibName: "SehirlerCel", bundle: nil), forCellReuseIdentifier: "SehirlerCel")
-        
+        searchBar.delegate = self
         
     }
+    
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     @objc func btnTamamAction() {
-        print("tamam")
+        
+        
+        
+        if self.selectedcountryid == "" || self.selectedcountry == "" {
+            print("Lutfen sehir secin")
+            return
+        }
+        
+        //kayit et oz yaddasina
+        print("Nicatalibli:\(self.selectedcountryid)")
+        print("Nicatalibli:\(self.selectedcountry)")
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let newCity = NSEntityDescription.insertNewObject(forEntityName: "City", into: context)
+        
+        newCity.setValue(Int(selectedcountryid), forKey: "id")
+        newCity.setValue(selectedcountry, forKey: "name")
+        
+        do {
+            try context.save()
+        } catch {
+            print("bir hata var")
+        }
+        
+       
+        
+        let storyboard: UIStoryboard = UIStoryboard (name: "Main", bundle: nil)
+        let vc: TabBar = storyboard.instantiateViewController(withIdentifier: "TabBar") as! TabBar
+        vc.modalPresentationStyle = .fullScreen
+        vc.selectedIndex = 0
+        let currentController = self.getCurrentViewController()
+        currentController?.present(vc, animated: false, completion: nil)
+        
+        
+        
+    }
+    
+    func getCurrentViewController() -> UIViewController? {
+        
+        if let rootController = UIApplication.shared.keyWindow?.rootViewController {
+            var currentController: UIViewController! = rootController
+            while( currentController.presentedViewController != nil ) {
+                currentController = currentController.presentedViewController
+            }
+            return currentController
+        }
+        return nil
+        
     }
     
     
-
+    
 }
 
 
 extension SelectCityPop : UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        if searching {
+            return searchCountry.count
+        }else{
+            return countryList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = sehirTableView.dequeueReusableCell(withIdentifier: "SehirlerCel", for: indexPath) as! SehirlerCel
         cell.imgSucces.isHidden = true
+        if searching {
+            cell.lbl.text = searchCountry[indexPath.row]
+        }else{
+            cell.lbl.text = countryList[indexPath.row].name
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("test")
         sehirTableView.reloadData()
         let cell = sehirTableView.cellForRow(at: indexPath) as! SehirlerCel
         cell.imgSucces.isHidden = false
-      
+        
+        selectedcountry =  countryList[indexPath.row].name
+        selectedcountryid = "\(countryList[indexPath.row].id)"
         
     }
+    
+    
+}
+
+extension SelectCityPop : UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchCountry = countryNameArr.filter({$0.prefix(searchText.count) == searchText})
+        searching = true
+        sehirTableView.reloadData()
+        
+    }
+    
     
     
 }

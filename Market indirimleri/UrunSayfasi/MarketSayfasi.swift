@@ -13,7 +13,7 @@ class MarketSayfasi: UIViewController {
     let ustView : UIView = {
         let view = UIView()
         view.backgroundColor = .customWhite()
-        view.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        //view.heightAnchor.constraint(equalToConstant: 250).isActive = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -63,29 +63,59 @@ class MarketSayfasi: UIViewController {
         return img
     }()
     
+    let lblAciklama : UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .black
+        lbl.textAlignment = .left
+        lbl.text = "Label Label Label Label Label Label Label Label Label LabelLabel abel LabelLabel Label Label Label Label Label Label Label Label Label.00Label LabelLabel LabelLabel LabelLabel LabelLabel Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label"
+        lbl.numberOfLines = 30
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        //lbl.font = UIFont.boldSystemFont(ofSize: 17)
+        lbl.font = UIFont.systemFont(ofSize: 14)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
+    
+    let searchBar : UISearchBar = {
+       let serach = UISearchBar()
+        serach.backgroundColor = .white
+        return serach
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .customYellow()
+        view.backgroundColor = .customWhite()
         
-        let viewSV = UIStackView(arrangedSubviews: [ustView,altView])
+        let viewSV = UIStackView(arrangedSubviews: [lblAciklama,altView])
         viewSV.axis = .vertical
+        //viewSV.distribution = .fillEqually
         
         view.addSubview(viewSV)
         ustView.addSubview(topView)
+        view.addSubview(topView)
         topView.addSubview(btnLeft)
         topView.addSubview(btnFavori)
+        view.addSubview(imgUrun)
+        //ustView.addSubview(lblAciklama)
+        altView.addSubview(searchBar)
         
     
         
         _ = viewSV.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        _ = topView.anchor(top: ustView.topAnchor, bottom: nil, leading: ustView.leadingAnchor, trailing: ustView.trailingAnchor)
+        
+        _ = topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        
         btnLeft.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
         btnLeft.leftAnchor.constraint(equalTo: topView.leftAnchor,constant: 5).isActive = true
         btnFavori.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
         btnFavori.rightAnchor.constraint(equalTo: topView.rightAnchor,constant: -5).isActive = true
         
+        _ = lblAciklama.anchor(top: imgUrun.bottomAnchor, bottom: altView.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
         
-        
+        imgUrun.centerYAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
+        imgUrun.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+       
+        _ = searchBar.anchor(top: altView.topAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
         
         
         

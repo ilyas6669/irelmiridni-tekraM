@@ -73,6 +73,7 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
     }()
     
    
+   
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let x = targetContentOffset.pointee.x
         
@@ -121,6 +122,7 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
     }
     
     
+  
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return goruntuler.count

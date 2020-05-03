@@ -73,7 +73,7 @@
         <!--Home Bar-->
         <scene sceneID="798-Of-3aP">
             <objects>
-                <viewController id="VMQ-Xe-kTo" customClass="HomeBar" customModule="Market_indirimleri" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeBar" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VMQ-Xe-kTo" customClass="HomeBar" customModule="Market_indirimleri" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rkg-OL-6iF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -88,10 +88,10 @@
             </objects>
             <point key="canvasLocation" x="-567" y="823"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar-->
         <scene sceneID="CDW-mM-DRO">
             <objects>
-                <tabBarController id="hgg-JH-j16" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBar" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hgg-JH-j16" customClass="TabBar" customModule="Market_indirimleri" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Lzc-wr-tQ0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
