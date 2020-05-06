@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import CoreData
+import SDWebImage
 
 class CartBar: UIViewController {
     
+    var countryList2 = [Resulttt]()
+    var idArray = [Int]()
     
     //MARK: properties
     let viewTop : UIView = {
@@ -100,21 +104,68 @@ class CartBar: UIViewController {
         
     }
     
+    func veriCekUrun() {
+           let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(idArray.last!)"
+           print("Nicatalibli:\(jsonUrlString)")
+           print("Nicataliblii:\(idArray.last!)")
+                  guard let url = URL(string: jsonUrlString) else {return}
+                 
+                 URLSession.shared.dataTask(with: url) { (data, response, error) in
+                     //perhaps check err
+                     guard let data = data else {return}
+                     
+                   
+                     do {
+
+                         let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
+                         self.countryList2 = welcomee.results
+                       
+                      
+                       
+                      
+                       
+                           //bulardaki apiden gelen verilerdi
+                         print("666\(self.countryList2[0].name)")
+                         print("666\(self.countryList2[0].id)")
+                       print("666\(self.countryList2[0].image)")
+
+                                         
+                         
+                     } catch let jsonError {
+                         print("Error serializing json:", jsonError)
+                         
+                         
+                     }
+                     
+                     
+                 }.resume()
+           
+           
+           DispatchQueue.main.async {
+
+                                self.urunlerCollectionView.reloadData()
+
+                                }
+           
+           
+       }
+
     
-    
-    
-    
+   
     
 }
 
 extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return countryList2.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
-                   return cell
+        let cell = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
+        cell.lblIsim.text = countryList2[indexPath.row].name
+        cell.lblFiyat.text = countryList2[indexPath.row].price
+        cell.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

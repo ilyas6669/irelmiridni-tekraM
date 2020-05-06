@@ -40,21 +40,35 @@ class ProfilBar: UIViewController {
         return view
     }()
     
-    let lblSehir : UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .black
-        lbl.font = UIFont.boldSystemFont(ofSize: 29)
-        lbl.text = "Istanbul"
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
+    let btnSehir : UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Istanbul", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 29)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.addTarget(self, action: #selector(btnSehirSecAction), for: .touchUpInside)
+        return btn
     }()
+    
+    let selectCityPop : SelectCityPop = {
+        let view = SelectCityPop()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let visualEffectView : UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let view = UIVisualEffectView(effect: blurEffect)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     
     let altView : UIView = {
         let view = UIView()
         view.heightAnchor.constraint(equalToConstant: 60).isActive = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .customYellow2()
-        
         return view
     }()
     
@@ -167,7 +181,7 @@ class ProfilBar: UIViewController {
         view.addSubview(viewTop)
         viewTop.addSubview(lblTop)
         view.addSubview(ustView)
-        ustView.addSubview(lblSehir)
+        ustView.addSubview(btnSehir)
         view.addSubview(altView)
         altView.addSubview(btnSV)
         view.addSubview(altView2)
@@ -184,7 +198,7 @@ class ProfilBar: UIViewController {
         
         _ = ustView.anchor(top: viewTop.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
-        lblSehir.merkezKonumlamdirmaSuperView()
+        btnSehir.merkezKonumlamdirmaSuperView()
         
         _ = altView.anchor(top: ustView.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
@@ -207,8 +221,44 @@ class ProfilBar: UIViewController {
         lblBegendigimUrun.rightAnchor.constraint(equalTo: btnBegendigimUrun.rightAnchor,constant: -12).isActive = true
         
         
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleDismissal))
+        //tap.delegate = self
+        view.addGestureRecognizer(tap)
+        
+        view.addSubview(visualEffectView)
+        visualEffectView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        visualEffectView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        visualEffectView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        visualEffectView.alpha = 0
+        
+        
     }
     
+    @objc func btnSehirSecAction() {
+        view.addSubview(selectCityPop)
+        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 35, left: 34, bottom: 100, right: 20))
+        selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        selectCityPop.alpha = 0
+        UIView.animate(withDuration: 0.5) {
+            self.visualEffectView.alpha = 1
+            self.selectCityPop.alpha = 1
+            self.selectCityPop.transform = CGAffineTransform.identity
+        }
+        
+    }
+    
+    @objc func handleDismissal() {
+           UIView.animate(withDuration: 0.3, animations: {
+               self.selectCityPop.alpha = 0
+               self.visualEffectView.alpha = 0
+               self.selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+           }) { (_) in
+               self.selectCityPop.removeFromSuperview()
+           }
+       }
+       
     
     
     @objc func btnMarketAction() {

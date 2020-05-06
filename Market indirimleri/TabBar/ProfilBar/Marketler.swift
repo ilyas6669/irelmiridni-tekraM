@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import CoreData
+import SDWebImage
 
 class Marketler: UIViewController {
+    
+    var countryList = [Resultt]()
+       var idArray = [Int]()
     
     //MARK: properties
     let viewTop : UIView = {
@@ -77,6 +82,73 @@ class Marketler: UIViewController {
         
     }
     
+    func veriCekMarket() {
+             func veriCekMarket() {
+                   
+                   let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                   let context = appDelegate.persistentContainer.viewContext
+                   
+                   let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+                   fetchRequest.returnsObjectsAsFaults = false
+                   
+                   do {
+                        let results = try context.fetch(fetchRequest)
+                       
+                       for result in results as! [NSManagedObject] {
+                           if let id = result.value(forKey: "id") as? Int {
+                               self.idArray.append(id)
+                              
+                              
+                              
+                           }
+                       }
+                       
+                       
+                   } catch {
+                       print("error")
+                   }
+                  
+                   
+                   let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?city=\(idArray.last!)"
+                          guard let url = URL(string: jsonUrlString) else {return}
+                         
+                         URLSession.shared.dataTask(with: url) { (data, response, error) in
+                             //perhaps check err
+                             guard let data = data else {return}
+                             
+                           
+                             do {
+
+                                 let welcome = try JSONDecoder().decode(Welcome.self, from: data)
+                                 self.countryList = welcome.results
+                               
+                              
+                               
+                              
+                               //reload datani verini tam aldigin yerde ele
+                                   //bulardaki apiden gelen verilerdi
+                                
+                                                 
+                                 
+                             } catch let jsonError {
+                                 print("Error serializing json:", jsonError)
+                                 
+                                 
+                             }
+                             
+                             
+                         }.resume()
+                  
+                
+                DispatchQueue.main.async {
+
+                                              self.marketlerTableView.reloadData()
+
+                                              }
+                
+        }
+       }
+    
     
     
     @objc func btnTopLeftAction() {
@@ -90,11 +162,13 @@ class Marketler: UIViewController {
 
 extension Marketler : UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        15
+        countryList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = marketlerTableView.dequeueReusableCell(withIdentifier: "MarketlerCel", for: indexPath) as! MarketlerCel
+        cell.lblIsim.text = countryList[indexPath.row].name
+        cell.imgUrun.sd_setImage(with: URL(string: "\(countryList[indexPath.row].image.imageDefault)"))
         return cell
     }
     

@@ -11,9 +11,10 @@ import UIKit
 class SplashView: UIViewController {
     
     //MARK: Properties
-    let imgLogo = UIImageView(image: #imageLiteral(resourceName: "launchImage"))
+    let imgLogo = UIImageView(image: UIImage(named: ""))
     
-    
+    let homebar = HomeBar()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,9 @@ class SplashView: UIViewController {
         
         //MARK: anchor
         imgLogo.merkezKonumlamdirmaSuperView(boyut: CGSize(width: 120, height: 80))
+        
+       
+        
         
     }
     

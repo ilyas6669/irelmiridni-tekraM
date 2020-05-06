@@ -21,7 +21,7 @@ extension UIColor {
 
 extension UIColor {
     class func customYellow() -> UIColor {
-        return UIColor(red: 250/255, green: 212/255, blue: 71/255, alpha: 1)
+        return UIColor(red: 247/255, green: 203/255, blue: 71/255, alpha: 1)
     }
 }
 

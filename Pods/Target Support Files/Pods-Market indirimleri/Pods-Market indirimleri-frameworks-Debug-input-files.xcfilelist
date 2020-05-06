@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-Market indirimleri/Pods-Market indirimleri-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework
 ${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework

@@ -7,4 +7,5 @@ target 'Market indirimleri' do
 
   # Pods for Market indirimleri
 pod 'PopupDialog', '~> 1.1'
+pod 'SDWebImage', '~> 5.0'
 end

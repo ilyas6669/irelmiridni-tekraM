@@ -116,9 +116,27 @@ class UrunSayfasi: UIViewController {
          _ = btnFavori.anchor(top: ustView.topAnchor, bottom: nil, leading: nil, trailing: ustView.trailingAnchor,padding: .init(top: 10, left: 0, bottom: 0, right: 10))
         _ = altView.anchor(top: ustView.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = lblSV.anchor(top: ustView.bottomAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: altView.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
+        
+        let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwpie(sender:)))
 
-      
+        downSwipe.direction = .up
+        view.addGestureRecognizer(downSwipe)
     }
+    
+   
+    @objc func handleSwpie(sender:UISwipeGestureRecognizer) {
+        if sender.state == .ended {
+            switch sender.direction {
+            case .up:
+               let alturunsayfasi = AltUrunSayfasi()
+               alturunsayfasi.modalPresentationStyle = .fullScreen
+                present(alturunsayfasi, animated: true, completion: nil)
+            default: break
+                
+            }
+        }
+    }
+    
     
 
     @objc func btnLeftAction() {

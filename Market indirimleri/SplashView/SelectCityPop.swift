@@ -1,28 +1,15 @@
 import UIKit
 import CoreData
 
-struct WebsiteDescription : Codable {
-    let count : Int
-   let results: [Result]
-}
 
-struct Result: Codable {
-    let id: Int
-    let name, detail: String
-    let storeSet: [Int]
 
-    enum CodingKeys: String, CodingKey {
-        case id, name, detail
-        case storeSet = "store_set"
-    }
-}
 
 class SelectCityPop: UIView {
     
     var countryNameArr = ["Afghanistan", "Albania", "Algeria", "American Samoa"]
     
     
-    var searchCountry = [String]()
+    var searchCountry = [Result]()
     var searching = false
     
     var countryList = [Result]()
@@ -79,12 +66,22 @@ class SelectCityPop: UIView {
         return btn
     }()
     
+    var activityIndicator : UIActivityIndicatorView = {
+           var indicator = UIActivityIndicatorView()
+           indicator.hidesWhenStopped = true
+           indicator.style = .large
+           indicator.color = .black
+           indicator.translatesAutoresizingMaskIntoConstraints = false
+           return indicator
+       }()
+    
     let sehirTableView = UITableView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         layoutDuzenle()
         tableViewDuzenle()
+        activityIndicator.startAnimating()
         
         let jsonUrlString = "https://marketindirimleri.com/api/v1/cities/?format=json"
         
@@ -97,12 +94,16 @@ class SelectCityPop: UIView {
           
             do {
 
-                let websiteDescription = try JSONDecoder().decode(WebsiteDescription.self, from: data)
-                self.countryList = websiteDescription.results
                 
-                print(self.countryList[0].name)
-                print(self.countryList[0].id)
+                
+                let websiteDescription = try JSONDecoder().decode(WebsiteDescription.self, from: data)
+                
+                 DispatchQueue.main.async {
+                self.countryList = websiteDescription.results
+                    self.sehirTableView.reloadData()
+                    self.activityIndicator.stopAnimating()
 
+                }
                                 
                 
             } catch let jsonError {
@@ -128,6 +129,7 @@ class SelectCityPop: UIView {
         addSubview(altView)
         altView.addSubview(btnTamam)
         addSubview(sehirTableView)
+        sehirTableView.addSubview(activityIndicator)
         
         
         _ = viewSehirSec.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor)
@@ -137,6 +139,9 @@ class SelectCityPop: UIView {
         btnTamam.centerYAnchor.constraint(equalTo: altView.centerYAnchor).isActive = true
         btnTamam.rightAnchor.constraint(equalTo: altView.rightAnchor,constant: -10).isActive = true
         _ = sehirTableView.anchor(top: searchBar.bottomAnchor, bottom: altView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor)
+        activityIndicator.centerXAnchor.constraint(equalTo: sehirTableView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: sehirTableView.centerYAnchor).isActive = true
+        
         
         
         
@@ -161,15 +166,10 @@ class SelectCityPop: UIView {
     @objc func btnTamamAction() {
         
         
-        
         if self.selectedcountryid == "" || self.selectedcountry == "" {
             print("Lutfen sehir secin")
             return
         }
-        
-        //kayit et oz yaddasina
-        print("Nicatalibli:\(self.selectedcountryid)")
-        print("Nicatalibli:\(self.selectedcountry)")
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
@@ -229,7 +229,7 @@ extension SelectCityPop : UITableViewDataSource,UITableViewDelegate {
         let cell = sehirTableView.dequeueReusableCell(withIdentifier: "SehirlerCel", for: indexPath) as! SehirlerCel
         cell.imgSucces.isHidden = true
         if searching {
-            cell.lbl.text = searchCountry[indexPath.row]
+            cell.lbl.text = searchCountry[indexPath.row].name
         }else{
             cell.lbl.text = countryList[indexPath.row].name
         }
@@ -242,8 +242,13 @@ extension SelectCityPop : UITableViewDataSource,UITableViewDelegate {
         let cell = sehirTableView.cellForRow(at: indexPath) as! SehirlerCel
         cell.imgSucces.isHidden = false
         
-        selectedcountry =  countryList[indexPath.row].name
-        selectedcountryid = "\(countryList[indexPath.row].id)"
+        if searching {
+            selectedcountry =  searchCountry[indexPath.row].name
+            selectedcountryid = "\(searchCountry[indexPath.row].id)"
+        } else{
+            selectedcountry =  countryList[indexPath.row].name
+            selectedcountryid = "\(countryList[indexPath.row].id)"
+        }
         
     }
     
@@ -253,7 +258,12 @@ extension SelectCityPop : UITableViewDataSource,UITableViewDelegate {
 extension SelectCityPop : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchCountry = countryNameArr.filter({$0.prefix(searchText.count) == searchText})
+//        searchCountry = countryList.filter({$0.name == searchText})
+        searchCountry = countryList.filter(
+            {
+                $0.name.lowercased().prefix(searchText.count) == searchText.lowercased()
+            }
+        )
         searching = true
         sehirTableView.reloadData()
         

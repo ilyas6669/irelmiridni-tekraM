@@ -7,9 +7,17 @@
 //
 
 import UIKit
+import CoreData
+import SDWebImage
+
+
 
 class HomeBar: UIViewController {
     //MARK: scrollView
+    var countryList = [Resultt]()
+    var idArray = [Int]()
+    
+    var countryList2 = [Resulttt]()
     
     lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height+10000)
     
@@ -34,11 +42,11 @@ class HomeBar: UIViewController {
     //MARK: properties
     
     let ustView : UIView = {
-           let view = UIView()
-           view.backgroundColor = .customYellow()
-           view.heightAnchor.constraint(equalToConstant: 50).isActive = true
-           return view
-       }()
+        let view = UIView()
+        view.backgroundColor = .customYellow()
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return view
+    }()
     
     let ortaView1 : UIView = {
         let view = UIView()
@@ -64,7 +72,7 @@ class HomeBar: UIViewController {
         return view
     }()
     
-
+    
     let lblTop : UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
@@ -76,7 +84,7 @@ class HomeBar: UIViewController {
     let btnTopSearch : UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "search-1"), for: .normal)
-        btn.addTarget(self, action: #selector(btnTopLeftAction), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(btnSearchAction), for: .touchUpInside)
         return btn
     }()
     
@@ -125,25 +133,72 @@ class HomeBar: UIViewController {
         return cv
     }()
     
+    var activityIndicator : UIActivityIndicatorView = {
+        var indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.style = .medium
+        indicator.color = .black
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
+    var activityIndicator2 : UIActivityIndicatorView = {
+        var indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.style = .large
+        indicator.color = .black
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
+    var refreshControl : UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
         callFunction()
         
+       
+        
         
     }
+    
+    
+   
     
     func callFunction() {
         
         layoutDuzenle()
         collectionViewDuzenle()
+        veriCekMarket()
+        veriCekUrun()
+        activityIndicator.startAnimating()
+        activityIndicator2.startAnimating()
+        refreshControlAction()
+        
+    }
+    
+    func refreshControlAction() {
+        
+        scrolView.alwaysBounceVertical = true
+        scrolView.bounces = true
+        refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+        self.scrolView.addSubview(refreshControl)
+           
+       }
+    
+    @objc func didPullToRefresh() {
+        print("resfresh")
+        
+        refreshControl.endRefreshing()
         
     }
     
     func layoutDuzenle() {
         
-        let viewSV = UIStackView(arrangedSubviews: [ustView,ortaView1,ortaView2,altView])
-        viewSV.axis = .vertical
+        
         
         //MARK: addSubview
         view.addSubview(scrolView)
@@ -152,29 +207,26 @@ class HomeBar: UIViewController {
         ustView.addSubview(lblTop)
         ustView.addSubview(btnTopSearch)
         containerView.addSubview(ortaView1)
-        //ortaView1.addSubview(imgReklam)
+        ortaView1.addSubview(imgReklam)
         containerView.addSubview(ortaView2)
         ortaView2.addSubview(lblMarket)
         ortaView2.addSubview(marketCollectionView)
         containerView.addSubview(altView)
         altView.addSubview(lblFiyat)
         altView.addSubview(fiyatlarCollectionView)
-//        containerView.addSubview(imgReklam)
-//        containerView.addSubview(lblMarket)
-//        containerView.addSubview(marketCollectionView)
-//        containerView.addSubview(lblFiyat)
-//        containerView.addSubview(fiyatlarCollectionView)
-//        altView.addSubview(fiyatlarCollectionView)
+        fiyatlarCollectionView.addSubview(activityIndicator)
+        marketCollectionView.addSubview(activityIndicator2)
+        
         
         //MARK: constraint
-        
         
         _ = ustView.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         lblTop.merkezKonumlamdirmaSuperView()
         btnTopSearch.merkezYSuperView()
         btnTopSearch.leadingAnchor.constraint(equalTo: ustView.leadingAnchor,constant: 5).isActive = true
         _ = ortaView1.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-       
+        //_ = imgReklam.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+        
         _ = ortaView2.anchor(top: ortaView1.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         _ = lblMarket.anchor(top: ortaView2.topAnchor, bottom: nil, leading: ortaView2.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
         _ = marketCollectionView.anchor(top: lblMarket.bottomAnchor, bottom: ortaView2.bottomAnchor, leading: ortaView2.leadingAnchor, trailing: ortaView2.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -183,18 +235,12 @@ class HomeBar: UIViewController {
         _ = lblFiyat.anchor(top: ortaView2.bottomAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
         _ = fiyatlarCollectionView.anchor(top: lblFiyat.bottomAnchor, bottom: containerView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
         
-//        _ = altView.anchor(top: nil, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-//        _ = viewTop.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-//
-//        lblTop.merkezKonumlamdirmaSuperView()
-//        btnTopSearch.merkezYSuperView()
-//        btnTopSearch.leadingAnchor.constraint(equalTo: viewTop.leadingAnchor,constant: 5).isActive = true
-//
-//        _ = imgReklam.anchor(top: viewTop.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-//        _ = lblMarket.anchor(top: imgReklam.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
-//        _ = marketCollectionView.anchor(top: lblMarket.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-//        _ = lblFiyat.anchor(top: marketCollectionView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
-//        _ = fiyatlarCollectionView.anchor(top: altView.topAnchor, bottom: containerView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
+        
+        activityIndicator.centerXAnchor.constraint(equalTo: fiyatlarCollectionView.centerXAnchor).isActive = true
+        activityIndicator.topAnchor.constraint(equalTo: fiyatlarCollectionView.topAnchor,constant: 100).isActive = true
+        
+        activityIndicator2.centerXAnchor.constraint(equalTo: marketCollectionView.centerXAnchor).isActive = true
+        activityIndicator2.topAnchor.constraint(equalTo: marketCollectionView.topAnchor,constant: 50).isActive = true
         
     }
     
@@ -203,9 +249,15 @@ class HomeBar: UIViewController {
         marketCollectionView.dataSource = self
         marketCollectionView.register(UINib(nibName: "MarketCell", bundle: nil), forCellWithReuseIdentifier: "MarketCell")
         
+      
+        
         fiyatlarCollectionView.delegate = self
         fiyatlarCollectionView.dataSource = self
         fiyatlarCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
+        
+       
+       
+        
         
         if let layout = marketCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.itemSize = CGSize(width: 100, height: 100)
@@ -225,12 +277,113 @@ class HomeBar: UIViewController {
     }
     
     
-    
-    
-    
-    @objc func btnTopLeftAction() {
+    func veriCekMarket() {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? Int {
+                    self.idArray.append(id)
+                }
+            }
+            
+        } catch {
+            print("error")
+        }
+        
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?city=\(idArray.last!)"
+        guard let url = URL(string: jsonUrlString) else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //perhaps check err
+            guard let data = data else {return}
+            
+            
+            do {
+                
+                let welcome = try JSONDecoder().decode(Welcome.self, from: data)
+                self.countryList = welcome.results
+                self.activityIndicator2.stopAnimating()
+                
+                
+                
+                
+                print("666\(self.countryList[0].name)")
+                print("666\(self.countryList[0].id)")
+                print("666\(self.countryList[0].image)")
+                
+            } catch let jsonError {
+                print("Error serializing json:", jsonError)
+            }
+        }.resume()
+        self.marketCollectionView.reloadData()
         
     }
+    
+    func veriCekUrun() {
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(idArray.last!)"
+        print("Nicatalibli:\(jsonUrlString)")
+        print("Nicataliblii:\(idArray.last!)")
+        guard let url = URL(string: jsonUrlString) else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //perhaps check err
+            guard let data = data else {return}
+            
+            
+            
+            
+            
+            
+            do {
+                
+                
+                
+                let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
+                
+                DispatchQueue.main.async {
+                    
+                    self.countryList2 = welcomee.results
+                    self.fiyatlarCollectionView.reloadData()
+                    self.activityIndicator.stopAnimating()
+                    
+                    
+                }
+                
+                //bulardaki apiden gelen verilerdi
+                
+                
+                
+                
+            } catch let jsonError {
+                print("Error serializing json:", jsonError)
+                
+                
+            }
+            
+            
+        }.resume()
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    @objc func btnSearchAction() {
+        tabBarController?.selectedIndex = 1
+    }
+    
+    
     
     
 }
@@ -239,21 +392,40 @@ class HomeBar: UIViewController {
 extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.marketCollectionView {
-            return 20
+            return countryList.count
         }
-        return 100
+        return countryList2.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.marketCollectionView {
             let cell1 = marketCollectionView.dequeueReusableCell(withReuseIdentifier: "MarketCell", for: indexPath) as! MarketCell
+            cell1.lblIsim.text = countryList[indexPath.row].name
+            cell1.imgUrun.sd_setImage(with: URL(string: "\(countryList[indexPath.row].image.imageDefault)"))
             return cell1
+            
+            
         }else {
             let cell2 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
+            cell2.lblIsim.text = countryList2[indexPath.row].name
+            cell2.lblFiyat.text = countryList2[indexPath.row].price
+            cell2.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
             return cell2
         }
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == self.marketCollectionView {
+            
+            
+        }else{
+            
+        }
+        
+        
+    }
+    
     
     
 }

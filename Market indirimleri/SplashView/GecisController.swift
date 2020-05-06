@@ -11,39 +11,37 @@ import UIKit
 class GecisController : UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
     
-    let goruntuler = ["walkthrough1","walkthrough2","walkthrough3"]
-    let basliklar = ["Merheba!","Tüketimi azaltip dogayi korumaya var misin?","Ayni zamanda ek gelir elde etmeye ne dersin?"]
+    let goruntuler = ["logo","logo"]
+    let basliklar = ["Ürünlerinizi listenize eklemek için çift dokunun yine listenizden çıkarmak için çift dokunun!","Şehrinizdeki yerel bu ulusal marketlerin indirimlerini yakalayın.Profilinizden istediğiniz zaman değiştire bilirsiniz."]
+    let baslik = ["Ürünlerinizi listenize eklemek için çift\ndokunun","Şehrinizi seçin"]
+    
+    
+    
+    let btnSonraki : UIButton = {
+           let btn = UIButton(type: .system)
+           btn.setTitle("SONRAKİ", for: .normal)
+           btn.setTitleColor(.black, for: .normal)
+           btn.backgroundColor = .clear
+           btn.addTarget(self, action: #selector(btnSonrakiClicked), for: .touchUpInside)
+           return btn
+       }()
     
     let btnAtla : UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("BACK", for: .normal)
+        btn.setTitle("GERi", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.backgroundColor = .clear
-         //btn.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        //btn.widthAnchor.constraint(equalToConstant: 112).isActive = true
         btn.addTarget(self, action: #selector(btnAtlaClicked), for: .touchUpInside)
         return btn
     }()
     
-    let btnSonraki : UIButton = {
-              let btn = UIButton(type: .system)
-              btn.setTitle("NEXT", for: .normal)
-              btn.setTitleColor(.black, for: .normal)
-        btn.backgroundColor = .clear
-            
-              //btn.heightAnchor.constraint(equalToConstant: 40).isActive = true
-               //btn.widthAnchor.constraint(equalToConstant: 112).isActive = true
-           btn.addTarget(self, action: #selector(btnSonrakiClicked), for: .touchUpInside)
-              return btn
-          }()
+   
     
     let btnHadiBaslayim : UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("SELECT CITY", for: .normal)
+        btn.setTitle("ŞEHİR SEÇ", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.backgroundColor = .clear
-        //btn.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        //btn.widthAnchor.constraint(equalToConstant: 112).isActive = true
         btn.addTarget(self, action: #selector(hadibaslayalimAction), for: .touchUpInside)
         return btn
         
@@ -52,15 +50,15 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
     let pageController : UIPageControl = {
         let pc = UIPageControl()
         pc.currentPage = 0
-        pc.numberOfPages = 3
+        pc.numberOfPages = 2
         pc.currentPageIndicatorTintColor = UIColor.customYellow2()
         pc.pageIndicatorTintColor = UIColor.white
         return pc
-    
+        
     }()
     
     let selectCityPop : SelectCityPop = {
-       let view = SelectCityPop()
+        let view = SelectCityPop()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -72,8 +70,8 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
         return view
     }()
     
-   
-   
+    
+    
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let x = targetContentOffset.pointee.x
         
@@ -84,9 +82,6 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
         super.viewDidLoad()
         
         
-        //collectionView.backgroundColor = .green
-        
-       
         
         view.addSubview(btnAtla)
         view.addSubview(btnSonraki)
@@ -98,8 +93,8 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
         collectionView.register(WelcomeSayfa.self, forCellWithReuseIdentifier: "cell")
         collectionView.isPagingEnabled = true
         
-       
-              
+        
+        
         _ = pageController.anchor(top: nil, bottom: btnAtla.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         _ = btnSonraki.anchor(top: nil, bottom: view.bottomAnchor, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 10, right: 20))
         _ = btnAtla.anchor(top: nil, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: nil,padding: .init(top: 0, left: 20, bottom: 10, right: 0))
@@ -108,21 +103,21 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
         
         
         
-        
-        
-        btnAtla.isHidden = true
-        btnHadiBaslayim.isHidden = true
-        
         view.addSubview(visualEffectView)
         visualEffectView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         visualEffectView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         visualEffectView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         visualEffectView.alpha = 0
+        
+        
+        btnAtla.isHidden = true
+        btnHadiBaslayim.isHidden = true
+        
     }
     
     
-  
+    
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return goruntuler.count
@@ -132,6 +127,7 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! WelcomeSayfa
         cell.image1.image = UIImage(named: goruntuler[indexPath.row])
         cell.lbl1.text = basliklar[indexPath.row]
+        cell.lbl2.text = baslik[indexPath.row]
         
         return cell
     }
@@ -148,23 +144,28 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
         pageController.currentPage += 1
         let indexpath = IndexPath(item: pageController.currentPage, section: 0)
         collectionView.scrollToItem(at: indexpath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
-        print("\(pageController.currentPage)")
         if pageController.currentPage == 1  {
             btnAtla.isHidden = false
+            btnSonraki.isHidden = true
+            btnHadiBaslayim.isHidden = false
         } else if pageController.currentPage == 2 {
             btnSonraki.isHidden = true
             btnHadiBaslayim.isHidden = false
         }
         
-       
-        
-         
-
-       }
-       
+    }
+    
     
     @objc func btnAtlaClicked() {
-        print("back")
+        let indexpath = IndexPath(item: pageController.currentPage, section: -1)
+        collectionView.scrollToItem(at: indexpath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+        if pageController.currentPage == 0 {
+            
+        } else {
+            btnAtla.isHidden = true
+            btnHadiBaslayim.isHidden = true
+            btnSonraki.isHidden = false
+        }
         
     }
     

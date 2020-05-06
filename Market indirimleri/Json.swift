@@ -1,0 +1,115 @@
+//
+//  Json.swift
+//  Market indirimleri
+//
+//  Created by İlyas Abiyev on 5/4/20.
+//  Copyright © 2020 İlyas Abiyev. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+
+//SelectCityPop
+
+struct WebsiteDescription : Codable {
+    let count : Int
+   let results: [Result]
+}
+
+struct Result: Codable {
+    let id: Int
+    let name, detail: String
+    let storeSet: [Int]
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, detail
+        case storeSet = "store_set"
+    }
+}
+
+
+//Marketler
+
+// MARK: - Welcome
+struct Welcome: Codable {
+    let count: Int
+    let next, previous: JSONNull?
+    let results: [Resultt]
+}
+
+// MARK: - Result
+struct Resultt: Codable {
+    let id: Int
+    let name: String
+    let image: Image
+    let cities: [Int]
+    let detail: String
+}
+
+// MARK: - Image
+struct Image: Codable {
+    let imageDefault, original: String
+
+    enum CodingKeys: String, CodingKey {
+        case imageDefault = "default"
+        case original
+    }
+}
+
+// MARK: - Encode/decode helpers
+
+class JSONNull: Codable, Hashable {
+
+    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
+        return true
+    }
+
+    public var hashValue: Int {
+        return 0
+    }
+
+    public init() {}
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if !container.decodeNil() {
+            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encodeNil()
+    }
+}
+
+//Urunler
+// MARK: - Welcome
+struct Welcomee: Codable {
+    let count: Int
+    let next: String
+    let previous: JSONNull?
+    let results: [Resulttt]
+}
+
+// MARK: - Result
+struct Resulttt: Codable {
+    let id, storeID: Int
+    let name, detail: String
+    let image: Image
+    let price: String?
+    let pricePrefixText, priceSuffixText, offerText: String
+    let validDates: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case storeID = "store_id"
+        case name, detail, image, price
+        case pricePrefixText = "price_prefix_text"
+        case priceSuffixText = "price_suffix_text"
+        case offerText = "offer_text"
+        case validDates = "valid_dates"
+    }
+}
+

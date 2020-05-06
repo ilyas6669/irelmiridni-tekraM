@@ -17,10 +17,16 @@ class FiyatCell: UICollectionViewCell {
     @IBOutlet weak var lblFiyat: UILabel!
     
     @IBOutlet weak var lblIsim2: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        imgUrun.contentMode = .scaleAspectFill
+        imgUrun.contentMode = .scaleAspectFit
+        
+       
+        
+        
     }
 
 }
