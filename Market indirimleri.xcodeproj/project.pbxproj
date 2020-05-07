@@ -40,6 +40,8 @@
 		008DEE3524523B23003ACEB2 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3424523B23003ACEB2 /* SearchBar.swift */; };
 		008DEE3724523BBB003ACEB2 /* CartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3624523BBB003ACEB2 /* CartBar.swift */; };
 		008DEE3924523BD7003ACEB2 /* ProfilBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3824523BD7003ACEB2 /* ProfilBar.swift */; };
+		009B5DCD2463BA6000C2EE3D /* UrunlerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009B5DCB2463BA6000C2EE3D /* UrunlerTableViewCell.swift */; };
+		009B5DCE2463BA6000C2EE3D /* UrunlerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 009B5DCC2463BA6000C2EE3D /* UrunlerTableViewCell.xib */; };
 		00A85A9024534F000046E484 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85A8F24534F000046E484 /* UIScrollView.swift */; };
 		00A85A9D2453E2F00046E484 /* MarketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85A9B2453E2F00046E484 /* MarketCell.swift */; };
 		00A85A9E2453E2F00046E484 /* MarketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00A85A9C2453E2F00046E484 /* MarketCell.xib */; };
@@ -85,6 +87,8 @@
 		008DEE3424523B23003ACEB2 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		008DEE3624523BBB003ACEB2 /* CartBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBar.swift; sourceTree = "<group>"; };
 		008DEE3824523BD7003ACEB2 /* ProfilBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilBar.swift; sourceTree = "<group>"; };
+		009B5DCB2463BA6000C2EE3D /* UrunlerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrunlerTableViewCell.swift; sourceTree = "<group>"; };
+		009B5DCC2463BA6000C2EE3D /* UrunlerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UrunlerTableViewCell.xib; sourceTree = "<group>"; };
 		00A85A8F24534F000046E484 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		00A85A9B2453E2F00046E484 /* MarketCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCell.swift; sourceTree = "<group>"; };
 		00A85A9C2453E2F00046E484 /* MarketCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketCell.xib; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 				008DEE3424523B23003ACEB2 /* SearchBar.swift */,
 				0073F4B024552E2200AD8095 /* AramaPop.swift */,
 				0073F4B224553EE700AD8095 /* SettingPop.swift */,
+				009B5DCB2463BA6000C2EE3D /* UrunlerTableViewCell.swift */,
+				009B5DCC2463BA6000C2EE3D /* UrunlerTableViewCell.xib */,
 			);
 			path = SearchBar;
 			sourceTree = "<group>";
@@ -315,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				008DEE202451F9EE003ACEB2 /* LaunchScreen.storyboard in Resources */,
+				009B5DCE2463BA6000C2EE3D /* UrunlerTableViewCell.xib in Resources */,
 				008DEE1D2451F9EE003ACEB2 /* Assets.xcassets in Resources */,
 				008DEE182451F9E9003ACEB2 /* Main.storyboard in Resources */,
 				0073F4BD2455717100AD8095 /* SehirlerCel.xib in Resources */,
@@ -380,6 +387,7 @@
 				00A85A9D2453E2F00046E484 /* MarketCell.swift in Sources */,
 				008DEE112451F9E9003ACEB2 /* AppDelegate.swift in Sources */,
 				0073F4C22455886A00AD8095 /* MarketSayfasi.swift in Sources */,
+				009B5DCD2463BA6000C2EE3D /* UrunlerTableViewCell.swift in Sources */,
 				0073F4942454AE3200AD8095 /* StatusBar.swift in Sources */,
 				008DEE1B2451F9E9003ACEB2 /* Market_indirimleri.xcdatamodeld in Sources */,
 				0073F49824550F2A00AD8095 /* Marketler.swift in Sources */,

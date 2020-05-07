@@ -66,7 +66,6 @@ class AramaPop: UIView {
         btn.setTitle("TAMAM", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        btn.addTarget(self, action: #selector(btnTamamAction), for: .touchUpInside)
         return btn
     }()
 
@@ -108,9 +107,7 @@ class AramaPop: UIView {
         print("switch")
     }
     
-    @objc func btnTamamAction() {
-        print("tamam")
-    }
+   
     
     
     required init?(coder: NSCoder) {

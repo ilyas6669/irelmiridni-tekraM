@@ -176,7 +176,7 @@ class SelectCityPop: UIView {
         
         let newCity = NSEntityDescription.insertNewObject(forEntityName: "City", into: context)
         
-        newCity.setValue(Int(selectedcountryid), forKey: "id")
+        newCity.setValue(selectedcountryid, forKey: "id")
         newCity.setValue(selectedcountry, forKey: "name")
         
         do {
@@ -187,10 +187,11 @@ class SelectCityPop: UIView {
         
        
         
+    
+        
         let storyboard: UIStoryboard = UIStoryboard (name: "Main", bundle: nil)
-        let vc: TabBar = storyboard.instantiateViewController(withIdentifier: "TabBar") as! TabBar
+        let vc: SplashView = storyboard.instantiateViewController(withIdentifier: "SplashView") as! SplashView
         vc.modalPresentationStyle = .fullScreen
-        vc.selectedIndex = 0
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: false, completion: nil)
         
@@ -199,7 +200,7 @@ class SelectCityPop: UIView {
     }
     
     func getCurrentViewController() -> UIViewController? {
-        
+        //ios 13 control
         if let rootController = UIApplication.shared.keyWindow?.rootViewController {
             var currentController: UIViewController! = rootController
             while( currentController.presentedViewController != nil ) {
@@ -268,6 +269,8 @@ extension SelectCityPop : UISearchBarDelegate {
         sehirTableView.reloadData()
         
     }
+    
+    
     
     
     

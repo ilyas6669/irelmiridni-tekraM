@@ -14,10 +14,14 @@ import SDWebImage
 
 class HomeBar: UIViewController {
     //MARK: scrollView
-    var countryList = [Resultt]()
-    var idArray = [Int]()
+    var countryList = [Resultt]() //market
+    var idArray = [String]()
     
-    var countryList2 = [Resulttt]()
+    var countryList2 = [Resulttt]() //product
+    
+    var photoList = [Resullt]()
+    
+    
     
     lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height+10000)
     
@@ -89,7 +93,7 @@ class HomeBar: UIViewController {
     }()
     
     let imgReklam : UIImageView = {
-        let img = UIImageView(image: #imageLiteral(resourceName: "reklam"))
+        let img = UIImageView(image: UIImage(named: ""))
         img.contentMode = .scaleAspectFill
         img.heightAnchor.constraint(equalToConstant: 160).isActive = true
         return img
@@ -145,7 +149,7 @@ class HomeBar: UIViewController {
     var activityIndicator2 : UIActivityIndicatorView = {
         var indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
-        indicator.style = .large
+        indicator.style = .medium
         indicator.color = .black
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -153,21 +157,24 @@ class HomeBar: UIViewController {
     
     var refreshControl : UIRefreshControl!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
         callFunction()
         
-       
+        
         
         
     }
     
     
-   
+    
     
     func callFunction() {
         
+         veriCekFoto()
         layoutDuzenle()
         collectionViewDuzenle()
         veriCekMarket()
@@ -175,7 +182,6 @@ class HomeBar: UIViewController {
         activityIndicator.startAnimating()
         activityIndicator2.startAnimating()
         refreshControlAction()
-        
     }
     
     func refreshControlAction() {
@@ -186,14 +192,12 @@ class HomeBar: UIViewController {
         refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         self.scrolView.addSubview(refreshControl)
-           
-       }
+        
+    }
     
     @objc func didPullToRefresh() {
-        print("resfresh")
-        
         refreshControl.endRefreshing()
-        
+        callFunction()
     }
     
     func layoutDuzenle() {
@@ -225,7 +229,7 @@ class HomeBar: UIViewController {
         btnTopSearch.merkezYSuperView()
         btnTopSearch.leadingAnchor.constraint(equalTo: ustView.leadingAnchor,constant: 5).isActive = true
         _ = ortaView1.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-        //_ = imgReklam.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+        _ = imgReklam.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         
         _ = ortaView2.anchor(top: ortaView1.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         _ = lblMarket.anchor(top: ortaView2.topAnchor, bottom: nil, leading: ortaView2.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
@@ -249,14 +253,14 @@ class HomeBar: UIViewController {
         marketCollectionView.dataSource = self
         marketCollectionView.register(UINib(nibName: "MarketCell", bundle: nil), forCellWithReuseIdentifier: "MarketCell")
         
-      
+        
         
         fiyatlarCollectionView.delegate = self
         fiyatlarCollectionView.dataSource = self
         fiyatlarCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
         
-       
-       
+        
+        
         
         
         if let layout = marketCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -276,6 +280,38 @@ class HomeBar: UIViewController {
         
     }
     
+    func veriCekFoto() {
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/banners/?format=json"
+        
+        guard let url = URL(string: jsonUrlString) else {return}
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //perhaps check err
+            guard let data = data else {return}
+            do {
+                
+                let welcomee = try JSONDecoder().decode(Banner.self, from: data)
+                
+                DispatchQueue.main.async {
+                    self.photoList = welcomee.results
+
+                    //bulardaki apiden gelen verilerdi
+                    self.imgReklam.sd_setImage(with: URL(string: "\(self.photoList[0].image.imageDefault)"))
+                }
+                
+                
+                
+                
+            } catch let jsonError {
+                print("Error serializing json:", jsonError)
+                
+                
+            }
+            
+            
+        }.resume()
+        
+    }
+    
     
     func veriCekMarket() {
         
@@ -285,12 +321,17 @@ class HomeBar: UIViewController {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
         fetchRequest.returnsObjectsAsFaults = false
         
+        var selectcounrty = ""
+        
         do {
             let results = try context.fetch(fetchRequest)
             
             for result in results as! [NSManagedObject] {
-                if let id = result.value(forKey: "id") as? Int {
+                if let id = result.value(forKey: "id") as? String {
                     self.idArray.append(id)
+                }
+                if let name = result.value(forKey: "name") as? String {
+                    selectcounrty = name
                 }
             }
             
@@ -298,69 +339,92 @@ class HomeBar: UIViewController {
             print("error")
         }
         
-        let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?city=\(idArray.last!)"
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
         guard let url = URL(string: jsonUrlString) else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             //perhaps check err
             guard let data = data else {return}
-            
-            
             do {
                 
                 let welcome = try JSONDecoder().decode(Welcome.self, from: data)
-                self.countryList = welcome.results
-                self.activityIndicator2.stopAnimating()
                 
+                DispatchQueue.main.async {
+                    
+                    for n in welcome.results {
+                        
+                        if n.cities.contains(Int(self.idArray.last!)!) {
+                            self.countryList.append(n)
+                        }
+                        
+                    }
+                    
+                    self.countryList.shuffle()
+                    self.lblMarket.text = "\(selectcounrty) 'da mağazalar"
+                    self.marketCollectionView.reloadData()
+                    self.activityIndicator2.stopAnimating()
+                    
+                }
                 
-                
-                
-                print("666\(self.countryList[0].name)")
-                print("666\(self.countryList[0].id)")
-                print("666\(self.countryList[0].image)")
                 
             } catch let jsonError {
                 print("Error serializing json:", jsonError)
             }
         }.resume()
-        self.marketCollectionView.reloadData()
+       
         
     }
     
     func veriCekUrun() {
-        let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(idArray.last!)"
-        print("Nicatalibli:\(jsonUrlString)")
-        print("Nicataliblii:\(idArray.last!)")
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+              let context = appDelegate.persistentContainer.viewContext
+              
+              let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+              fetchRequest.returnsObjectsAsFaults = false
+              
+              var selectcounrty = ""
+              var selectid = ""
+              
+              do {
+                  let results = try context.fetch(fetchRequest)
+                  
+                  for result in results as! [NSManagedObject] {
+                      if let id = result.value(forKey: "id") as? String {
+                           selectid = id
+                      }
+                      if let name = result.value(forKey: "name") as? String {
+                          selectcounrty = name
+                      }
+                  }
+                  
+              } catch {
+                  print("error")
+              }
+        
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(selectid)&format=json"
         guard let url = URL(string: jsonUrlString) else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             //perhaps check err
             guard let data = data else {return}
             
-            
-            
-            
-            
-            
             do {
-                
-                
-                
+                            
                 let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
                 
                 DispatchQueue.main.async {
                     
                     self.countryList2 = welcomee.results
+                    self.countryList2.shuffle()
                     self.fiyatlarCollectionView.reloadData()
                     self.activityIndicator.stopAnimating()
-                    
-                    
+                    self.lblFiyat.text = "\(selectcounrty) 'da son fiyatlar "
                 }
                 
+                
                 //bulardaki apiden gelen verilerdi
-                
-                
-                
+                        
                 
             } catch let jsonError {
                 print("Error serializing json:", jsonError)
@@ -410,6 +474,27 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             cell2.lblIsim.text = countryList2[indexPath.row].name
             cell2.lblFiyat.text = countryList2[indexPath.row].price
             cell2.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
+            
+            let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
+            let url = URL(string: jsonUrlString)
+           
+            URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                //perhaps check err
+                guard let data = data else {return}
+                
+                do {
+                    let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        cell2.lblIsim2.text = welcomee.name
+                        
+                    }
+                    
+                } catch let jsonError {print("Error serializing json:", jsonError)}
+                
+                
+            }.resume()
+            
             return cell2
         }
         

@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 class ProfilBar: UIViewController {
+    
+    var countryList = [Resultt]()
+    var idArray = [String]()
+    
+    var countryList2 = [Resulttt]()
     
     
     //MARK: properties
@@ -93,7 +99,7 @@ class ProfilBar: UIViewController {
     }()
     
     let altView2 : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .customWhite()
         return view
@@ -159,6 +165,8 @@ class ProfilBar: UIViewController {
         
         view.backgroundColor = .customYellow()
         layoutDuzenle()
+        veriCekUrun()
+        veriCekMarket()
         
         
         
@@ -166,6 +174,8 @@ class ProfilBar: UIViewController {
     }
     
     func layoutDuzenle() {
+        
+       
         
         //MARK: stackView
         let btnSV = UIStackView(arrangedSubviews: [btnMarket,btnUrun])
@@ -236,6 +246,125 @@ class ProfilBar: UIViewController {
         
     }
     
+    
+    func veriCekMarket() {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        fetchRequest.returnsObjectsAsFaults = false
+       
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? String {
+                    self.idArray.append(id)
+                }
+            }
+            
+        } catch {
+            print("error")
+        }
+        
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
+        guard let url = URL(string: jsonUrlString) else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //perhaps check err
+            guard let data = data else {return}
+            do {
+                
+                let welcome = try JSONDecoder().decode(Welcome.self, from: data)
+                
+                DispatchQueue.main.async {
+                    
+                    for n in welcome.results {
+                        
+                        if n.cities.contains(Int(self.idArray.last!)!) {
+                            self.countryList.append(n)
+                        }
+                        
+                    }
+                    
+                    self.btnMarket.setTitle("\(self.countryList.count) Market", for: .normal)
+                    
+                }
+                
+                
+            } catch let jsonError {
+                print("Error serializing json:", jsonError)
+            }
+        }.resume()
+        
+        
+    }
+    
+    func veriCekUrun() {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        var selectcounrty = ""
+        var selectid = ""
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? String {
+                    selectid = id
+                }
+                if let name = result.value(forKey: "name") as? String {
+                    selectcounrty = name
+                }
+            }
+            
+        } catch {
+            print("error")
+        }
+        
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(selectid)&format=json"
+        guard let url = URL(string: jsonUrlString) else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //perhaps check err
+            guard let data = data else {return}
+            
+            do {
+                
+                let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
+                
+                DispatchQueue.main.async {
+                    
+                  self.countryList2 = welcomee.results
+                  self.btnUrun.setTitle("\(self.countryList2.count) Ürün", for: .normal)
+                }
+                
+                
+                //bulardaki apiden gelen verilerdi
+                
+                
+            } catch let jsonError {
+                print("Error serializing json:", jsonError)
+                
+                
+            }
+            
+            
+        }.resume()
+        
+        
+        
+        
+        
+    }
+    
     @objc func btnSehirSecAction() {
         view.addSubview(selectCityPop)
         _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 35, left: 34, bottom: 100, right: 20))
@@ -250,15 +379,15 @@ class ProfilBar: UIViewController {
     }
     
     @objc func handleDismissal() {
-           UIView.animate(withDuration: 0.3, animations: {
-               self.selectCityPop.alpha = 0
-               self.visualEffectView.alpha = 0
-               self.selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-           }) { (_) in
-               self.selectCityPop.removeFromSuperview()
-           }
-       }
-       
+        UIView.animate(withDuration: 0.3, animations: {
+            self.selectCityPop.alpha = 0
+            self.visualEffectView.alpha = 0
+            self.selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }) { (_) in
+            self.selectCityPop.removeFromSuperview()
+        }
+    }
+    
     
     
     @objc func btnMarketAction() {

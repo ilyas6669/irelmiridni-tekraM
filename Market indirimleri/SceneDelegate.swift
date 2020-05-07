@@ -17,16 +17,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
-     let layout = UICollectionViewFlowLayout()
-              layout.scrollDirection = .horizontal
-              let signUp = GecisController(collectionViewLayout: layout)
-              window?.rootViewController = signUp
+//     let layout = UICollectionViewFlowLayout()
+//              layout.scrollDirection = .horizontal
+//              let signUp = GecisController(collectionViewLayout: layout)
+//              window?.rootViewController = signUp
 
 
         
         
-//        let viewController = SplashView()
-//        window?.rootViewController = viewController
+        let viewController = SplashView()
+        window?.rootViewController = viewController
         
         
         guard let _ = (scene as? UIWindowScene) else { return }

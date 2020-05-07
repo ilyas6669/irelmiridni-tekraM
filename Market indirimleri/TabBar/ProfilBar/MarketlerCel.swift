@@ -15,6 +15,12 @@ class MarketlerCel: UITableViewCell {
     @IBOutlet weak var lblIsim: UILabel!
     
     @IBOutlet weak var lblSehir: UILabel!
+    
+    
+    @IBOutlet weak var btnFavori: UIButton!
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -88,8 +88,6 @@ class JSONNull: Codable, Hashable {
 // MARK: - Welcome
 struct Welcomee: Codable {
     let count: Int
-    let next: String
-    let previous: JSONNull?
     let results: [Resulttt]
 }
 
@@ -111,5 +109,36 @@ struct Resulttt: Codable {
         case offerText = "offer_text"
         case validDates = "valid_dates"
     }
+}
+
+
+// MARK: - Banner
+struct Banner: Codable {
+    let count: Int
+    let next, previous: JSONNull?
+    let results: [Resullt]
+}
+
+// MARK: - Result
+struct Resullt: Codable {
+    let id: Int
+    let title, subtitle, linkURL: String
+    let image: Image
+
+    enum CodingKeys: String, CodingKey {
+        case id, title, subtitle
+        case linkURL = "link_url"
+        case image
+    }
+}
+
+
+// MARK: - SingleStore
+struct SingleStore: Codable {
+    let id: Int
+    let name: String
+    let image: Image
+    let cities: [Int]
+    let detail: String
 }
 

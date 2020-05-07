@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,46 +23,53 @@
                             <constraint firstAttribute="width" constant="139" id="JW5-1U-eQf"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Gt-2n-4Xu">
-                        <rect key="frame" x="158" y="10" width="146" height="21"/>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JYU-rK-mKr">
+                        <rect key="frame" x="276" y="10" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2vY-1Y-bYd">
+                        <rect key="frame" x="282" y="11" width="32" height="28"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="SgL-9u-Lmb"/>
+                            <constraint firstAttribute="height" constant="28" id="3K1-wK-pbu"/>
+                            <constraint firstAttribute="width" constant="32" id="fc1-84-EhT"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <state key="normal" image="ic_favoriteiconyellow"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label Label Label Label Label Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ygg-Gh-NlQ">
+                        <rect key="frame" x="157" y="11" width="117" height="48"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4q-QF-6iV">
-                        <rect key="frame" x="158" y="39" width="146" height="16"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="16" id="iLa-jB-VNf"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rmw-xj-8vU">
+                        <rect key="frame" x="157" y="65" width="42" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="9Gt-2n-4Xu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="08j-FN-87w"/>
                     <constraint firstAttribute="bottom" secondItem="Kc3-wj-Upu" secondAttribute="bottom" constant="11" id="0Ut-eV-Ogv"/>
-                    <constraint firstAttribute="trailing" secondItem="T4q-QF-6iV" secondAttribute="trailing" constant="16" id="B7r-0h-Fww"/>
-                    <constraint firstItem="9Gt-2n-4Xu" firstAttribute="leading" secondItem="Kc3-wj-Upu" secondAttribute="trailing" constant="9" id="DLt-S1-evv"/>
-                    <constraint firstItem="T4q-QF-6iV" firstAttribute="leading" secondItem="Kc3-wj-Upu" secondAttribute="trailing" constant="9" id="QWf-Wj-5qv"/>
-                    <constraint firstItem="T4q-QF-6iV" firstAttribute="top" secondItem="9Gt-2n-4Xu" secondAttribute="bottom" constant="8" id="TS8-vp-8iI"/>
+                    <constraint firstItem="2vY-1Y-bYd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="49T-GJ-5dx"/>
+                    <constraint firstAttribute="trailing" secondItem="2vY-1Y-bYd" secondAttribute="trailing" constant="6" id="AVI-TA-ZkG"/>
                     <constraint firstItem="Kc3-wj-Upu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Tqz-b8-V9f"/>
                     <constraint firstItem="Kc3-wj-Upu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="dOz-tp-JcK"/>
-                    <constraint firstItem="T4q-QF-6iV" firstAttribute="top" secondItem="9Gt-2n-4Xu" secondAttribute="bottom" constant="8" id="h2S-cf-6x8"/>
                     <constraint firstItem="Kc3-wj-Upu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="pcW-rO-dup"/>
-                    <constraint firstAttribute="trailing" secondItem="9Gt-2n-4Xu" secondAttribute="trailing" constant="16" id="vdE-29-gDF"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="btnFavori" destination="2vY-1Y-bYd" id="3ht-Oo-Lp9"/>
                 <outlet property="imgUrun" destination="Kc3-wj-Upu" id="563-TV-O9L"/>
-                <outlet property="lblIsim" destination="9Gt-2n-4Xu" id="NU2-dB-7Xq"/>
-                <outlet property="lblSehir" destination="T4q-QF-6iV" id="5qq-pr-FJ2"/>
+                <outlet property="lblIsim" destination="ygg-Gh-NlQ" id="hLj-hr-Vru"/>
+                <outlet property="lblSehir" destination="rmw-xj-8vU" id="heT-YC-Enn"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="127.90178571428571"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ic_favoriteiconyellow" width="32" height="28"/>
+    </resources>
 </document>

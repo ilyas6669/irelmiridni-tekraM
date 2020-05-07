@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import CoreData
 
 class Urunler: UIViewController {
     
@@ -53,6 +54,7 @@ class Urunler: UIViewController {
         view.backgroundColor = .customYellow()
         layoutDuzenle()
         duzenleCollectionView()
+        veriCekUrun()
         
         
     }
@@ -96,53 +98,71 @@ class Urunler: UIViewController {
     }
     
     func veriCekUrun() {
-        let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(idArray.last!)"
-        print("Nicatalibli:\(jsonUrlString)")
-        print("Nicataliblii:\(idArray.last!)")
-               guard let url = URL(string: jsonUrlString) else {return}
-              
-              URLSession.shared.dataTask(with: url) { (data, response, error) in
-                  //perhaps check err
-                  guard let data = data else {return}
-                  
-                
-                  do {
-
-                      let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
-                    
-                    
-                      DispatchQueue.main.async {
-                                         
-                                           self.countryList2 = welcomee.results
-                                             self.urunlerCollectionView.reloadData()
-                         
-                                         }
+           
+           let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                 let context = appDelegate.persistentContainer.viewContext
+                 
+                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+                 fetchRequest.returnsObjectsAsFaults = false
+                 
+                 var selectcounrty = ""
+                 var selectid = ""
+                 
+                 do {
+                     let results = try context.fetch(fetchRequest)
+                     
+                     for result in results as! [NSManagedObject] {
+                         if let id = result.value(forKey: "id") as? String {
+                              selectid = id
+                         }
+                         if let name = result.value(forKey: "name") as? String {
+                             selectcounrty = name
+                         }
+                     }
+                     
+                 } catch {
+                     print("error")
+                 }
+           
+           let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(selectid)"
+           guard let url = URL(string: jsonUrlString) else {return}
+           
+           URLSession.shared.dataTask(with: url) { (data, response, error) in
+               //perhaps check err
+               guard let data = data else {return}
+               
+               do {
+                               
+                   let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
                    
-                    
+                   DispatchQueue.main.async {
+                       
+                       self.countryList2 = welcomee.results
+                       self.countryList2.shuffle()
+                       self.urunlerCollectionView.reloadData()
+                       //self.activityIndicator.stopAnimating()
+                       
+                   }
                    
-                    
-                        //bulardaki apiden gelen verilerdi
-                      print("666\(self.countryList2[0].name)")
-                      print("666\(self.countryList2[0].id)")
-                    print("666\(self.countryList2[0].image)")
-
-                                      
-                      
-                  } catch let jsonError {
-                      print("Error serializing json:", jsonError)
-                      
-                      
-                  }
-                  
-                  
-              }.resume()
-        
-     
-        
-        
-        
-    }
-
+                   
+                   //bulardaki apiden gelen verilerdi
+                           
+                   
+               } catch let jsonError {
+                   print("Error serializing json:", jsonError)
+                   
+                   
+               }
+               
+               
+           }.resume()
+           
+           
+           
+           
+           
+       }
+       
     
     
     
@@ -165,6 +185,25 @@ extension Urunler : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
         cell.lblIsim.text = countryList2[indexPath.row].name
         cell.lblFiyat.text = countryList2[indexPath.row].price
         cell.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
+         let url = URL(string: jsonUrlString)
+        
+         URLSession.shared.dataTask(with: url!) { (data, response, error) in
+             //perhaps check err
+             guard let data = data else {return}
+             
+             do {
+                 let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
+                 
+                 DispatchQueue.main.async {
+                     cell.lblIsim2.text = welcomee.name
+                     
+                 }
+                 
+             } catch let jsonError {print("Error serializing json:", jsonError)}
+             
+             
+         }.resume()
                    return cell
     }
     

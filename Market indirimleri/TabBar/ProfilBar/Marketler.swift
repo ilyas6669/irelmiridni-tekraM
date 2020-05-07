@@ -13,7 +13,7 @@ import SDWebImage
 class Marketler: UIViewController {
     
     var countryList = [Resultt]()
-       var idArray = [Int]()
+       var idArray = [String]()
     
     //MARK: properties
     let viewTop : UIView = {
@@ -47,6 +47,7 @@ class Marketler: UIViewController {
         view.backgroundColor = .customYellow()
         layoutDuzenle()
         duzenleCollectionView()
+        veriCekMarket()
         
         
     }
@@ -83,70 +84,65 @@ class Marketler: UIViewController {
     }
     
     func veriCekMarket() {
-             func veriCekMarket() {
+           
+           let appDelegate = UIApplication.shared.delegate as! AppDelegate
+           let context = appDelegate.persistentContainer.viewContext
+           
+           let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+           fetchRequest.returnsObjectsAsFaults = false
+           
+           var selectcounrty = ""
+           
+           do {
+               let results = try context.fetch(fetchRequest)
+               
+               for result in results as! [NSManagedObject] {
+                   if let id = result.value(forKey: "id") as? String {
+                       self.idArray.append(id)
+                   }
+                   if let name = result.value(forKey: "name") as? String {
+                       selectcounrty = name
+                   }
+               }
+               
+           } catch {
+               print("error")
+           }
+           
+           let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
+           guard let url = URL(string: jsonUrlString) else {return}
+           
+           URLSession.shared.dataTask(with: url) { (data, response, error) in
+               //perhaps check err
+               guard let data = data else {return}
+               do {
                    
-                   let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                   let context = appDelegate.persistentContainer.viewContext
+                   let welcome = try JSONDecoder().decode(Welcome.self, from: data)
                    
-                   let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
-                   fetchRequest.returnsObjectsAsFaults = false
-                   
-                   do {
-                        let results = try context.fetch(fetchRequest)
+                   DispatchQueue.main.async {
                        
-                       for result in results as! [NSManagedObject] {
-                           if let id = result.value(forKey: "id") as? Int {
-                               self.idArray.append(id)
-                              
-                              
-                              
+                       for n in welcome.results {
+                           
+                           if n.cities.contains(Int(self.idArray.last!)!) {
+                               self.countryList.append(n)
                            }
+                           
                        }
                        
+                       self.countryList.shuffle()
                        
-                   } catch {
-                       print("error")
+                       self.marketlerTableView.reloadData()
+                       //self.activityIndicator2.stopAnimating()
+                       
                    }
-                  
                    
-                   let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?city=\(idArray.last!)"
-                          guard let url = URL(string: jsonUrlString) else {return}
-                         
-                         URLSession.shared.dataTask(with: url) { (data, response, error) in
-                             //perhaps check err
-                             guard let data = data else {return}
-                             
-                           
-                             do {
-
-                                 let welcome = try JSONDecoder().decode(Welcome.self, from: data)
-                                 self.countryList = welcome.results
-                               
-                              
-                               
-                              
-                               //reload datani verini tam aldigin yerde ele
-                                   //bulardaki apiden gelen verilerdi
-                                
-                                                 
-                                 
-                             } catch let jsonError {
-                                 print("Error serializing json:", jsonError)
-                                 
-                                 
-                             }
-                             
-                             
-                         }.resume()
-                  
-                
-                DispatchQueue.main.async {
-
-                                              self.marketlerTableView.reloadData()
-
-                                              }
-                
-        }
+                   
+               } catch let jsonError {
+                   print("Error serializing json:", jsonError)
+               }
+           }.resume()
+          
+           
        }
     
     
@@ -169,6 +165,28 @@ extension Marketler : UITableViewDataSource,UITableViewDelegate {
         let cell = marketlerTableView.dequeueReusableCell(withIdentifier: "MarketlerCel", for: indexPath) as! MarketlerCel
         cell.lblIsim.text = countryList[indexPath.row].name
         cell.imgUrun.sd_setImage(with: URL(string: "\(countryList[indexPath.row].image.imageDefault)"))
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        var selectcounrty = ""
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                if let name = result.value(forKey: "name") as? String {
+                    selectcounrty = name
+                    cell.lblSehir.text = selectcounrty
+                }
+            }
+            
+        } catch {
+            print("error")
+        }
+        
         return cell
     }
     

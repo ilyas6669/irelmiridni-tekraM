@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class SplashView: UIViewController {
     
@@ -14,7 +15,9 @@ class SplashView: UIViewController {
     let imgLogo = UIImageView(image: UIImage(named: ""))
     
     let homebar = HomeBar()
-
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +29,67 @@ class SplashView: UIViewController {
         //MARK: anchor
         imgLogo.merkezKonumlamdirmaSuperView(boyut: CGSize(width: 120, height: 80))
         
-       
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
         
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        var selectedcountryname = ""
+        var selectedcountryid   = ""
+        var datacontrol = false
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? String {
+                    selectedcountryid = id
+                    datacontrol = true
+                }
+                if let name = result.value(forKey: "name") as? String {
+                    selectedcountryname = name
+                    datacontrol = true
+                }
+                
+            }
+            
+            if datacontrol{ ///kayit olub
+                
+                print("Nicataliblii:Kec\(selectedcountryname) || \(selectedcountryid)")
+                perform(#selector(toTabBarControllerr), with: nil,afterDelay: 2)
+                
+            }else{ ///kayit olmuyub
+                
+                print("Nicatalibli:Kecme\(selectedcountryname) || \(selectedcountryid)")
+                perform(#selector(toGecisControllerr), with: nil,afterDelay: 2)
+            
+            }
+            
+        } catch {
+            print("error")
+        }
+        
+        
+        
+        
+    }
+    
+    
+    @objc func toGecisControllerr() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let signUp = GecisController(collectionViewLayout: layout)
+        signUp.modalPresentationStyle = .overFullScreen
+        present(signUp, animated: true, completion: nil)
+    }
+    
+    @objc func toTabBarControllerr() {
+        let storyboard: UIStoryboard = UIStoryboard (name: "Main", bundle: nil)
+        let vc: TabBar = storyboard.instantiateViewController(withIdentifier: "TabBar") as! TabBar
+        vc.modalPresentationStyle = .fullScreen
+        vc.selectedIndex = 0
+        self.present(vc, animated: true, completion: nil)
         
     }
     
