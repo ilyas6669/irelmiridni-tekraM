@@ -15,6 +15,7 @@ class ProfilBar: UIViewController {
     var idArray = [String]()
     
     var countryList2 = [Resulttt]()
+    var countryList3 = [SingleProduct]()
     
     
     //MARK: properties
@@ -169,8 +170,6 @@ class ProfilBar: UIViewController {
         veriCekMarket()
         
         
-        
-        
     }
     
     func layoutDuzenle() {
@@ -232,9 +231,9 @@ class ProfilBar: UIViewController {
         
         
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleDismissal))
-        //tap.delegate = self
-        view.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleDismissal))
+//        //tap.delegate = self
+//        view.addGestureRecognizer(tap)
         
         view.addSubview(visualEffectView)
         visualEffectView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -290,6 +289,8 @@ class ProfilBar: UIViewController {
                     }
                     
                     self.btnMarket.setTitle("\(self.countryList.count) Market", for: .normal)
+                   
+                   
                     
                 }
                 
@@ -344,6 +345,8 @@ class ProfilBar: UIViewController {
                     
                   self.countryList2 = welcomee.results
                     self.btnUrun.setTitle("\(welcomee.count) Ürün", for: .normal)
+                    self.btnSehir.setTitle("\(selectcounrty)", for: .normal)
+                    
                 }
                 
             
@@ -358,14 +361,75 @@ class ProfilBar: UIViewController {
         }.resume()
         
         
+    }
+    
+    
+    func btnSehirTitleDeyis() {
         
-        
+       
+              
+              let appDelegate = UIApplication.shared.delegate as! AppDelegate
+              let context = appDelegate.persistentContainer.viewContext
+              let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+              fetchRequest.returnsObjectsAsFaults = false
+              
+              countryList3.removeAll(keepingCapacity: false)
+              
+              do {
+                  let results = try context.fetch(fetchRequest)
+                  
+                  for result in results as! [NSManagedObject] {
+                      if let id = result.value(forKey: "id") as? String {
+                          
+                          let jsonUrlString = "https://marketindirimleri.com/api/v1/products/\(id)?format=json"
+                          guard let url = URL(string: jsonUrlString) else {return}
+                          
+                          URLSession.shared.dataTask(with: url) { (data, response, error) in
+                                    //perhaps check err
+                                    guard let data = data else {return}
+                                    
+                                    do {
+                                        
+                                        let singleproduct = try JSONDecoder().decode(SingleProduct.self, from: data)
+                                        
+                                        DispatchQueue.main.async {
+                                            
+                                          self.countryList3.append(singleproduct)
+                                          self.countryList3.reverse()
+                                            self.lblBegendigimMarket.text = "\(self.countryList3.count)"
+                                          
+                                            
+                                        }
+                                        
+                                        
+                                        
+                                    } catch let jsonError {
+                                        print("Error serializing json:", jsonError)
+                                        
+                                        
+                                    }
+                                    
+                                }.resume()
+                                
+                          
+                          
+                      }
+                  }
+                  
+              } catch {
+                  print("error")
+              }
+              
+           
+     
         
     }
     
+    
     @objc func btnSehirSecAction() {
         view.addSubview(selectCityPop)
-        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 35, left: 34, bottom: 100, right: 20))
+        self.selectCityPop.sehirTableView.separatorColor = .white
+        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 40, left: 20, bottom: 40, right: 20))
         selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         selectCityPop.alpha = 0
         UIView.animate(withDuration: 0.5) {
@@ -376,17 +440,7 @@ class ProfilBar: UIViewController {
         
     }
     
-    @objc func handleDismissal() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.selectCityPop.alpha = 0
-            self.visualEffectView.alpha = 0
-            self.selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-        }) { (_) in
-            self.selectCityPop.removeFromSuperview()
-        }
-    }
-    
-    
+
     
     @objc func btnMarketAction() {
         let marketler = Marketler()

@@ -153,8 +153,6 @@ class CartBar: UIViewController {
                                   }
                                   
                                   
-                                  //bulardaki apiden gelen verilerdi
-                                  
                                   
                               } catch let jsonError {
                                   print("Error serializing json:", jsonError)
@@ -174,9 +172,6 @@ class CartBar: UIViewController {
         }
         
      
-       
-        
-      
     }
     
     

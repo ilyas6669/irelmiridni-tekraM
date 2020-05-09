@@ -125,10 +125,11 @@ class BegendigimMarketler: UIViewController {
                         
                         if n.cities.contains(Int(self.idArray.last!)!) {
                             self.countryList.append(n)
+                           
                         }
                         
                     }
-                    
+                   
                     self.countryList.shuffle()
                     
                     self.marketlerTableView.reloadData()
