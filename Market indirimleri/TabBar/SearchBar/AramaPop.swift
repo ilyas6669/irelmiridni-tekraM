@@ -107,7 +107,7 @@ class AramaPop: UIView {
         print("switch")
     }
     
-   
+    
     
     
     required init?(coder: NSCoder) {

@@ -19,7 +19,7 @@ class MarketlerCel: UITableViewCell {
     
     @IBOutlet weak var btnFavori: UIButton!
     
-    
+      var btnTapAction : (()->())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,12 +27,14 @@ class MarketlerCel: UITableViewCell {
         imgUrun.contentMode = .scaleAspectFill
         imgUrun.layer.borderWidth = 1
         imgUrun.layer.borderColor = UIColor.customWhite().cgColor
+        
+        btnFavori.addTarget(self, action: #selector(btnFavoriAction), for: .touchUpInside)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    @objc func btnFavoriAction() {
+          btnTapAction?()
     }
+    
+    
     
 }

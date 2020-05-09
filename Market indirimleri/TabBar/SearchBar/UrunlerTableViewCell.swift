@@ -25,10 +25,20 @@ class UrunlerTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblTarih: UILabel!
     
+      var btnTapAction : (()->())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        btnFavori.addTarget(self, action: #selector(btnFavoriAction), for: .touchUpInside)
+        
     }
+    
+    
+    @objc func btnFavoriAction() {
+             btnTapAction?()
+       }
+    
+  
 
   
     

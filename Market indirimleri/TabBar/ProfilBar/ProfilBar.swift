@@ -343,12 +343,10 @@ class ProfilBar: UIViewController {
                 DispatchQueue.main.async {
                     
                   self.countryList2 = welcomee.results
-                  self.btnUrun.setTitle("\(self.countryList2.count) Ürün", for: .normal)
+                    self.btnUrun.setTitle("\(welcomee.count) Ürün", for: .normal)
                 }
                 
-                
-                //bulardaki apiden gelen verilerdi
-                
+            
                 
             } catch let jsonError {
                 print("Error serializing json:", jsonError)

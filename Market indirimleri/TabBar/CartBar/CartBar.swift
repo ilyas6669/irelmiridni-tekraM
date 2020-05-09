@@ -12,7 +12,7 @@ import SDWebImage
 
 class CartBar: UIViewController {
     
-    var countryList2 = [Resulttt]()
+    var countryList2 = [SingleProduct]()
     var idArray = [Int]()
     
     //MARK: properties
@@ -32,14 +32,14 @@ class CartBar: UIViewController {
     }()
     
     let viewBulunmadi : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .customWhite()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let imgBulunmadi : UIImageView = {
-       let img = UIImageView(image: UIImage(named: "ic_norecord_dark"))
+        let img = UIImageView(image: UIImage(named: "ic_norecord_dark"))
         img.translatesAutoresizingMaskIntoConstraints = false
         img.heightAnchor.constraint(equalToConstant: 250).isActive = true
         img.widthAnchor.constraint(equalToConstant: 250).isActive = true
@@ -47,7 +47,7 @@ class CartBar: UIViewController {
     }()
     
     let lblBUlunmadi : UILabel = {
-       let lbl = UILabel()
+        let lbl = UILabel()
         lbl.textColor = .lightGray
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.text = "Hiç bir şey bulunamadı"
@@ -65,7 +65,15 @@ class CartBar: UIViewController {
         return cv
     }()
     
-   
+    var activityIndicator : UIActivityIndicatorView = {
+        var indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.style = .medium
+        indicator.color = .black
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +88,7 @@ class CartBar: UIViewController {
         viewBulunmadi.addSubview(imgBulunmadi)
         viewBulunmadi.addSubview(lblBUlunmadi)
         view.addSubview(urunlerCollectionView)
+        urunlerCollectionView.addSubview(activityIndicator)
         
         //MARK: constraint
         _ = viewTop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -88,6 +97,8 @@ class CartBar: UIViewController {
         imgBulunmadi.merkezKonumlamdirmaSuperView()
         _ = lblBUlunmadi.anchor(top: imgBulunmadi.bottomAnchor, bottom: nil, leading: viewBulunmadi.leadingAnchor, trailing: viewBulunmadi.trailingAnchor)
         _ = urunlerCollectionView.anchor(top: viewTop.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        activityIndicator.merkezKonumlamdirmaSuperView()
+        activityIndicator.startAnimating()
         
         urunlerCollectionView.delegate = self
         urunlerCollectionView.dataSource = self
@@ -100,58 +111,74 @@ class CartBar: UIViewController {
             layout.sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         }
         
-       
+        veriCekUrun()
+        
+        
         
     }
     
     func veriCekUrun() {
-           let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(idArray.last!)"
-           print("Nicatalibli:\(jsonUrlString)")
-           print("Nicataliblii:\(idArray.last!)")
-                  guard let url = URL(string: jsonUrlString) else {return}
-                 
-                 URLSession.shared.dataTask(with: url) { (data, response, error) in
-                     //perhaps check err
-                     guard let data = data else {return}
-                     
-                   
-                     do {
-
-                         let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
-                         self.countryList2 = welcomee.results
-                       
-                      
-                       
-                      
-                       
-                           //bulardaki apiden gelen verilerdi
-                         print("666\(self.countryList2[0].name)")
-                         print("666\(self.countryList2[0].id)")
-                       print("666\(self.countryList2[0].image)")
-
-                                         
-                         
-                     } catch let jsonError {
-                         print("Error serializing json:", jsonError)
-                         
-                         
-                     }
-                     
-                     
-                 }.resume()
-           
-           
-           DispatchQueue.main.async {
-
-                                self.urunlerCollectionView.reloadData()
-
-                                }
-           
-           
-       }
-
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        countryList2.removeAll(keepingCapacity: false)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? String {
+                    
+                    let jsonUrlString = "https://marketindirimleri.com/api/v1/products/\(id)?format=json"
+                    guard let url = URL(string: jsonUrlString) else {return}
+                    
+                    URLSession.shared.dataTask(with: url) { (data, response, error) in
+                              //perhaps check err
+                              guard let data = data else {return}
+                              
+                              do {
+                                  
+                                  let singleproduct = try JSONDecoder().decode(SingleProduct.self, from: data)
+                                  
+                                  DispatchQueue.main.async {
+                                      
+                                    self.countryList2.append(singleproduct)
+                                    self.countryList2.reverse()
+                                    self.urunlerCollectionView.reloadData()
+                                    self.activityIndicator.stopAnimating()
+                                      
+                                  }
+                                  
+                                  
+                                  //bulardaki apiden gelen verilerdi
+                                  
+                                  
+                              } catch let jsonError {
+                                  print("Error serializing json:", jsonError)
+                                  
+                                  
+                              }
+                              
+                          }.resume()
+                          
+                    
+                    
+                }
+            }
+            
+        } catch {
+            print("error")
+        }
+        
+     
+       
+        
+      
+    }
     
-   
     
 }
 
@@ -165,6 +192,26 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
         cell.lblIsim.text = countryList2[indexPath.row].name
         cell.lblFiyat.text = countryList2[indexPath.row].price
         cell.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
+        let url = URL(string: jsonUrlString)
+        
+        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            //perhaps check err
+            guard let data = data else {return}
+            
+            do {
+                let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
+                
+                DispatchQueue.main.async {
+                    cell.lblIsim2.text = welcomee.name
+                    
+                }
+                
+            } catch let jsonError {print("Error serializing json:", jsonError)}
+            
+            
+        }.resume()
+        
         return cell
     }
     

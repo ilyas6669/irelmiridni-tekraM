@@ -11,7 +11,7 @@ import UIKit
 class GecisController : UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
     
-    let goruntuler = ["logo","logo"]
+    let goruntuler = ["walkthorught1","walkthorught2"]
     let basliklar = ["Ürünlerinizi listenize eklemek için çift dokunun yine listenizden çıkarmak için çift dokunun!","Şehrinizdeki yerel bu ulusal marketlerin indirimlerini yakalayın.Profilinizden istediğiniz zaman değiştire bilirsiniz."]
     let baslik = ["Ürünlerinizi listenize eklemek için çift\ndokunun","Şehrinizi seçin"]
     

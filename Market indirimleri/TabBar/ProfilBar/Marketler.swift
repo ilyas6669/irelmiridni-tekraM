@@ -41,6 +41,7 @@ class Marketler: UIViewController {
     
     
     let marketlerTableView = UITableView()
+    let marketler = MarketlerCel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,7 @@ class Marketler: UIViewController {
         layoutDuzenle()
         duzenleCollectionView()
         veriCekMarket()
+      
         
         
     }
@@ -70,6 +72,8 @@ class Marketler: UIViewController {
         
         _ = marketlerTableView.anchor(top: viewTop.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
+      
+        
         
         
     }
@@ -79,9 +83,9 @@ class Marketler: UIViewController {
         marketlerTableView.dataSource = self
         marketlerTableView.register(UINib(nibName: "MarketlerCel", bundle: nil), forCellReuseIdentifier: "MarketlerCel")
         
-       
-        
     }
+    
+ 
     
     func veriCekMarket() {
            
@@ -186,6 +190,8 @@ extension Marketler : UITableViewDataSource,UITableViewDelegate {
         } catch {
             print("error")
         }
+        
+       
         
         return cell
     }

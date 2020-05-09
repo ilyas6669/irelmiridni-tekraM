@@ -38,35 +38,6 @@
             </objects>
             <point key="canvasLocation" x="184" y="882"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="vdt-rQ-I0n">
-            <objects>
-                <viewController id="Qk8-Mz-a7f" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="SHh-J0-fUC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jzZ-Le-t7I">
-                                <rect key="frame" x="0.0" y="44" width="414" height="250"/>
-                                <color key="backgroundColor" red="0.92343819140000005" green="0.7961357832" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="a25-NF-uCT"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="jzZ-Le-t7I" firstAttribute="top" secondItem="Nas-nX-Uc9" secondAttribute="top" id="7kD-7c-sMA"/>
-                            <constraint firstItem="jzZ-Le-t7I" firstAttribute="trailing" secondItem="Nas-nX-Uc9" secondAttribute="trailing" id="Nhh-MF-74c"/>
-                            <constraint firstItem="jzZ-Le-t7I" firstAttribute="leading" secondItem="Nas-nX-Uc9" secondAttribute="leading" id="SUB-sc-Vnk"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Nas-nX-Uc9"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mDh-QQ-D3o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-309" y="1629"/>
-        </scene>
         <!--Cart Bar-->
         <scene sceneID="Z7z-Qm-qwx">
             <objects>
@@ -138,7 +109,7 @@
                     <view key="view" contentMode="scaleToFill" id="d19-kh-B46">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.90971416230000002" green="0.90986675019999996" blue="0.90969413519999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6sU-ax-ueT"/>
                     </view>
                 </viewController>

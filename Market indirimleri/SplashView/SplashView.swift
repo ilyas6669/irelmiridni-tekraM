@@ -12,7 +12,16 @@ import CoreData
 class SplashView: UIViewController {
     
     //MARK: Properties
-    let imgLogo = UIImageView(image: UIImage(named: ""))
+    let imgLogo = UIImageView(image: UIImage(named: "logo"))
+    
+    var activityIndicator : UIActivityIndicatorView = {
+           var indicator = UIActivityIndicatorView()
+           indicator.hidesWhenStopped = true
+           indicator.style = .medium
+           indicator.color = .black
+           indicator.translatesAutoresizingMaskIntoConstraints = false
+           return indicator
+       }()
     
     let homebar = HomeBar()
     
@@ -25,9 +34,15 @@ class SplashView: UIViewController {
         
         //MARK: addSubview
         view.addSubview(imgLogo)
+        view.addSubview(activityIndicator)
         
         //MARK: anchor
-        imgLogo.merkezKonumlamdirmaSuperView(boyut: CGSize(width: 120, height: 80))
+        imgLogo.merkezKonumlamdirmaSuperView(boyut: CGSize(width: 200, height: 200))
+        activityIndicator.topAnchor.constraint(equalTo: imgLogo.bottomAnchor,constant: 5).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        
+        activityIndicator.startAnimating()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext

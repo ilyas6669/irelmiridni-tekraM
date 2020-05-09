@@ -98,16 +98,30 @@ class SearchBar: UIViewController{
     
     let viewSetting : UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 10
         return view
     }()
     
-    
+    let lblAramaModu : UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .black
+        lbl.text = "Arama Modu"
+        lbl.font = UIFont.boldSystemFont(ofSize: 17)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         
         view.backgroundColor = .customYellow()
         
@@ -122,17 +136,19 @@ class SearchBar: UIViewController{
         view.addSubview(marketlerTableView)
         view.addSubview(urunlerTableView)
         view.addSubview(viewSetting)
+        viewSetting.addSubview(lblAramaModu)
         viewSetting.addSubview(pickerView)
-        viewSetting.merkezKonumlamdirmaSuperView()
-        _ = viewSetting.anchor(top: nil, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 20, bottom: 0, right: 20))
         
+        
+        //viewSetting.merkezKonumlamdirmaSuperView()
+        _ = viewSetting.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        lblAramaModu.topAnchor.constraint(equalTo: viewSetting.topAnchor,constant: 10).isActive = true
+        lblAramaModu.centerXAnchor.constraint(equalTo: viewSetting.centerXAnchor).isActive = true
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         pickerView.merkezKonumlamdirmaSuperView()
+        _ = pickerView.anchor(top: nil, bottom: nil, leading: viewSetting.leadingAnchor, trailing: viewSetting.trailingAnchor)
         
         viewSetting.isHidden = true
-        
-        
-        
         
         //MARK: constraint
         _ = viewTop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -145,11 +161,10 @@ class SearchBar: UIViewController{
         _ = viewMagazaAra.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         lblMagazaAra.merkezKonumlamdirmaSuperView()
         _ = marketlerTableView.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-         _ = urunlerTableView.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = urunlerTableView.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
         marketlerTableView.isHidden = true
         urunlerTableView.isHidden = true
-        
         
         
         marketlerTableView.delegate = self
@@ -157,10 +172,9 @@ class SearchBar: UIViewController{
         marketlerTableView.register(UINib(nibName: "MarketlerCel", bundle: nil), forCellReuseIdentifier: "MarketlerCel")
         
         
-        
         urunlerTableView.delegate = self
         urunlerTableView.dataSource = self
-         urunlerTableView.register(UINib(nibName: "UrunlerTableViewCell", bundle: nil), forCellReuseIdentifier: "UrunlerTableViewCell")
+        urunlerTableView.register(UINib(nibName: "UrunlerTableViewCell", bundle: nil), forCellReuseIdentifier: "UrunlerTableViewCell")
         
         
         view.addSubview(visualEffectView)
@@ -173,8 +187,8 @@ class SearchBar: UIViewController{
         let gestureREcongizer = UITapGestureRecognizer(target: self, action: #selector(handleDismissal))
         view.addGestureRecognizer(gestureREcongizer)
         
-        let gestureREcongizer2 = UITapGestureRecognizer(target: self, action: #selector(handleDismissal2))
-        view.addGestureRecognizer(gestureREcongizer2)
+        //        let gestureREcongizer2 = UITapGestureRecognizer(target: self, action: #selector(handleDismissal2))
+        //        view.addGestureRecognizer(gestureREcongizer2)
         
         pickerView.dataSource = self
         pickerView.delegate = self
@@ -207,11 +221,10 @@ class SearchBar: UIViewController{
     
     @objc func btnTopSettingAction() {
         viewSetting.isHidden = false
-        
-        
     }
     
     @objc func handleDismissal() {
+        viewSetting.isHidden = true
         UIView.animate(withDuration: 0.3, animations: {
             self.aramaPop.alpha = 0
             self.visualEffectView.alpha = 0
@@ -275,7 +288,7 @@ class SearchBar: UIViewController{
                 guard let data = data else {return}
                 
                 do {
-
+                    
                     var welcome : Welcome!
                     var welcomee : Welcomee!
                     
@@ -299,6 +312,8 @@ class SearchBar: UIViewController{
                             
                             self.storeList = welcome.results
                             
+                            
+                            
                             self.marketlerTableView.reloadData()
                             
                             self.marketlerTableView.isHidden = false
@@ -312,15 +327,15 @@ class SearchBar: UIViewController{
                             self.productList = welcomee.results
                             
                             self.urunlerTableView.reloadData()
-
+                            
                             self.marketlerTableView.isHidden = true
                             self.urunlerTableView.isHidden = false
-
+                            
                             break
                         default:
                             break
                         }
-                    
+                        
                         
                     }
                     
@@ -341,6 +356,9 @@ class SearchBar: UIViewController{
         
     }
     
+    
+    
+    
 }
 
 
@@ -355,24 +373,26 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if tableView == marketlerTableView {
             let cell = marketlerTableView.dequeueReusableCell(withIdentifier: "MarketlerCel", for: indexPath) as! MarketlerCel
             cell.lblIsim.text = storeList[indexPath.row].name
+            
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
             
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
-            fetchRequest.returnsObjectsAsFaults = false
+            let fetchRequestCity = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+            fetchRequestCity.returnsObjectsAsFaults = false
             
             var selectcounrty = ""
             var selectid = ""
             
             do {
-                let results = try context.fetch(fetchRequest)
+                let results = try context.fetch(fetchRequestCity)
                 
                 for result in results as! [NSManagedObject] {
                     if let id = result.value(forKey: "id") as? String {
-                         selectid = id
+                        selectid = id
                     }
                     if let name = result.value(forKey: "name") as? String {
                         selectcounrty = name
@@ -383,7 +403,106 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
                 print("error")
             }
             cell.lblSehir.text = selectcounrty
-             cell.imgUrun.sd_setImage(with: URL(string: "\(storeList[indexPath.row].image.imageDefault)"))
+            cell.imgUrun.sd_setImage(with: URL(string: "\(storeList[indexPath.row].image.imageDefault)"))
+            
+            
+            ///--------------------------FAVORI BUTON CLICK----------------------------------------------------------------
+            cell.btnTapAction = { //favori buton
+                () in
+                
+                let tagstatus = cell.btnFavori.tag
+                
+                if tagstatus == 0 { //favori degil ise
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let context = appDelegate.persistentContainer.viewContext
+                    
+                    let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteStore", into: context)
+                    favoriteproduct.setValue("\(self.storeList[indexPath.row].id)", forKey: "id")
+                    
+                    cell.btnFavori.tag = 1
+                    cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                    
+                    
+                    do {
+                        try context.save()
+                    } catch {
+                        print("bir hata var")
+                    }
+                    
+                }else{ //favori ise
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let context = appDelegate.persistentContainer.viewContext
+                    
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+                    fetchRequest.returnsObjectsAsFaults = false
+                    
+                    do {
+                        let results = try context.fetch(fetchRequest)
+                        
+                        for result in results as! [NSManagedObject] {
+                            
+                            if let id = result.value(forKey: "id") as? String {
+                                
+                                if id == "\(self.storeList[indexPath.row].id)" {
+                                    context.delete(result as NSManagedObject)
+                                }
+                                
+                            }
+                            
+                        }
+                        do {
+                            try context.save()
+                        } catch {
+                            print("bir hata var")
+                        }
+                        
+                    } catch {}
+                    
+                    cell.btnFavori.tag = 0
+                    cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                    
+                }
+                
+            }
+            ///--------------------------URUN FAVORI MI CONTROL ----------------------------------------------------------------
+            let fetchRequestCityFavorite = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+            fetchRequestCityFavorite.returnsObjectsAsFaults = false
+            
+            var favoriteproductcontrol = false
+            do {
+                let results = try context.fetch(fetchRequestCityFavorite)
+                
+                for result in results as! [NSManagedObject] {
+                    
+                    if let id = result.value(forKey: "id") as? String {
+                        
+                        print("Nicatalibli:\(id)")
+                        if id == "\(self.storeList[indexPath.row].id)" {
+                            favoriteproductcontrol = true
+                            break
+                        }else{
+                            favoriteproductcontrol = false
+                        }
+                        
+                    }
+                    
+                }
+                if favoriteproductcontrol{
+                    cell.btnFavori.tag = 1
+                    cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                }else{
+                    cell.btnFavori.tag = 0
+                    cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                }
+                
+                
+            } catch {}
+            
+            
+            
+            
             return cell
         } else {
             
@@ -392,6 +511,7 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
             cell1.lblFiyat.text = productList[indexPath.row].price
             cell1.imgUrun.sd_setImage(with: URL(string: "\(productList[indexPath.row].image.imageDefault)"))
             cell1.lblTarih.text = productList[indexPath.row].validDates[1]
+            
             
             let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(productList[indexPath.row].storeID)?format=json"
             let url = URL(string: jsonUrlString)
@@ -406,17 +526,119 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
                     DispatchQueue.main.async {
                         cell1.lblUrunIsim.text = welcomee.name
                         
+                        
+                        
                     }
                     
                 } catch let jsonError {print("Error serializing json:", jsonError)}
-                  }.resume()
+            }.resume()
+            
+            
+            
+            ///--------------------------FAVORI BUTON CLICK---------------------------------------------------------------
+            
+            cell1.btnTapAction = { //favori buton
+                () in
                 
-           
+                let tagstatus = cell1.btnFavori.tag
+                
+                if tagstatus == 0 { //favori degil ise
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let context = appDelegate.persistentContainer.viewContext
+                    
+                    let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
+                    favoriteproduct.setValue("\(self.productList[indexPath.row].id)", forKey: "id")
+                    
+                    cell1.btnFavori.tag = 1
+                    cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                    
+                    
+                    do {
+                        try context.save()
+                    } catch {
+                        print("bir hata var")
+                    }
+                    
+                }else{ //favori ise
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let context = appDelegate.persistentContainer.viewContext
+                    
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+                    fetchRequest.returnsObjectsAsFaults = false
+                    
+                    do {
+                        let results = try context.fetch(fetchRequest)
+                        
+                        for result in results as! [NSManagedObject] {
+                            
+                            if let id = result.value(forKey: "id") as? String {
+                                
+                                if id == "\(self.productList[indexPath.row].id)" {
+                                    context.delete(result as NSManagedObject)
+                                }
+                                
+                            }
+                            
+                        }
+                        do {
+                            try context.save()
+                        } catch {
+                            print("bir hata var")
+                        }
+                        
+                    } catch {}
+                    
+                    cell1.btnFavori.tag = 0
+                    cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                    
+                }
+                
+            }
+            ///--------------------------FAVORI CONTROL----------------------------------------------------------------
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            var favoriteproductcontrol = false
+            do {
+                let results = try context.fetch(fetchRequest)
+                
+                for result in results as! [NSManagedObject] {
+                    
+                    if let id = result.value(forKey: "id") as? String {
+                        
+                        if id == "\(self.productList[indexPath.row].id)" {
+                            favoriteproductcontrol = true
+                            break
+                        }else{
+                            favoriteproductcontrol = false
+                        }
+                        
+                    }
+                    
+                }
+                if favoriteproductcontrol{
+                    cell1.btnFavori.tag = 1
+                    cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                }else{
+                    cell1.btnFavori.tag = 0
+                    cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                }
+                
+                
+            } catch {}
+            
+            
+            
             
             return cell1
         }
         
-       
+        
     }
     
     
@@ -435,6 +657,7 @@ extension SearchBar : UIPickerViewDelegate,UIPickerViewDataSource {
         return array[row]
     }
     
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         viewSetting.isHidden = true
         
@@ -445,7 +668,12 @@ extension SearchBar : UIPickerViewDelegate,UIPickerViewDataSource {
             sortsetting = 0
             lblTop.text = "Mağaza Ara"
         }
+        
     }
+    
+    
+    
+    
     
     
 }

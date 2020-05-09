@@ -10,7 +10,7 @@ import UIKit
 
 class WelcomeSayfa: UICollectionViewCell {
     
-     let image1 = UIImageView(image: UIImage(named: "logo"))
+     let image1 = UIImageView(image: UIImage(named: ""))
 
     
      let lbl1 : UILabel = {
@@ -39,11 +39,11 @@ class WelcomeSayfa: UICollectionViewCell {
 
     override init(frame: CGRect) {
     super.init(frame: frame)
-        image1.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        image1.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        image1.heightAnchor.constraint(equalToConstant: 350).isActive = true
+//        image1.widthAnchor.constraint(equalToConstant: 200).isActive = true
 
         self.backgroundColor = .customYellow()
-        
+         image1.translatesAutoresizingMaskIntoConstraints = false
        
         
         
@@ -53,15 +53,18 @@ class WelcomeSayfa: UICollectionViewCell {
         
         addSubview(lbl2)
         
+         _ = lbl2.anchor(top: nil, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor,padding: .init(top: 80, left: 5, bottom: 0, right: 5))
         
-        _ = lbl1.anchor(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 120, right: 0))
-        
-        image1.translatesAutoresizingMaskIntoConstraints = false
         image1.merkezKonumlamdirmaSuperView()
-       
-        //_ = image1.anchor(top: safeAreaLayoutGuide.topAnchor, bottom: lbl1.topAnchor, leading: leadingAnchor, trailing: trailingAnchor,padding: .init(top: 10, left: 20, bottom: 10, right: 20))
+        _ = image1.anchor(top: lbl2.bottomAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor,padding: .init(top: 10, left: 20, bottom: 0, right: 20))
         
-        _ = lbl2.anchor(top: safeAreaLayoutGuide.topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor,padding: .init(top: 80, left: 5, bottom: 0, right: 5))
+        
+        _ = lbl1.anchor(top: image1.bottomAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        
+       
+      
+     
+       
     }
     
     required init?(coder: NSCoder) {

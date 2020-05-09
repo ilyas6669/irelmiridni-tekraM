@@ -49,6 +49,8 @@ class Urunler: UIViewController {
         return cv
     }()
     
+ 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
@@ -56,6 +58,7 @@ class Urunler: UIViewController {
         duzenleCollectionView()
         veriCekUrun()
         
+   
         
     }
     
@@ -97,6 +100,8 @@ class Urunler: UIViewController {
         
     }
     
+    
+
     func veriCekUrun() {
            
            let appDelegate = UIApplication.shared.delegate as! AppDelegate

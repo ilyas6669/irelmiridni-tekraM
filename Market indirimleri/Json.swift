@@ -142,3 +142,22 @@ struct SingleStore: Codable {
     let detail: String
 }
 
+// MARK: - SingleProduct
+struct SingleProduct: Codable {
+    let id, storeID: Int
+    let name, detail: String
+    let image: Image
+    let price, pricePrefixText, priceSuffixText, offerText: String
+    let validDates: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case storeID = "store_id"
+        case name, detail, image, price
+        case pricePrefixText = "price_prefix_text"
+        case priceSuffixText = "price_suffix_text"
+        case offerText = "offer_text"
+        case validDates = "valid_dates"
+    }
+}
+

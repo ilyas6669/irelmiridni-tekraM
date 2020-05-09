@@ -186,8 +186,7 @@ class SelectCityPop: UIView {
         }
         
        
-        
-    
+        // indi saxranit eliyessense bele olunur
         
         let storyboard: UIStoryboard = UIStoryboard (name: "Main", bundle: nil)
         let vc: SplashView = storyboard.instantiateViewController(withIdentifier: "SplashView") as! SplashView
