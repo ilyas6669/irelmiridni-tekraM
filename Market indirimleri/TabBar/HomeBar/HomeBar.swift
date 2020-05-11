@@ -9,8 +9,7 @@
 import UIKit
 import CoreData
 import SDWebImage
-
-
+import GoogleMobileAds
 
 class HomeBar: UIViewController {
     //MARK: scrollView
@@ -101,7 +100,7 @@ class HomeBar: UIViewController {
     
     let lblMarket : UILabel = {
         let lbl = UILabel()
-        lbl.text = "İstanbul'da mağazalar"
+        lbl.text = ""
         lbl.textColor = .black
         lbl.textAlignment = .left
         lbl.font = UIFont.boldSystemFont(ofSize: 17)
@@ -121,7 +120,7 @@ class HomeBar: UIViewController {
     
     let lblFiyat : UILabel = {
         let lbl = UILabel()
-        lbl.text = "İstanbul'da son fiyatlar"
+        lbl.text = ""
         lbl.textColor = .black
         lbl.textAlignment = .left
         lbl.font = UIFont.boldSystemFont(ofSize: 17)
@@ -165,12 +164,7 @@ class HomeBar: UIViewController {
         callFunction()
         
         
-        
-        
     }
-    
-    
-    
     
     func callFunction() {
         
@@ -198,6 +192,7 @@ class HomeBar: UIViewController {
     @objc func didPullToRefresh() {
         refreshControl.endRefreshing()
         callFunction()
+        
     }
     
     func layoutDuzenle() {
@@ -360,7 +355,7 @@ class HomeBar: UIViewController {
                     }
                     
                     self.countryList.shuffle()
-                    self.lblMarket.text = "\(selectcounrty) 'da mağazalar"
+                    self.lblMarket.text = "\(selectcounrty) 'market indirimleri"
                     self.marketCollectionView.reloadData()
                     self.activityIndicator2.stopAnimating()
                     
@@ -436,9 +431,6 @@ class HomeBar: UIViewController {
         }.resume()
         
         
-        
-        
-        
     }
     
     
@@ -470,6 +462,28 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             
             
         }else {
+            
+            if indexPath.row % 10 == 1 {
+                
+                let cell3 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
+                cell3.lblIsim.isHidden = true
+                cell3.lblFiyat.isHidden = true
+                cell3.lblIsim2.isHidden = true
+                cell3.imgUrun.isHidden = true
+                var bannerView = GADBannerView()
+                cell3.addSubview(bannerView)
+                bannerView.translatesAutoresizingMaskIntoConstraints = false
+                bannerView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+                bannerView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+                bannerView.centerXAnchor.constraint(equalTo: cell3.centerXAnchor).isActive = true
+                bannerView.centerYAnchor.constraint(equalTo: cell3.centerYAnchor).isActive = true
+                bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+                bannerView.rootViewController = self
+                bannerView.load(GADRequest())
+                return cell3
+                
+            }
+            //
             let cell2 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
             cell2.lblIsim.text = countryList2[indexPath.row].name
             cell2.lblFiyat.text = countryList2[indexPath.row].price
@@ -477,7 +491,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             
             let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
             let url = URL(string: jsonUrlString)
-           
+            
             URLSession.shared.dataTask(with: url!) { (data, response, error) in
                 //perhaps check err
                 guard let data = data else {return}
@@ -496,6 +510,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             }.resume()
             
             return cell2
+            
         }
         
     }

@@ -6,6 +6,7 @@ target 'Market indirimleri' do
   use_frameworks!
 
   # Pods for Market indirimleri
-pod 'PopupDialog', '~> 1.1'
+
 pod 'SDWebImage', '~> 5.0'
+pod 'Google-Mobile-Ads-SDK'
 end

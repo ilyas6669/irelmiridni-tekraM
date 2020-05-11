@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,7 @@
 		0073F4BD2455717100AD8095 /* SehirlerCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0073F4BB2455717100AD8095 /* SehirlerCel.xib */; };
 		0073F4C024557C9F00AD8095 /* UrunSayfasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4BF24557C9F00AD8095 /* UrunSayfasi.swift */; };
 		0073F4C22455886A00AD8095 /* MarketSayfasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073F4C12455886A00AD8095 /* MarketSayfasi.swift */; };
+		007D55452468DF5800F5DA58 /* LikeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007D55442468DF5800F5DA58 /* LikeAnimator.swift */; };
 		008DEE112451F9E9003ACEB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE102451F9E9003ACEB2 /* AppDelegate.swift */; };
 		008DEE132451F9E9003ACEB2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE122451F9E9003ACEB2 /* SceneDelegate.swift */; };
 		008DEE152451F9E9003ACEB2 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE142451F9E9003ACEB2 /* SplashView.swift */; };
@@ -68,6 +69,7 @@
 		0073F4BB2455717100AD8095 /* SehirlerCel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SehirlerCel.xib; sourceTree = "<group>"; };
 		0073F4BF24557C9F00AD8095 /* UrunSayfasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrunSayfasi.swift; sourceTree = "<group>"; };
 		0073F4C12455886A00AD8095 /* MarketSayfasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketSayfasi.swift; sourceTree = "<group>"; };
+		007D55442468DF5800F5DA58 /* LikeAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeAnimator.swift; sourceTree = "<group>"; };
 		008DEE0D2451F9E9003ACEB2 /* Market indirimleri.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Market indirimleri.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		008DEE102451F9E9003ACEB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		008DEE122451F9E9003ACEB2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +153,14 @@
 			path = UrunSayfasi;
 			sourceTree = "<group>";
 		};
+		007D55432468DF3A00F5DA58 /* LikeAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				007D55442468DF5800F5DA58 /* LikeAnimator.swift */,
+			);
+			path = LikeAnimator;
+			sourceTree = "<group>";
+		};
 		008DEE042451F9E8003ACEB2 = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +193,7 @@
 				008DEE2F24523A4E003ACEB2 /* SplashView */,
 				008DEE2E24523A32003ACEB2 /* TabBar */,
 				0073F4BE24557C4500AD8095 /* UrunSayfasi */,
+				007D55432468DF3A00F5DA58 /* LikeAnimator */,
 				008DEE272451FBAE003ACEB2 /* Extension */,
 			);
 			path = "Market indirimleri";
@@ -292,7 +303,7 @@
 				};
 			};
 			buildConfigurationList = 008DEE082451F9E8003ACEB2 /* Build configuration list for PBXProject "Market indirimleri" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.4";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -387,6 +398,7 @@
 				0073F49824550F2A00AD8095 /* Marketler.swift in Sources */,
 				0073F4C024557C9F00AD8095 /* UrunSayfasi.swift in Sources */,
 				006E374024533C9000E31FC6 /* TabBar.swift in Sources */,
+				007D55452468DF5800F5DA58 /* LikeAnimator.swift in Sources */,
 				008DEE132451F9E9003ACEB2 /* SceneDelegate.swift in Sources */,
 				008DEE3324523B12003ACEB2 /* HomeBar.swift in Sources */,
 				0073F4A1245519AB00AD8095 /* MarketlerCel.swift in Sources */,

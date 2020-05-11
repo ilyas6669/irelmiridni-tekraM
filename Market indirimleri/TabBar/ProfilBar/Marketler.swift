@@ -43,6 +43,21 @@ class Marketler: UIViewController {
     let marketlerTableView = UITableView()
     let marketler = MarketlerCel()
     
+    var activityIndicator : UIActivityIndicatorView = {
+        var indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.style = .medium
+        indicator.color = .black
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
+    var refreshControl : UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        return refreshControl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
@@ -61,6 +76,7 @@ class Marketler: UIViewController {
         viewTop.addSubview(lblTop)
         view.addSubview(btnTopLeft)
         view.addSubview(marketlerTableView)
+        marketlerTableView.addSubview(activityIndicator)
         
         //MARK: constraint
         _ = viewTop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -72,18 +88,26 @@ class Marketler: UIViewController {
         
         _ = marketlerTableView.anchor(top: viewTop.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
-      
+        activityIndicator.centerXAnchor.constraint(equalTo: marketlerTableView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: marketlerTableView.centerYAnchor).isActive = true
         
+        activityIndicator.startAnimating()
         
-        
+    
     }
     
     func duzenleCollectionView() {
         marketlerTableView.delegate = self
         marketlerTableView.dataSource = self
         marketlerTableView.register(UINib(nibName: "MarketlerCel", bundle: nil), forCellReuseIdentifier: "MarketlerCel")
+        marketlerTableView.refreshControl = refreshControl
         
     }
+    
+    @objc private func refresh(sender:UIRefreshControl) {
+           sender.endRefreshing()
+          veriCekMarket()
+       }
     
  
     
@@ -134,9 +158,9 @@ class Marketler: UIViewController {
                        }
                        
                        self.countryList.shuffle()
-                       
                        self.marketlerTableView.reloadData()
-                       //self.activityIndicator2.stopAnimating()
+                    self.activityIndicator.stopAnimating()
+                    
                        
                    }
                    
@@ -197,7 +221,10 @@ extension Marketler : UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storeid = countryList[indexPath.row]
+       print("666\(storeid)")
         let urunSayfasi = MarketSayfasi()
+        urunSayfasi.itemid = "\(storeid)"
         urunSayfasi.modalPresentationStyle = .fullScreen
         present(urunSayfasi, animated: true, completion: nil)
     }

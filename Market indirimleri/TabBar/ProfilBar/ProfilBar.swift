@@ -49,7 +49,7 @@ class ProfilBar: UIViewController {
     
     let btnSehir : UIButton = {
         let btn = UIButton()
-        btn.setTitle("Istanbul", for: .normal)
+        btn.setTitle("", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 29)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -168,7 +168,7 @@ class ProfilBar: UIViewController {
         layoutDuzenle()
         veriCekUrun()
         veriCekMarket()
-        
+        lblBegendigimUrunDeyis()
         
     }
     
@@ -364,10 +364,7 @@ class ProfilBar: UIViewController {
     }
     
     
-    func btnSehirTitleDeyis() {
-        
-       
-              
+    func lblBegendigimUrunDeyis() {
               let appDelegate = UIApplication.shared.delegate as! AppDelegate
               let context = appDelegate.persistentContainer.viewContext
               let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
@@ -396,7 +393,7 @@ class ProfilBar: UIViewController {
                                             
                                           self.countryList3.append(singleproduct)
                                           self.countryList3.reverse()
-                                            self.lblBegendigimMarket.text = "\(self.countryList3.count)"
+                                            self.lblBegendigimUrun.text = "\(self.countryList3.count)"
                                           
                                             
                                         }

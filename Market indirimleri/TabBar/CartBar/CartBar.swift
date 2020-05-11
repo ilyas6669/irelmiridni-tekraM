@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import SDWebImage
+import GoogleMobileAds
 
 class CartBar: UIViewController {
     
@@ -74,11 +75,12 @@ class CartBar: UIViewController {
         return indicator
     }()
     
+   var bannerView = GADBannerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .customYellow()
+        veriCekUrun()
         
         
         //MARK: addSubview
@@ -103,6 +105,7 @@ class CartBar: UIViewController {
         urunlerCollectionView.delegate = self
         urunlerCollectionView.dataSource = self
         urunlerCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
+        urunlerCollectionView.isHidden = true
         
         if let layout = urunlerCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.itemSize = CGSize(width: view.frame.width, height: 310)
@@ -111,11 +114,25 @@ class CartBar: UIViewController {
             layout.sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         }
         
-        veriCekUrun()
         
+        view.addSubview(bannerView)
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        bannerView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        bannerView.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        
+       
         
     }
+    
+  
+    
+  
     
     func veriCekUrun() {
         

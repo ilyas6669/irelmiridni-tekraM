@@ -49,6 +49,21 @@ class Urunler: UIViewController {
         return cv
     }()
     
+    var activityIndicator : UIActivityIndicatorView = {
+           var indicator = UIActivityIndicatorView()
+           indicator.hidesWhenStopped = true
+           indicator.style = .medium
+           indicator.color = .black
+           indicator.translatesAutoresizingMaskIntoConstraints = false
+           return indicator
+       }()
+    
+    var refreshControl : UIRefreshControl = {
+          let refreshControl = UIRefreshControl()
+          refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+          return refreshControl
+      }()
+    
  
     
     override func viewDidLoad() {
@@ -69,6 +84,7 @@ class Urunler: UIViewController {
         viewTop.addSubview(lblTop)
         view.addSubview(btnTopLeft)
         view.addSubview(urunlerCollectionView)
+        urunlerCollectionView.addSubview(activityIndicator)
         
         //MARK: constraint
         _ = viewTop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -80,6 +96,9 @@ class Urunler: UIViewController {
         
         _ = urunlerCollectionView.anchor(top: viewTop.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
+        activityIndicator.centerXAnchor.constraint(equalTo: urunlerCollectionView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: urunlerCollectionView.centerYAnchor).isActive = true
+        activityIndicator.startAnimating()
         
         
     }
@@ -88,6 +107,7 @@ class Urunler: UIViewController {
         urunlerCollectionView.delegate = self
         urunlerCollectionView.dataSource = self
         urunlerCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
+        urunlerCollectionView.refreshControl = refreshControl
         
         if let layout = urunlerCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
                    layout.itemSize = CGSize(width: view.frame.width, height: 310)
@@ -99,6 +119,11 @@ class Urunler: UIViewController {
        
         
     }
+    
+    @objc private func refresh(sender:UIRefreshControl) {
+             sender.endRefreshing()
+            veriCekUrun()
+         }
     
     
 
@@ -145,7 +170,7 @@ class Urunler: UIViewController {
                        self.countryList2 = welcomee.results
                        self.countryList2.shuffle()
                        self.urunlerCollectionView.reloadData()
-                       //self.activityIndicator.stopAnimating()
+                       self.activityIndicator.stopAnimating()
                        
                    }
                    
@@ -174,7 +199,7 @@ class Urunler: UIViewController {
     @objc func btnTopLeftAction() {
         self.dismiss(animated: true, completion: nil)
     }
-    
+    //yetim ne erroru link atbsane o link acmr ba var o singleproduct
     
     
 }
@@ -213,7 +238,11 @@ extension Urunler : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+       
+        let productid =  countryList2[indexPath.row].id
+        
         let urunSayfasi = UrunSayfasi()
+        urunSayfasi.itemid = "\(productid)"
         urunSayfasi.modalPresentationStyle = .fullScreen
         present(urunSayfasi, animated: true, completion: nil)
     }

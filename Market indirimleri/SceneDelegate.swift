@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         
         
-        let viewController = SplashView ()
+        let viewController = SplashView()
         window?.rootViewController = viewController
         
         

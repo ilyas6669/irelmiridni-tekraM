@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="350" height="310"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fcZ-rw-cB7">
+                    <imageView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fcZ-rw-cB7">
                         <rect key="frame" x="0.0" y="0.0" width="350" height="204"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="350" id="Joj-BH-N8e"/>
@@ -41,6 +41,13 @@
                         <color key="textColor" red="0.92343819140000005" green="0.7961357832" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favorite-big" translatesAutoresizingMaskIntoConstraints="NO" id="haL-sg-WDi">
+                        <rect key="frame" x="175" y="155" width="0.0" height="0.0"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="haL-sg-WDi" secondAttribute="height" id="XgA-i2-VUF"/>
+                            <constraint firstAttribute="width" id="qFg-06-x54"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -50,11 +57,13 @@
                 <constraint firstItem="XAK-4I-i54" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="5CS-6W-xtr"/>
                 <constraint firstItem="fcZ-rw-cB7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5dz-o5-djw"/>
                 <constraint firstAttribute="trailing" secondItem="fcZ-rw-cB7" secondAttribute="trailing" id="IjP-SN-5sW"/>
+                <constraint firstItem="haL-sg-WDi" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Mn1-eF-WIG"/>
                 <constraint firstItem="JLR-NQ-sgg" firstAttribute="top" secondItem="fcZ-rw-cB7" secondAttribute="bottom" id="U2a-7D-cAQ"/>
                 <constraint firstItem="XAK-4I-i54" firstAttribute="top" secondItem="QcY-Uh-apG" secondAttribute="bottom" constant="3" id="Zti-Yu-IGi"/>
                 <constraint firstItem="fcZ-rw-cB7" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="p6V-DO-3hl"/>
                 <constraint firstAttribute="trailing" secondItem="JLR-NQ-sgg" secondAttribute="trailing" constant="8" id="s9D-eC-kLl"/>
                 <constraint firstAttribute="trailing" secondItem="QcY-Uh-apG" secondAttribute="trailing" constant="8" id="ur0-bT-Acf"/>
+                <constraint firstItem="haL-sg-WDi" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="vIF-Bk-Ycl"/>
                 <constraint firstItem="QcY-Uh-apG" firstAttribute="top" secondItem="JLR-NQ-sgg" secondAttribute="bottom" constant="5" id="waM-lf-zUf"/>
                 <constraint firstAttribute="trailing" secondItem="XAK-4I-i54" secondAttribute="trailing" constant="8" id="yTs-7n-p8x"/>
             </constraints>
@@ -65,8 +74,12 @@
                 <outlet property="lblFiyat" destination="QcY-Uh-apG" id="9E6-IV-0pr"/>
                 <outlet property="lblIsim" destination="JLR-NQ-sgg" id="qaX-EZ-BQ0"/>
                 <outlet property="lblIsim2" destination="XAK-4I-i54" id="nYW-aF-FJW"/>
+                <outlet property="likeImageViewWidthConstraint" destination="qFg-06-x54" id="TJ1-bN-rTm"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="125.22321428571428"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="favorite-big" width="167" height="147"/>
+    </resources>
 </document>

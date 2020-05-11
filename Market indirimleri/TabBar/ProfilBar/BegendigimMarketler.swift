@@ -42,6 +42,15 @@ class BegendigimMarketler: UIViewController {
     
     let marketlerTableView = UITableView()
     
+    var activityIndicator : UIActivityIndicatorView = {
+           var indicator = UIActivityIndicatorView()
+           indicator.hidesWhenStopped = true
+           indicator.style = .medium
+           indicator.color = .black
+           indicator.translatesAutoresizingMaskIntoConstraints = false
+           return indicator
+       }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
@@ -59,6 +68,7 @@ class BegendigimMarketler: UIViewController {
         viewTop.addSubview(lblTop)
         view.addSubview(btnTopLeft)
         view.addSubview(marketlerTableView)
+        marketlerTableView.addSubview(activityIndicator)
         
         //MARK: constraint
         _ = viewTop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -69,6 +79,11 @@ class BegendigimMarketler: UIViewController {
         btnTopLeft.leftAnchor.constraint(equalTo: viewTop.leftAnchor,constant: 10).isActive = true
         
         _ = marketlerTableView.anchor(top: viewTop.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        
+        activityIndicator.centerXAnchor.constraint(equalTo: marketlerTableView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: marketlerTableView.centerYAnchor).isActive = true
+        
+        activityIndicator.startAnimating()
         
         
         
@@ -125,15 +140,16 @@ class BegendigimMarketler: UIViewController {
                         
                         if n.cities.contains(Int(self.idArray.last!)!) {
                             self.countryList.append(n)
-                           
+                            
+                            
                         }
                         
                     }
                    
-                    self.countryList.shuffle()
-                    
-                    self.marketlerTableView.reloadData()
-                    //self.activityIndicator2.stopAnimating()
+                   self.countryList.shuffle()
+                   self.marketlerTableView.reloadData()
+                   self.activityIndicator.stopAnimating()
+                   
                     
                 }
                 

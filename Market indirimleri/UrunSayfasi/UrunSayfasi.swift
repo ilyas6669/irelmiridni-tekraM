@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 class UrunSayfasi: UIViewController {
     
     let ustView : UIView = {
         let view = UIView()
         view.backgroundColor = .black
-        view.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 430).isActive = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -27,7 +28,8 @@ class UrunSayfasi: UIViewController {
     
     let imgUrun : UIImageView = {
         let img = UIImageView()
-        img.contentMode = .scaleAspectFill
+        //img.contentMode = .
+        img.backgroundColor = .white
         img.translatesAutoresizingMaskIntoConstraints = false
         return img
     }()
@@ -52,7 +54,7 @@ class UrunSayfasi: UIViewController {
         let lbl = UILabel()
         lbl.textColor = .black
         lbl.textAlignment = .left
-        lbl.text = "Label Label Label Label Label Label Label Label "
+        lbl.text = ""
         lbl.numberOfLines = 4
         lbl.font = UIFont.boldSystemFont(ofSize: 24)
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -63,9 +65,9 @@ class UrunSayfasi: UIViewController {
            let lbl = UILabel()
            lbl.textColor = .customYellow()
            lbl.textAlignment = .left
-           lbl.text = "100.00"
+           lbl.text = ""
            lbl.numberOfLines = 2
-           lbl.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 22)
+           lbl.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 25)
            lbl.translatesAutoresizingMaskIntoConstraints = false
            return lbl
        }()
@@ -74,31 +76,48 @@ class UrunSayfasi: UIViewController {
         let lbl = UILabel()
         lbl.textColor = .lightGray
         lbl.textAlignment = .left
-        lbl.text = "Label Label Label Label Label Label Label Label Label LabelLabel abel LabelLabel Label Label Label Label Label Label Label Label Label.00Label LabelLabel LabelLabel LabelLabel LabelLabel Label"
+        lbl.text = ""
         lbl.numberOfLines = 30
         lbl.translatesAutoresizingMaskIntoConstraints = false
          lbl.font = UIFont.boldSystemFont(ofSize: 17)
         return lbl
     }()
     
+    let lblTarih : UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .lightGray
+        lbl.textAlignment = .left
+        lbl.text = "Tarih"
+        lbl.numberOfLines = 2
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.font = UIFont.boldSystemFont(ofSize: 17)
+        return lbl
+    }()
+    
     let lblIsim2 : UILabel = {
-           let lbl = UILabel()
+        let lbl = UILabel()
            lbl.textColor = .darkGray
            lbl.textAlignment = .left
-           lbl.text = "Label Label LabelLabel Label"
+           lbl.text = "Market Isim"
            lbl.numberOfLines = 2
            lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont.boldSystemFont(ofSize: 17)
            return lbl
        }()
     
+    var itemid = ""
     
+  
+     var countryList2 = [Resulttt]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
+        veriCekUrun()
+        //lblIsim2Deyis()
+      
         
-        let lblSV = UIStackView(arrangedSubviews: [lblIsim,lblFiyat,lblAciklama,lblIsim2])
+        let lblSV = UIStackView(arrangedSubviews: [lblIsim,lblFiyat,lblAciklama,lblTarih,lblIsim2])
         lblSV.axis = .vertical
         lblSV.spacing = 0
         
@@ -110,10 +129,10 @@ class UrunSayfasi: UIViewController {
         altView.addSubview(lblSV)
         
         
-        _ = ustView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = ustView.anchor(top: view.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = imgUrun.anchor(top: ustView.topAnchor, bottom: ustView.bottomAnchor, leading: ustView.leadingAnchor, trailing: ustView.trailingAnchor)
-        _ = btnLeft.anchor(top: ustView.topAnchor, bottom: nil, leading: ustView.leadingAnchor, trailing: nil,padding: .init(top: 10, left: 10, bottom: 0, right: 0))
-         _ = btnFavori.anchor(top: ustView.topAnchor, bottom: nil, leading: nil, trailing: ustView.trailingAnchor,padding: .init(top: 10, left: 0, bottom: 0, right: 10))
+        _ = btnLeft.anchor(top: ustView.topAnchor, bottom: nil, leading: ustView.leadingAnchor, trailing: nil,padding: .init(top: 45, left: 10, bottom: 0, right: 0))
+         _ = btnFavori.anchor(top: ustView.topAnchor, bottom: nil, leading: nil, trailing: ustView.trailingAnchor,padding: .init(top: 45, left: 0, bottom: 0, right: 10))
         _ = altView.anchor(top: ustView.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = lblSV.anchor(top: ustView.bottomAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: altView.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
         
@@ -147,6 +166,78 @@ class UrunSayfasi: UIViewController {
         print("favori")
     }
     
+    
+    func veriCekUrun() {
+              //bular lazim deyil coredatadan vericekmek idi onlar billem sielecehdim cox gozel
+              
+        
+                print("Nicatalibli:\(itemid)")
+              let jsonUrlString = "https://marketindirimleri.com/api/v1/products/\(itemid)?format=json"
+              guard let url = URL(string: jsonUrlString) else {return}
+              
+              URLSession.shared.dataTask(with: url) { (data, response, error) in
+                  //perhaps check err
+                  guard let data = data else {return}
+                  
+                  do {
+                                  
+                      let welcomee = try JSONDecoder().decode(SingleProduct.self, from: data)
+                   
+                    
+                    
+                  
+                    
+                      DispatchQueue.main.async {
+                        
+                        self.lblIsim.text = welcomee.name
+                        self.lblFiyat.text = welcomee.price
+                        self.lblAciklama.text = welcomee.detail
+                        
+                       
+                       
+                        self.imgUrun.sd_setImage(with: URL(string: "\(welcomee.image.imageDefault)"))
+                         
+                          
+                      }
+                      
+                      
+                      
+                              
+                      
+                  } catch let jsonError {
+                      print("Error serializing json:", jsonError)
+                      
+                      
+                  }
+                  
+                  
+              }.resume()
+              
+          }
+    
+    
+    func lblIsim2Deyis() {
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[0].storeID)?format=json"
+                   let url = URL(string: jsonUrlString)
+                   
+                   URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                       //perhaps check err
+                       guard let data = data else {return}
+                       
+                       do {
+                           let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
+                           
+                           DispatchQueue.main.async {
+                            self.lblIsim2.text = welcomee.name
+                               
+                           }
+                           
+                       } catch let jsonError {print("Error serializing json:", jsonError)}
+                       
+                       
+                   }.resume()
+    }
+   
     
     
 }

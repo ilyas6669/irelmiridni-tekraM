@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PopupDialog
 import CoreData
 import SDWebImage
 
@@ -117,6 +116,28 @@ class SearchBar: UIViewController{
         return lbl
     }()
     
+    var activityIndicator : UIActivityIndicatorView = {
+           var indicator = UIActivityIndicatorView()
+           indicator.hidesWhenStopped = true
+           indicator.style = .medium
+           indicator.color = .black
+           indicator.translatesAutoresizingMaskIntoConstraints = false
+           return indicator
+       }()
+    
+    var refreshControl : UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        return refreshControl
+    }()
+    
+    let imgRight : UIImageView = {
+       let img = UIImageView(image: UIImage(named: "ic_uparrow_right_long_white"))
+        img.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        img.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        return img
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -138,6 +159,10 @@ class SearchBar: UIViewController{
         view.addSubview(viewSetting)
         viewSetting.addSubview(lblAramaModu)
         viewSetting.addSubview(pickerView)
+        searchBar.addSubview(activityIndicator)
+       
+//        view.addSubview(imgRight)
+//        _ = imgRight.anchor(top: btnTopSetting.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor)
         
         
         //viewSetting.merkezKonumlamdirmaSuperView()
@@ -163,6 +188,11 @@ class SearchBar: UIViewController{
         _ = marketlerTableView.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = urunlerTableView.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
+        activityIndicator.centerYAnchor.constraint(equalTo: searchBar.centerYAnchor).isActive = true
+        activityIndicator.rightAnchor.constraint(equalTo: searchBar.rightAnchor,constant: -35).isActive = true
+        
+        
+        
         marketlerTableView.isHidden = true
         urunlerTableView.isHidden = true
         
@@ -170,11 +200,13 @@ class SearchBar: UIViewController{
         marketlerTableView.delegate = self
         marketlerTableView.dataSource = self
         marketlerTableView.register(UINib(nibName: "MarketlerCel", bundle: nil), forCellReuseIdentifier: "MarketlerCel")
+        marketlerTableView.refreshControl = refreshControl
         
         
         urunlerTableView.delegate = self
         urunlerTableView.dataSource = self
         urunlerTableView.register(UINib(nibName: "UrunlerTableViewCell", bundle: nil), forCellReuseIdentifier: "UrunlerTableViewCell")
+        urunlerTableView.refreshControl = refreshControl
         
         
         view.addSubview(visualEffectView)
@@ -198,6 +230,12 @@ class SearchBar: UIViewController{
         aramaPop.btnTamam.addTarget(self, action: #selector(btnTamamAction), for: .touchUpInside)
         
     }
+    
+    @objc private func refresh(sender:UIRefreshControl) {
+        sender.endRefreshing()
+        
+    }
+    
     
     
     @objc func btnTamamAction() {
@@ -315,6 +353,7 @@ class SearchBar: UIViewController{
                             
                             
                             self.marketlerTableView.reloadData()
+                            self.activityIndicator.stopAnimating()
                             
                             self.marketlerTableView.isHidden = false
                             self.urunlerTableView.isHidden = true
@@ -327,6 +366,9 @@ class SearchBar: UIViewController{
                             self.productList = welcomee.results
                             
                             self.urunlerTableView.reloadData()
+                            self.activityIndicator.stopAnimating()
+                           
+
                             
                             self.marketlerTableView.isHidden = true
                             self.urunlerTableView.isHidden = false
@@ -682,6 +724,8 @@ extension SearchBar : UISearchBarDelegate {
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        activityIndicator.startAnimating()
+        
         getitem(searchkeyword: searchBar.text!)
     }
     

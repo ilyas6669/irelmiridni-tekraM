@@ -7,21 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Splash View-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController storyboardIdentifier="SplashView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="SplashView" customModule="Market_indirimleri" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-849" y="121"/>
-        </scene>
         <!--Search Bar-->
         <scene sceneID="y0N-eP-n7T">
             <objects>
@@ -29,20 +14,20 @@
                     <view key="view" contentMode="scaleToFill" id="hfv-gs-99S">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="4m5-2c-Gvq"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="search" selectedImage="searchSelected" id="EAa-Sa-E9N"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NxZ-Tk-yNd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="184" y="882"/>
+            <point key="canvasLocation" x="182.60869565217394" y="881.91964285714278"/>
         </scene>
         <!--Cart Bar-->
         <scene sceneID="Z7z-Qm-qwx">
             <objects>
                 <viewController id="l8h-Z5-ba8" customClass="CartBar" customModule="Market_indirimleri" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="favoriteProducts" selectedImage="favoriteProductsSelected" id="kMQ-nu-EcG"/>
+                    <tabBarItem key="tabBarItem" title="" image="gestures" selectedImage="gestures2" id="kMQ-nu-EcG"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vCb-qG-0dL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -102,6 +87,21 @@
             </objects>
             <point key="canvasLocation" x="794" y="130"/>
         </scene>
+        <!--Splash View-->
+        <scene sceneID="QZZ-R3-Tnz">
+            <objects>
+                <viewController storyboardIdentifier="SplashView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sha-Dc-31V" customClass="SplashView" customModule="Market_indirimleri" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="azf-8Q-5ZX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="S0K-iv-Jp2"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BkZ-Jd-2bH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-654" y="130"/>
+        </scene>
         <!--Gecis Controller-->
         <scene sceneID="x2I-yn-MLB">
             <objects>
@@ -115,12 +115,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RuC-GA-Nvm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16" y="121"/>
+            <point key="canvasLocation" x="25" y="130"/>
         </scene>
     </scenes>
     <resources>
-        <image name="favoriteProducts" width="33" height="32"/>
-        <image name="favoriteProductsSelected" width="33" height="32"/>
+        <image name="gestures" width="32" height="32"/>
+        <image name="gestures2" width="32" height="32"/>
         <image name="home" width="32" height="32"/>
         <image name="homeSelected" width="32" height="32"/>
         <image name="profile" width="24" height="32"/>

@@ -14,7 +14,7 @@ class MarketSayfasi: UIViewController {
     
     lazy var scrolView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
-        view.backgroundColor = .customYellow()
+        view.backgroundColor = .customWhite()
         view.frame = self.view.bounds
         view.contentSize = contentViewSize
         view.autoresizingMask = .flexibleHeight
@@ -25,7 +25,7 @@ class MarketSayfasi: UIViewController {
     
     lazy var containerView : UIView = {
         let view = UIView()
-        view.backgroundColor = .rgb(red: 0, green: 38, blue: 26)
+        view.backgroundColor = .customWhite()
         view.frame.size = contentViewSize
         return view
     }()
@@ -50,6 +50,14 @@ class MarketSayfasi: UIViewController {
         let view = UIView()
         view.backgroundColor = .customYellow()
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let ortaView : UIView = {
+       let view = UIView()
+        view.backgroundColor = .customWhite()
+        view.heightAnchor.constraint(equalToConstant: 200).isActive = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -87,7 +95,7 @@ class MarketSayfasi: UIViewController {
         let lbl = UILabel()
         lbl.textColor = .black
         lbl.textAlignment = .left
-        lbl.text = "Label Label Label Label Label Label Label Label Label LabelLabel abel LabelLabel Label Label Label Label Label Label Label Label Label.00Label LabelLabel LabelLabel LabelLabel LabelLabel Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label"
+        lbl.text = "Label Label Label Label Label Label Label Label Label LabelLabel abel LabelLabel Label Label Label Ll Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label LabelLabel abel LabelLabel Label Label Label Ll Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label LabelLabel abel LabelLabel Label Label Label Ll Label Label Label Label Label Label Label Label Label Label"
         lbl.numberOfLines = 30
         lbl.translatesAutoresizingMaskIntoConstraints = false
         //lbl.font = UIFont.boldSystemFont(ofSize: 17)
@@ -99,86 +107,68 @@ class MarketSayfasi: UIViewController {
     let searchBar : UISearchBar = {
         let serach = UISearchBar()
         serach.backgroundColor = .white
+        serach.placeholder = "Arama Yap"
         return serach
     }()
     
     
+    fileprivate let urunlerCollectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = .red
+        return cv
+    }()
     
+    var itemid = ""
+    
+  
    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .customWhite()
+        view.backgroundColor = .customYellow()
+        
+        
+        let ortaViewSV = UIStackView(arrangedSubviews: [lblAciklama,searchBar])
+        ortaViewSV.axis = .vertical
+        ortaViewSV.spacing = 0
         
         
         view.addSubview(scrolView)
         scrolView.addSubview(containerView)
-        containerView.addSubview(topView)
+        view.addSubview(topView)
+        containerView.addSubview(ortaView)
+        ortaView.addSubview(ortaViewSV)
         topView.addSubview(btnLeft)
         topView.addSubview(btnFavori)
-        containerView.addSubview(aciklamaView)
-        containerView.addSubview(imgUrun)
-        //containerView.addSubview(altView)
+        view.addSubview(imgUrun)
+        containerView.addSubview(urunlerCollectionView)
+       
         
-        
-        
-        
+        _ = scrolView.anchor(top: topView.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
          _ = topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = ortaView.anchor(top: containerView.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+        _ = ortaViewSV.anchor(top: topView.bottomAnchor, bottom: ortaView.bottomAnchor, leading: ortaView.leadingAnchor, trailing: ortaView.trailingAnchor)
+        _ = lblAciklama.topAnchor.constraint(equalTo: imgUrun.bottomAnchor).isActive = true
         btnLeft.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
         btnLeft.leftAnchor.constraint(equalTo: topView.leftAnchor,constant: 5).isActive = true
-        
         btnFavori.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
         btnFavori.rightAnchor.constraint(equalTo: topView.rightAnchor,constant: -5).isActive = true
-        
         imgUrun.centerYAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
         imgUrun.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        _ = aciklamaView.anchor(top: topView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+        _ = urunlerCollectionView.anchor(top: ortaViewSV.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         
-        //----------------------------------------------------------------------
-        
-        //_ = altView.anchor(top: aciklamaView.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-        
-        
-        
-//        let viewSV = UIStackView(arrangedSubviews: [lblAciklama,altView])
-//        viewSV.axis = .vertical
-//        //viewSV.distribution = .fillEqually
-//
-//        view.addSubview(viewSV)
-//        ustView.addSubview(topView)
-//        view.addSubview(topView)
-//        topView.addSubview(btnLeft)
-//        topView.addSubview(btnFavori)
-//        view.addSubview(imgUrun)
-//        //ustView.addSubview(lblAciklama)
-//        altView.addSubview(searchBar)
-//
-//
-//
-//        _ = viewSV.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-//
-//
-//
-//
-//
-//
-//        _ = lblAciklama.anchor(top: imgUrun.bottomAnchor, bottom: altView.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
-//
-//
-//
-//        _ = searchBar.anchor(top: altView.topAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
-//
-//
-        
-        
+     
+      
         
         
     }
     
-    
+   
+   
     
     
     @objc func btnLeftAction() {
