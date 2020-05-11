@@ -19,6 +19,7 @@ class FiyatCell: UICollectionViewCell {
     @IBOutlet weak var lblIsim2: UILabel!
     
    
+    @IBOutlet weak var imgLiked: UIImageView!
     
     @IBOutlet weak var likeImageViewWidthConstraint: NSLayoutConstraint!
     
@@ -50,7 +51,7 @@ class FiyatCell: UICollectionViewCell {
         
        likeAnimator.animate { [weak self] in
             
-            //self?.isLikedImageView.isHidden = false
+            self?.imgLiked.isHidden = false
         }
         
     }
