@@ -222,7 +222,7 @@ extension Marketler : UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storeid = countryList[indexPath.row]
-       print("666\(storeid)")
+       
         let urunSayfasi = MarketSayfasi()
         urunSayfasi.itemid = "\(storeid)"
         urunSayfasi.modalPresentationStyle = .fullScreen

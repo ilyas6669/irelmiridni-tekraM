@@ -517,9 +517,20 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.marketCollectionView {
+            let storeid = countryList[indexPath.row]
             
+            let urunSayfasi = MarketSayfasi()
+            urunSayfasi.itemid = "\(storeid)"
+            urunSayfasi.modalPresentationStyle = .fullScreen
+            present(urunSayfasi, animated: true, completion: nil)
             
         }else{
+            let productid =  countryList2[indexPath.row].id
+            
+            let urunSayfasi = UrunSayfasi()
+            urunSayfasi.itemid = "\(productid)"
+            urunSayfasi.modalPresentationStyle = .fullScreen
+            present(urunSayfasi, animated: true, completion: nil)
             
         }
         

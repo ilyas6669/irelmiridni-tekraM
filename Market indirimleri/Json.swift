@@ -161,4 +161,18 @@ struct SingleProduct: Codable {
     }
 }
 
+// MARK: - SingleMarket
+struct SingleMarket: Codable {
+    let count: Int
+    let next, previous: JSONNull?
+    let results: [Market]
+}
 
+// MARK: - Result
+struct Market: Codable {
+    let id: Int
+    let name: String
+    let image: Image
+    let cities: [Int]
+    let detail: String
+}

@@ -50,7 +50,228 @@
 		E7898922F749761648B299A5 /* Pods_Market_indirimleri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C52F0BB40B6700FF74046F4 /* Pods_Market_indirimleri.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		00507CF7246A0D6B0081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507CE5246A0D6B0081F7CF /* FlexibleHeightBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765591E21B12600B1AF2C;
+			remoteInfo = FlexibleHeightBar;
+		};
+		00507CF9246A0D6B0081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507CE5246A0D6B0081F7CF /* FlexibleHeightBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765621E21B12600B1AF2C;
+			remoteInfo = FlexibleHeightBarTests;
+		};
+		00507CFE246A0D6B0081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507CDB246A0D6B0081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765B71E21B52D00B1AF2C;
+			remoteInfo = FlexibleHeightBarDemo;
+		};
+		00507D00246A0D6B0081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507CDB246A0D6B0081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765CB1E21B52D00B1AF2C;
+			remoteInfo = FlexibleHeightBarDemoTests;
+		};
+		00507D02246A0D6B0081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507CDB246A0D6B0081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765D61E21B52D00B1AF2C;
+			remoteInfo = FlexibleHeightBarDemoUITests;
+		};
+		00507D38246A0D840081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D26246A0D840081F7CF /* FlexibleHeightBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765591E21B12600B1AF2C;
+			remoteInfo = FlexibleHeightBar;
+		};
+		00507D3A246A0D840081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D26246A0D840081F7CF /* FlexibleHeightBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765621E21B12600B1AF2C;
+			remoteInfo = FlexibleHeightBarTests;
+		};
+		00507D3F246A0D840081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D1C246A0D840081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765B71E21B52D00B1AF2C;
+			remoteInfo = FlexibleHeightBarDemo;
+		};
+		00507D41246A0D840081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D1C246A0D840081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765CB1E21B52D00B1AF2C;
+			remoteInfo = FlexibleHeightBarDemoTests;
+		};
+		00507D43246A0D840081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D1C246A0D840081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765D61E21B52D00B1AF2C;
+			remoteInfo = FlexibleHeightBarDemoUITests;
+		};
+		00507D57246A0D8A0081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D49246A0D8A0081F7CF /* FlexibleHeightBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765591E21B12600B1AF2C;
+			remoteInfo = FlexibleHeightBar;
+		};
+		00507D59246A0D8A0081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D49246A0D8A0081F7CF /* FlexibleHeightBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765621E21B12600B1AF2C;
+			remoteInfo = FlexibleHeightBarTests;
+		};
+		00507D78246A0D900081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D72246A0D900081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765B71E21B52D00B1AF2C;
+			remoteInfo = FlexibleHeightBarDemo;
+		};
+		00507D7A246A0D900081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D72246A0D900081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765CB1E21B52D00B1AF2C;
+			remoteInfo = FlexibleHeightBarDemoTests;
+		};
+		00507D7C246A0D900081F7CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00507D72246A0D900081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAC765D61E21B52D00B1AF2C;
+			remoteInfo = FlexibleHeightBarDemoUITests;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		00253BD4246A038C000A4F18 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		00253BD5246A038C000A4F18 /* FlexibleHeightBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FlexibleHeightBar.framework; sourceTree = "<group>"; };
+		00253BD6246A038C000A4F18 /* CALayer+XibConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+XibConfiguration.swift"; sourceTree = "<group>"; };
+		00253BD7246A038C000A4F18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		00253BD8246A038C000A4F18 /* TableViewDataSourceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceHandler.swift; sourceTree = "<group>"; };
+		00253BD9246A038C000A4F18 /* SquareCashStyleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashStyleViewController.swift; sourceTree = "<group>"; };
+		00253BDB246A038C000A4F18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		00253BDD246A038C000A4F18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		00253BDE246A038C000A4F18 /* FacebookStyleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookStyleViewController.swift; sourceTree = "<group>"; };
+		00253BDF246A038C000A4F18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		00253BE0246A038C000A4F18 /* SquareCashFlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashFlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00253BE1246A038C000A4F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00253BE2246A038C000A4F18 /* FacebookFlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookFlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00253BE3246A08FD000A4F18 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		00507CC6246A0D6B0081F7CF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		00507CC7246A0D6B0081F7CF /* FlexibleHeightBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FlexibleHeightBar.framework; sourceTree = "<group>"; };
+		00507CC8246A0D6B0081F7CF /* CALayer+XibConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+XibConfiguration.swift"; sourceTree = "<group>"; };
+		00507CC9246A0D6B0081F7CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		00507CCA246A0D6B0081F7CF /* TableViewDataSourceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceHandler.swift; sourceTree = "<group>"; };
+		00507CCB246A0D6B0081F7CF /* SquareCashStyleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashStyleViewController.swift; sourceTree = "<group>"; };
+		00507CCD246A0D6B0081F7CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		00507CCF246A0D6B0081F7CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		00507CD0246A0D6B0081F7CF /* FacebookStyleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookStyleViewController.swift; sourceTree = "<group>"; };
+		00507CD1246A0D6B0081F7CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		00507CD2246A0D6B0081F7CF /* SquareCashFlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashFlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00507CD3246A0D6B0081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507CD4246A0D6B0081F7CF /* FacebookFlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookFlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00507CD6246A0D6B0081F7CF /* FlexibleHeightBarDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarDemoUITests.swift; sourceTree = "<group>"; };
+		00507CD7246A0D6B0081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507CD9246A0D6B0081F7CF /* FlexibleHeightBarDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarDemoTests.swift; sourceTree = "<group>"; };
+		00507CDA246A0D6B0081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507CDB246A0D6B0081F7CF /* FlexibleHeightBarDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = FlexibleHeightBarDemo.xcodeproj; sourceTree = "<group>"; };
+		00507CDE246A0D6B0081F7CF /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		00507CDF246A0D6B0081F7CF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		00507CE0246A0D6B0081F7CF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		00507CE3246A0D6B0081F7CF /* FlexibleHeightBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarTests.swift; sourceTree = "<group>"; };
+		00507CE4246A0D6B0081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507CE5246A0D6B0081F7CF /* FlexibleHeightBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = FlexibleHeightBar.xcodeproj; sourceTree = "<group>"; };
+		00507CE9246A0D6B0081F7CF /* FlexibleHeightBarSubviewLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarSubviewLayoutAttributes.swift; sourceTree = "<group>"; };
+		00507CEA246A0D6B0081F7CF /* FlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00507CEB246A0D6B0081F7CF /* FlexibleHeightBarBehaviorDefiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarBehaviorDefiner.swift; sourceTree = "<group>"; };
+		00507CEC246A0D6B0081F7CF /* FacebookBarBehaviorDefiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookBarBehaviorDefiner.swift; sourceTree = "<group>"; };
+		00507CED246A0D6B0081F7CF /* SquareCashBarBehaviorDefiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashBarBehaviorDefiner.swift; sourceTree = "<group>"; };
+		00507CEE246A0D6B0081F7CF /* FlexibleHeightBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlexibleHeightBar.h; sourceTree = "<group>"; };
+		00507CEF246A0D6B0081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507CF0246A0D6B0081F7CF /* TableViewDelegateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegateHandler.swift; sourceTree = "<group>"; };
+		00507CF2246A0D6B0081F7CF /* SquareCashFlexibleHeightBarDemo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SquareCashFlexibleHeightBarDemo.gif; sourceTree = "<group>"; };
+		00507CF3246A0D6B0081F7CF /* example.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = example.gif; sourceTree = "<group>"; };
+		00507CF4246A0D6B0081F7CF /* FacebookFlexibleHeightBarDemo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = FacebookFlexibleHeightBarDemo.gif; sourceTree = "<group>"; };
+		00507D07246A0D840081F7CF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		00507D08246A0D840081F7CF /* FlexibleHeightBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FlexibleHeightBar.framework; sourceTree = "<group>"; };
+		00507D09246A0D840081F7CF /* CALayer+XibConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+XibConfiguration.swift"; sourceTree = "<group>"; };
+		00507D0A246A0D840081F7CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		00507D0B246A0D840081F7CF /* TableViewDataSourceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceHandler.swift; sourceTree = "<group>"; };
+		00507D0C246A0D840081F7CF /* SquareCashStyleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashStyleViewController.swift; sourceTree = "<group>"; };
+		00507D0E246A0D840081F7CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		00507D10246A0D840081F7CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		00507D11246A0D840081F7CF /* FacebookStyleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookStyleViewController.swift; sourceTree = "<group>"; };
+		00507D12246A0D840081F7CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		00507D13246A0D840081F7CF /* SquareCashFlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashFlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00507D14246A0D840081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D15246A0D840081F7CF /* FacebookFlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookFlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00507D17246A0D840081F7CF /* FlexibleHeightBarDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarDemoUITests.swift; sourceTree = "<group>"; };
+		00507D18246A0D840081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D1A246A0D840081F7CF /* FlexibleHeightBarDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarDemoTests.swift; sourceTree = "<group>"; };
+		00507D1B246A0D840081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D1C246A0D840081F7CF /* FlexibleHeightBarDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = FlexibleHeightBarDemo.xcodeproj; sourceTree = "<group>"; };
+		00507D1F246A0D840081F7CF /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		00507D20246A0D840081F7CF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		00507D21246A0D840081F7CF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		00507D24246A0D840081F7CF /* FlexibleHeightBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarTests.swift; sourceTree = "<group>"; };
+		00507D25246A0D840081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D26246A0D840081F7CF /* FlexibleHeightBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = FlexibleHeightBar.xcodeproj; sourceTree = "<group>"; };
+		00507D2A246A0D840081F7CF /* FlexibleHeightBarSubviewLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarSubviewLayoutAttributes.swift; sourceTree = "<group>"; };
+		00507D2B246A0D840081F7CF /* FlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00507D2C246A0D840081F7CF /* FlexibleHeightBarBehaviorDefiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarBehaviorDefiner.swift; sourceTree = "<group>"; };
+		00507D2D246A0D840081F7CF /* FacebookBarBehaviorDefiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookBarBehaviorDefiner.swift; sourceTree = "<group>"; };
+		00507D2E246A0D840081F7CF /* SquareCashBarBehaviorDefiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashBarBehaviorDefiner.swift; sourceTree = "<group>"; };
+		00507D2F246A0D840081F7CF /* FlexibleHeightBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlexibleHeightBar.h; sourceTree = "<group>"; };
+		00507D30246A0D840081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D31246A0D840081F7CF /* TableViewDelegateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegateHandler.swift; sourceTree = "<group>"; };
+		00507D33246A0D840081F7CF /* SquareCashFlexibleHeightBarDemo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SquareCashFlexibleHeightBarDemo.gif; sourceTree = "<group>"; };
+		00507D34246A0D840081F7CF /* example.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = example.gif; sourceTree = "<group>"; };
+		00507D35246A0D840081F7CF /* FacebookFlexibleHeightBarDemo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = FacebookFlexibleHeightBarDemo.gif; sourceTree = "<group>"; };
+		00507D47246A0D8A0081F7CF /* FlexibleHeightBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarTests.swift; sourceTree = "<group>"; };
+		00507D48246A0D8A0081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D49246A0D8A0081F7CF /* FlexibleHeightBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = FlexibleHeightBar.xcodeproj; sourceTree = "<group>"; };
+		00507D4D246A0D8A0081F7CF /* FlexibleHeightBarSubviewLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarSubviewLayoutAttributes.swift; sourceTree = "<group>"; };
+		00507D4E246A0D8A0081F7CF /* FlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00507D4F246A0D8A0081F7CF /* FlexibleHeightBarBehaviorDefiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarBehaviorDefiner.swift; sourceTree = "<group>"; };
+		00507D50246A0D8A0081F7CF /* FacebookBarBehaviorDefiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookBarBehaviorDefiner.swift; sourceTree = "<group>"; };
+		00507D51246A0D8A0081F7CF /* SquareCashBarBehaviorDefiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashBarBehaviorDefiner.swift; sourceTree = "<group>"; };
+		00507D52246A0D8A0081F7CF /* FlexibleHeightBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlexibleHeightBar.h; sourceTree = "<group>"; };
+		00507D53246A0D8A0081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D54246A0D8A0081F7CF /* TableViewDelegateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegateHandler.swift; sourceTree = "<group>"; };
+		00507D5D246A0D900081F7CF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		00507D5E246A0D900081F7CF /* FlexibleHeightBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FlexibleHeightBar.framework; sourceTree = "<group>"; };
+		00507D5F246A0D900081F7CF /* CALayer+XibConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+XibConfiguration.swift"; sourceTree = "<group>"; };
+		00507D60246A0D900081F7CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		00507D61246A0D900081F7CF /* TableViewDataSourceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceHandler.swift; sourceTree = "<group>"; };
+		00507D62246A0D900081F7CF /* SquareCashStyleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashStyleViewController.swift; sourceTree = "<group>"; };
+		00507D64246A0D900081F7CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		00507D66246A0D900081F7CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		00507D67246A0D900081F7CF /* FacebookStyleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookStyleViewController.swift; sourceTree = "<group>"; };
+		00507D68246A0D900081F7CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		00507D69246A0D900081F7CF /* SquareCashFlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCashFlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00507D6A246A0D900081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D6B246A0D900081F7CF /* FacebookFlexibleHeightBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookFlexibleHeightBar.swift; sourceTree = "<group>"; };
+		00507D6D246A0D900081F7CF /* FlexibleHeightBarDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarDemoUITests.swift; sourceTree = "<group>"; };
+		00507D6E246A0D900081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D70246A0D900081F7CF /* FlexibleHeightBarDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarDemoTests.swift; sourceTree = "<group>"; };
+		00507D71246A0D900081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00507D72246A0D900081F7CF /* FlexibleHeightBarDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = FlexibleHeightBarDemo.xcodeproj; sourceTree = "<group>"; };
 		006D39F7245F78EC00BE4736 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		006D39FB24603C7400BE4736 /* AltUrunSayfasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltUrunSayfasi.swift; sourceTree = "<group>"; };
 		006E373F24533C9000E31FC6 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
@@ -110,6 +331,383 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00253BD3246A038C000A4F18 /* FlexibleHeightBarDemo */ = {
+			isa = PBXGroup;
+			children = (
+				00253BD4246A038C000A4F18 /* ViewController.swift */,
+				00253BD5246A038C000A4F18 /* FlexibleHeightBar.framework */,
+				00253BD6246A038C000A4F18 /* CALayer+XibConfiguration.swift */,
+				00253BD7246A038C000A4F18 /* Assets.xcassets */,
+				00253BD8246A038C000A4F18 /* TableViewDataSourceHandler.swift */,
+				00253BD9246A038C000A4F18 /* SquareCashStyleViewController.swift */,
+				00253BDA246A038C000A4F18 /* LaunchScreen.storyboard */,
+				00253BDC246A038C000A4F18 /* Main.storyboard */,
+				00253BDE246A038C000A4F18 /* FacebookStyleViewController.swift */,
+				00253BDF246A038C000A4F18 /* AppDelegate.swift */,
+				00253BE0246A038C000A4F18 /* SquareCashFlexibleHeightBar.swift */,
+				00253BE1246A038C000A4F18 /* Info.plist */,
+				00253BE2246A038C000A4F18 /* FacebookFlexibleHeightBar.swift */,
+			);
+			name = FlexibleHeightBarDemo;
+			path = "Carthage/Checkouts/Swift-FlexibleHeightBar/FlexibleHeightBarDemo/FlexibleHeightBarDemo";
+			sourceTree = "<group>";
+		};
+		00507CC3246A0D6B0081F7CF /* Swift-FlexibleHeightBar */ = {
+			isa = PBXGroup;
+			children = (
+				00507CC4246A0D6B0081F7CF /* FlexibleHeightBarDemo */,
+				00507CDE246A0D6B0081F7CF /* LICENSE */,
+				00507CDF246A0D6B0081F7CF /* README.md */,
+				00507CE0246A0D6B0081F7CF /* .gitignore */,
+				00507CE1246A0D6B0081F7CF /* FlexibleHeightBar */,
+				00507CF1246A0D6B0081F7CF /* media */,
+			);
+			name = "Swift-FlexibleHeightBar";
+			path = "Carthage/Checkouts/Swift-FlexibleHeightBar";
+			sourceTree = "<group>";
+		};
+		00507CC4246A0D6B0081F7CF /* FlexibleHeightBarDemo */ = {
+			isa = PBXGroup;
+			children = (
+				00507CC5246A0D6B0081F7CF /* FlexibleHeightBarDemo */,
+				00507CD5246A0D6B0081F7CF /* FlexibleHeightBarDemoUITests */,
+				00507CD8246A0D6B0081F7CF /* FlexibleHeightBarDemoTests */,
+				00507CDB246A0D6B0081F7CF /* FlexibleHeightBarDemo.xcodeproj */,
+			);
+			path = FlexibleHeightBarDemo;
+			sourceTree = "<group>";
+		};
+		00507CC5246A0D6B0081F7CF /* FlexibleHeightBarDemo */ = {
+			isa = PBXGroup;
+			children = (
+				00507CC6246A0D6B0081F7CF /* ViewController.swift */,
+				00507CC7246A0D6B0081F7CF /* FlexibleHeightBar.framework */,
+				00507CC8246A0D6B0081F7CF /* CALayer+XibConfiguration.swift */,
+				00507CC9246A0D6B0081F7CF /* Assets.xcassets */,
+				00507CCA246A0D6B0081F7CF /* TableViewDataSourceHandler.swift */,
+				00507CCB246A0D6B0081F7CF /* SquareCashStyleViewController.swift */,
+				00507CCC246A0D6B0081F7CF /* LaunchScreen.storyboard */,
+				00507CCE246A0D6B0081F7CF /* Main.storyboard */,
+				00507CD0246A0D6B0081F7CF /* FacebookStyleViewController.swift */,
+				00507CD1246A0D6B0081F7CF /* AppDelegate.swift */,
+				00507CD2246A0D6B0081F7CF /* SquareCashFlexibleHeightBar.swift */,
+				00507CD3246A0D6B0081F7CF /* Info.plist */,
+				00507CD4246A0D6B0081F7CF /* FacebookFlexibleHeightBar.swift */,
+			);
+			path = FlexibleHeightBarDemo;
+			sourceTree = "<group>";
+		};
+		00507CD5246A0D6B0081F7CF /* FlexibleHeightBarDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				00507CD6246A0D6B0081F7CF /* FlexibleHeightBarDemoUITests.swift */,
+				00507CD7246A0D6B0081F7CF /* Info.plist */,
+			);
+			path = FlexibleHeightBarDemoUITests;
+			sourceTree = "<group>";
+		};
+		00507CD8246A0D6B0081F7CF /* FlexibleHeightBarDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				00507CD9246A0D6B0081F7CF /* FlexibleHeightBarDemoTests.swift */,
+				00507CDA246A0D6B0081F7CF /* Info.plist */,
+			);
+			path = FlexibleHeightBarDemoTests;
+			sourceTree = "<group>";
+		};
+		00507CDC246A0D6B0081F7CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00507CFF246A0D6B0081F7CF /* FlexibleHeightBarDemo.app */,
+				00507D01246A0D6B0081F7CF /* FlexibleHeightBarDemoTests.xctest */,
+				00507D03246A0D6B0081F7CF /* FlexibleHeightBarDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00507CE1246A0D6B0081F7CF /* FlexibleHeightBar */ = {
+			isa = PBXGroup;
+			children = (
+				00507CE2246A0D6B0081F7CF /* FlexibleHeightBarTests */,
+				00507CE5246A0D6B0081F7CF /* FlexibleHeightBar.xcodeproj */,
+				00507CE8246A0D6B0081F7CF /* FlexibleHeightBar */,
+			);
+			path = FlexibleHeightBar;
+			sourceTree = "<group>";
+		};
+		00507CE2246A0D6B0081F7CF /* FlexibleHeightBarTests */ = {
+			isa = PBXGroup;
+			children = (
+				00507CE3246A0D6B0081F7CF /* FlexibleHeightBarTests.swift */,
+				00507CE4246A0D6B0081F7CF /* Info.plist */,
+			);
+			path = FlexibleHeightBarTests;
+			sourceTree = "<group>";
+		};
+		00507CE6246A0D6B0081F7CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00507CF8246A0D6B0081F7CF /* FlexibleHeightBar.framework */,
+				00507CFA246A0D6B0081F7CF /* FlexibleHeightBarTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00507CE8246A0D6B0081F7CF /* FlexibleHeightBar */ = {
+			isa = PBXGroup;
+			children = (
+				00507CE9246A0D6B0081F7CF /* FlexibleHeightBarSubviewLayoutAttributes.swift */,
+				00507CEA246A0D6B0081F7CF /* FlexibleHeightBar.swift */,
+				00507CEB246A0D6B0081F7CF /* FlexibleHeightBarBehaviorDefiner.swift */,
+				00507CEC246A0D6B0081F7CF /* FacebookBarBehaviorDefiner.swift */,
+				00507CED246A0D6B0081F7CF /* SquareCashBarBehaviorDefiner.swift */,
+				00507CEE246A0D6B0081F7CF /* FlexibleHeightBar.h */,
+				00507CEF246A0D6B0081F7CF /* Info.plist */,
+				00507CF0246A0D6B0081F7CF /* TableViewDelegateHandler.swift */,
+			);
+			path = FlexibleHeightBar;
+			sourceTree = "<group>";
+		};
+		00507CF1246A0D6B0081F7CF /* media */ = {
+			isa = PBXGroup;
+			children = (
+				00507CF2246A0D6B0081F7CF /* SquareCashFlexibleHeightBarDemo.gif */,
+				00507CF3246A0D6B0081F7CF /* example.gif */,
+				00507CF4246A0D6B0081F7CF /* FacebookFlexibleHeightBarDemo.gif */,
+			);
+			path = media;
+			sourceTree = "<group>";
+		};
+		00507D04246A0D840081F7CF /* Swift-FlexibleHeightBar */ = {
+			isa = PBXGroup;
+			children = (
+				00507D05246A0D840081F7CF /* FlexibleHeightBarDemo */,
+				00507D1F246A0D840081F7CF /* LICENSE */,
+				00507D20246A0D840081F7CF /* README.md */,
+				00507D21246A0D840081F7CF /* .gitignore */,
+				00507D22246A0D840081F7CF /* FlexibleHeightBar */,
+				00507D32246A0D840081F7CF /* media */,
+			);
+			name = "Swift-FlexibleHeightBar";
+			path = "Carthage/Checkouts/Swift-FlexibleHeightBar";
+			sourceTree = "<group>";
+		};
+		00507D05246A0D840081F7CF /* FlexibleHeightBarDemo */ = {
+			isa = PBXGroup;
+			children = (
+				00507D06246A0D840081F7CF /* FlexibleHeightBarDemo */,
+				00507D16246A0D840081F7CF /* FlexibleHeightBarDemoUITests */,
+				00507D19246A0D840081F7CF /* FlexibleHeightBarDemoTests */,
+				00507D1C246A0D840081F7CF /* FlexibleHeightBarDemo.xcodeproj */,
+			);
+			path = FlexibleHeightBarDemo;
+			sourceTree = "<group>";
+		};
+		00507D06246A0D840081F7CF /* FlexibleHeightBarDemo */ = {
+			isa = PBXGroup;
+			children = (
+				00507D07246A0D840081F7CF /* ViewController.swift */,
+				00507D08246A0D840081F7CF /* FlexibleHeightBar.framework */,
+				00507D09246A0D840081F7CF /* CALayer+XibConfiguration.swift */,
+				00507D0A246A0D840081F7CF /* Assets.xcassets */,
+				00507D0B246A0D840081F7CF /* TableViewDataSourceHandler.swift */,
+				00507D0C246A0D840081F7CF /* SquareCashStyleViewController.swift */,
+				00507D0D246A0D840081F7CF /* LaunchScreen.storyboard */,
+				00507D0F246A0D840081F7CF /* Main.storyboard */,
+				00507D11246A0D840081F7CF /* FacebookStyleViewController.swift */,
+				00507D12246A0D840081F7CF /* AppDelegate.swift */,
+				00507D13246A0D840081F7CF /* SquareCashFlexibleHeightBar.swift */,
+				00507D14246A0D840081F7CF /* Info.plist */,
+				00507D15246A0D840081F7CF /* FacebookFlexibleHeightBar.swift */,
+			);
+			path = FlexibleHeightBarDemo;
+			sourceTree = "<group>";
+		};
+		00507D16246A0D840081F7CF /* FlexibleHeightBarDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				00507D17246A0D840081F7CF /* FlexibleHeightBarDemoUITests.swift */,
+				00507D18246A0D840081F7CF /* Info.plist */,
+			);
+			path = FlexibleHeightBarDemoUITests;
+			sourceTree = "<group>";
+		};
+		00507D19246A0D840081F7CF /* FlexibleHeightBarDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				00507D1A246A0D840081F7CF /* FlexibleHeightBarDemoTests.swift */,
+				00507D1B246A0D840081F7CF /* Info.plist */,
+			);
+			path = FlexibleHeightBarDemoTests;
+			sourceTree = "<group>";
+		};
+		00507D1D246A0D840081F7CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00507D40246A0D840081F7CF /* FlexibleHeightBarDemo.app */,
+				00507D42246A0D840081F7CF /* FlexibleHeightBarDemoTests.xctest */,
+				00507D44246A0D840081F7CF /* FlexibleHeightBarDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00507D22246A0D840081F7CF /* FlexibleHeightBar */ = {
+			isa = PBXGroup;
+			children = (
+				00507D23246A0D840081F7CF /* FlexibleHeightBarTests */,
+				00507D26246A0D840081F7CF /* FlexibleHeightBar.xcodeproj */,
+				00507D29246A0D840081F7CF /* FlexibleHeightBar */,
+			);
+			path = FlexibleHeightBar;
+			sourceTree = "<group>";
+		};
+		00507D23246A0D840081F7CF /* FlexibleHeightBarTests */ = {
+			isa = PBXGroup;
+			children = (
+				00507D24246A0D840081F7CF /* FlexibleHeightBarTests.swift */,
+				00507D25246A0D840081F7CF /* Info.plist */,
+			);
+			path = FlexibleHeightBarTests;
+			sourceTree = "<group>";
+		};
+		00507D27246A0D840081F7CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00507D39246A0D840081F7CF /* FlexibleHeightBar.framework */,
+				00507D3B246A0D840081F7CF /* FlexibleHeightBarTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00507D29246A0D840081F7CF /* FlexibleHeightBar */ = {
+			isa = PBXGroup;
+			children = (
+				00507D2A246A0D840081F7CF /* FlexibleHeightBarSubviewLayoutAttributes.swift */,
+				00507D2B246A0D840081F7CF /* FlexibleHeightBar.swift */,
+				00507D2C246A0D840081F7CF /* FlexibleHeightBarBehaviorDefiner.swift */,
+				00507D2D246A0D840081F7CF /* FacebookBarBehaviorDefiner.swift */,
+				00507D2E246A0D840081F7CF /* SquareCashBarBehaviorDefiner.swift */,
+				00507D2F246A0D840081F7CF /* FlexibleHeightBar.h */,
+				00507D30246A0D840081F7CF /* Info.plist */,
+				00507D31246A0D840081F7CF /* TableViewDelegateHandler.swift */,
+			);
+			path = FlexibleHeightBar;
+			sourceTree = "<group>";
+		};
+		00507D32246A0D840081F7CF /* media */ = {
+			isa = PBXGroup;
+			children = (
+				00507D33246A0D840081F7CF /* SquareCashFlexibleHeightBarDemo.gif */,
+				00507D34246A0D840081F7CF /* example.gif */,
+				00507D35246A0D840081F7CF /* FacebookFlexibleHeightBarDemo.gif */,
+			);
+			path = media;
+			sourceTree = "<group>";
+		};
+		00507D45246A0D8A0081F7CF /* FlexibleHeightBar */ = {
+			isa = PBXGroup;
+			children = (
+				00507D46246A0D8A0081F7CF /* FlexibleHeightBarTests */,
+				00507D49246A0D8A0081F7CF /* FlexibleHeightBar.xcodeproj */,
+				00507D4C246A0D8A0081F7CF /* FlexibleHeightBar */,
+			);
+			name = FlexibleHeightBar;
+			path = "Carthage/Checkouts/Swift-FlexibleHeightBar/FlexibleHeightBar";
+			sourceTree = "<group>";
+		};
+		00507D46246A0D8A0081F7CF /* FlexibleHeightBarTests */ = {
+			isa = PBXGroup;
+			children = (
+				00507D47246A0D8A0081F7CF /* FlexibleHeightBarTests.swift */,
+				00507D48246A0D8A0081F7CF /* Info.plist */,
+			);
+			path = FlexibleHeightBarTests;
+			sourceTree = "<group>";
+		};
+		00507D4A246A0D8A0081F7CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00507D58246A0D8A0081F7CF /* FlexibleHeightBar.framework */,
+				00507D5A246A0D8A0081F7CF /* FlexibleHeightBarTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00507D4C246A0D8A0081F7CF /* FlexibleHeightBar */ = {
+			isa = PBXGroup;
+			children = (
+				00507D4D246A0D8A0081F7CF /* FlexibleHeightBarSubviewLayoutAttributes.swift */,
+				00507D4E246A0D8A0081F7CF /* FlexibleHeightBar.swift */,
+				00507D4F246A0D8A0081F7CF /* FlexibleHeightBarBehaviorDefiner.swift */,
+				00507D50246A0D8A0081F7CF /* FacebookBarBehaviorDefiner.swift */,
+				00507D51246A0D8A0081F7CF /* SquareCashBarBehaviorDefiner.swift */,
+				00507D52246A0D8A0081F7CF /* FlexibleHeightBar.h */,
+				00507D53246A0D8A0081F7CF /* Info.plist */,
+				00507D54246A0D8A0081F7CF /* TableViewDelegateHandler.swift */,
+			);
+			path = FlexibleHeightBar;
+			sourceTree = "<group>";
+		};
+		00507D5B246A0D900081F7CF /* FlexibleHeightBarDemo */ = {
+			isa = PBXGroup;
+			children = (
+				00507D5C246A0D900081F7CF /* FlexibleHeightBarDemo */,
+				00507D6C246A0D900081F7CF /* FlexibleHeightBarDemoUITests */,
+				00507D6F246A0D900081F7CF /* FlexibleHeightBarDemoTests */,
+				00507D72246A0D900081F7CF /* FlexibleHeightBarDemo.xcodeproj */,
+			);
+			name = FlexibleHeightBarDemo;
+			path = "Carthage/Checkouts/Swift-FlexibleHeightBar/FlexibleHeightBarDemo";
+			sourceTree = "<group>";
+		};
+		00507D5C246A0D900081F7CF /* FlexibleHeightBarDemo */ = {
+			isa = PBXGroup;
+			children = (
+				00507D5D246A0D900081F7CF /* ViewController.swift */,
+				00507D5E246A0D900081F7CF /* FlexibleHeightBar.framework */,
+				00507D5F246A0D900081F7CF /* CALayer+XibConfiguration.swift */,
+				00507D60246A0D900081F7CF /* Assets.xcassets */,
+				00507D61246A0D900081F7CF /* TableViewDataSourceHandler.swift */,
+				00507D62246A0D900081F7CF /* SquareCashStyleViewController.swift */,
+				00507D63246A0D900081F7CF /* LaunchScreen.storyboard */,
+				00507D65246A0D900081F7CF /* Main.storyboard */,
+				00507D67246A0D900081F7CF /* FacebookStyleViewController.swift */,
+				00507D68246A0D900081F7CF /* AppDelegate.swift */,
+				00507D69246A0D900081F7CF /* SquareCashFlexibleHeightBar.swift */,
+				00507D6A246A0D900081F7CF /* Info.plist */,
+				00507D6B246A0D900081F7CF /* FacebookFlexibleHeightBar.swift */,
+			);
+			path = FlexibleHeightBarDemo;
+			sourceTree = "<group>";
+		};
+		00507D6C246A0D900081F7CF /* FlexibleHeightBarDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				00507D6D246A0D900081F7CF /* FlexibleHeightBarDemoUITests.swift */,
+				00507D6E246A0D900081F7CF /* Info.plist */,
+			);
+			path = FlexibleHeightBarDemoUITests;
+			sourceTree = "<group>";
+		};
+		00507D6F246A0D900081F7CF /* FlexibleHeightBarDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				00507D70246A0D900081F7CF /* FlexibleHeightBarDemoTests.swift */,
+				00507D71246A0D900081F7CF /* Info.plist */,
+			);
+			path = FlexibleHeightBarDemoTests;
+			sourceTree = "<group>";
+		};
+		00507D73246A0D900081F7CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00507D79246A0D900081F7CF /* FlexibleHeightBarDemo.app */,
+				00507D7B246A0D900081F7CF /* FlexibleHeightBarDemoTests.xctest */,
+				00507D7D246A0D900081F7CF /* FlexibleHeightBarDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		0073F4A324551D8300AD8095 /* ProfilBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +849,12 @@
 		27306DFEF739D783EB8FA00F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				00507D5B246A0D900081F7CF /* FlexibleHeightBarDemo */,
+				00507D45246A0D8A0081F7CF /* FlexibleHeightBar */,
+				00507CC3246A0D6B0081F7CF /* Swift-FlexibleHeightBar */,
+				00507D04246A0D840081F7CF /* Swift-FlexibleHeightBar */,
+				00253BE3246A08FD000A4F18 /* Alamofire.framework */,
+				00253BD3246A038C000A4F18 /* FlexibleHeightBarDemo */,
 				6C52F0BB40B6700FF74046F4 /* Pods_Market_indirimleri.framework */,
 			);
 			name = Frameworks;
@@ -313,12 +917,146 @@
 			mainGroup = 008DEE042451F9E8003ACEB2;
 			productRefGroup = 008DEE0E2451F9E9003ACEB2 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 00507D27246A0D840081F7CF /* Products */;
+					ProjectRef = 00507D26246A0D840081F7CF /* FlexibleHeightBar.xcodeproj */;
+				},
+				{
+					ProductGroup = 00507D4A246A0D8A0081F7CF /* Products */;
+					ProjectRef = 00507D49246A0D8A0081F7CF /* FlexibleHeightBar.xcodeproj */;
+				},
+				{
+					ProductGroup = 00507CE6246A0D6B0081F7CF /* Products */;
+					ProjectRef = 00507CE5246A0D6B0081F7CF /* FlexibleHeightBar.xcodeproj */;
+				},
+				{
+					ProductGroup = 00507D73246A0D900081F7CF /* Products */;
+					ProjectRef = 00507D72246A0D900081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+				},
+				{
+					ProductGroup = 00507CDC246A0D6B0081F7CF /* Products */;
+					ProjectRef = 00507CDB246A0D6B0081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+				},
+				{
+					ProductGroup = 00507D1D246A0D840081F7CF /* Products */;
+					ProjectRef = 00507D1C246A0D840081F7CF /* FlexibleHeightBarDemo.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				008DEE0C2451F9E9003ACEB2 /* Market indirimleri */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		00507CF8246A0D6B0081F7CF /* FlexibleHeightBar.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FlexibleHeightBar.framework;
+			remoteRef = 00507CF7246A0D6B0081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507CFA246A0D6B0081F7CF /* FlexibleHeightBarTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlexibleHeightBarTests.xctest;
+			remoteRef = 00507CF9246A0D6B0081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507CFF246A0D6B0081F7CF /* FlexibleHeightBarDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FlexibleHeightBarDemo.app;
+			remoteRef = 00507CFE246A0D6B0081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D01246A0D6B0081F7CF /* FlexibleHeightBarDemoTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlexibleHeightBarDemoTests.xctest;
+			remoteRef = 00507D00246A0D6B0081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D03246A0D6B0081F7CF /* FlexibleHeightBarDemoUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlexibleHeightBarDemoUITests.xctest;
+			remoteRef = 00507D02246A0D6B0081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D39246A0D840081F7CF /* FlexibleHeightBar.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FlexibleHeightBar.framework;
+			remoteRef = 00507D38246A0D840081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D3B246A0D840081F7CF /* FlexibleHeightBarTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlexibleHeightBarTests.xctest;
+			remoteRef = 00507D3A246A0D840081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D40246A0D840081F7CF /* FlexibleHeightBarDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FlexibleHeightBarDemo.app;
+			remoteRef = 00507D3F246A0D840081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D42246A0D840081F7CF /* FlexibleHeightBarDemoTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlexibleHeightBarDemoTests.xctest;
+			remoteRef = 00507D41246A0D840081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D44246A0D840081F7CF /* FlexibleHeightBarDemoUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlexibleHeightBarDemoUITests.xctest;
+			remoteRef = 00507D43246A0D840081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D58246A0D8A0081F7CF /* FlexibleHeightBar.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FlexibleHeightBar.framework;
+			remoteRef = 00507D57246A0D8A0081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D5A246A0D8A0081F7CF /* FlexibleHeightBarTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlexibleHeightBarTests.xctest;
+			remoteRef = 00507D59246A0D8A0081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D79246A0D900081F7CF /* FlexibleHeightBarDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FlexibleHeightBarDemo.app;
+			remoteRef = 00507D78246A0D900081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D7B246A0D900081F7CF /* FlexibleHeightBarDemoTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlexibleHeightBarDemoTests.xctest;
+			remoteRef = 00507D7A246A0D900081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00507D7D246A0D900081F7CF /* FlexibleHeightBarDemoUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlexibleHeightBarDemoUITests.xctest;
+			remoteRef = 00507D7C246A0D900081F7CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		008DEE0B2451F9E9003ACEB2 /* Resources */ = {
@@ -423,6 +1161,70 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		00253BDA246A038C000A4F18 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				00253BDB246A038C000A4F18 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		00253BDC246A038C000A4F18 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				00253BDD246A038C000A4F18 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		00507CCC246A0D6B0081F7CF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				00507CCD246A0D6B0081F7CF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		00507CCE246A0D6B0081F7CF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				00507CCF246A0D6B0081F7CF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		00507D0D246A0D840081F7CF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				00507D0E246A0D840081F7CF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		00507D0F246A0D840081F7CF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				00507D10246A0D840081F7CF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		00507D63246A0D900081F7CF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				00507D64246A0D900081F7CF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		00507D65246A0D900081F7CF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				00507D66246A0D900081F7CF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		008DEE162451F9E9003ACEB2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -563,6 +1365,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 695LGZ67Y9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Swift-FlexibleHeightBar/FlexibleHeightBarDemo/FlexibleHeightBarDemo",
+				);
 				INFOPLIST_FILE = "Market indirimleri/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -582,6 +1389,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 695LGZ67Y9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Swift-FlexibleHeightBar/FlexibleHeightBarDemo/FlexibleHeightBarDemo",
+				);
 				INFOPLIST_FILE = "Market indirimleri/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

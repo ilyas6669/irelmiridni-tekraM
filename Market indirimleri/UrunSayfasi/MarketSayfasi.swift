@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class MarketSayfasi: UIViewController {
     
     lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height+1000)
@@ -123,14 +125,17 @@ class MarketSayfasi: UIViewController {
     
     var itemid = ""
     
-  
+  var marketlist = [Market]()
+    
+    
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
+          veriCekUrun()
         
-        
+       
         let ortaViewSV = UIStackView(arrangedSubviews: [lblAciklama,searchBar])
         ortaViewSV.axis = .vertical
         ortaViewSV.spacing = 0
@@ -161,14 +166,52 @@ class MarketSayfasi: UIViewController {
         
         _ = urunlerCollectionView.anchor(top: ortaViewSV.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         
-     
       
-        
+     
         
     }
     
-   
-   
+    func veriCekUrun() {
+        
+        print("Nicatalibli:\(itemid)")
+        let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(itemid)?format=json"
+        guard let url = URL(string: jsonUrlString) else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //perhaps check err
+            guard let data = data else {return}
+            
+            do {
+                
+                let welcomee = try JSONDecoder().decode(SingleMarket.self, from: data)
+                
+                DispatchQueue.main.async {
+                    
+                  
+                    
+                        self.marketlist = welcomee.results
+                    self.lblAciklama.text = self.marketlist[0].name
+                    //self.imgUrun.sd_setImage(with: URL(string: "\(welcomee.image.imageDefault)"))
+                    
+                    
+                }
+                
+                
+                
+                
+                
+            } catch let jsonError {
+                print("Error serializing json:", jsonError)
+                
+                
+            }
+            
+            
+        }.resume()
+        
+    }
+    
+    
     
     
     @objc func btnLeftAction() {
@@ -179,7 +222,7 @@ class MarketSayfasi: UIViewController {
         print("favori")
     }
     
-   
+    
     
     
     

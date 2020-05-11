@@ -12,8 +12,8 @@ import SDWebImage
 
 class BegendigimMarketler: UIViewController {
     
-    var countryList = [Resultt]()
-    var idArray = [String]()
+    var countryList = [SingleStore]()
+    var idArray = [Int]()
     
     //MARK: properties
     let viewTop : UIView = {
@@ -43,13 +43,13 @@ class BegendigimMarketler: UIViewController {
     let marketlerTableView = UITableView()
     
     var activityIndicator : UIActivityIndicatorView = {
-           var indicator = UIActivityIndicatorView()
-           indicator.hidesWhenStopped = true
-           indicator.style = .medium
-           indicator.color = .black
-           indicator.translatesAutoresizingMaskIntoConstraints = false
-           return indicator
-       }()
+        var indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.style = .medium
+        indicator.color = .black
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +85,7 @@ class BegendigimMarketler: UIViewController {
         
         activityIndicator.startAnimating()
         
+        veriCekMarket()
         
         
     }
@@ -96,27 +97,53 @@ class BegendigimMarketler: UIViewController {
         
     }
     
-  
     
-    func veriCekMarket() {
+    func veriCekMarket(){
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
         fetchRequest.returnsObjectsAsFaults = false
         
-        var selectcounrty = ""
+        countryList.removeAll(keepingCapacity: false)
         
         do {
             let results = try context.fetch(fetchRequest)
             
             for result in results as! [NSManagedObject] {
                 if let id = result.value(forKey: "id") as? String {
-                    self.idArray.append(id)
-                }
-                if let name = result.value(forKey: "name") as? String {
-                    selectcounrty = name
+                    
+                    let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(id)?format=json"
+                    guard let url = URL(string: jsonUrlString) else {return}
+                    
+                    URLSession.shared.dataTask(with: url) { (data, response, error) in
+                        //perhaps check err
+                        guard let data = data else {return}
+                        
+                        do {
+                            
+                            let singlestore = try JSONDecoder().decode(SingleStore.self, from: data)
+                            
+                            DispatchQueue.main.async {
+                                
+                                
+                                self.countryList.append(singlestore)
+                                self.countryList.reverse()
+                                self.marketlerTableView.reloadData()
+                                self.activityIndicator.stopAnimating()
+                                
+                            }
+                            
+                            
+                            
+                        } catch let jsonError {
+                            print("Error serializing json:", jsonError)
+                            
+                            
+                        }
+                        
+                    }.resume()
+                    
                 }
             }
             
@@ -124,44 +151,9 @@ class BegendigimMarketler: UIViewController {
             print("error")
         }
         
-        let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
-        guard let url = URL(string: jsonUrlString) else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            //perhaps check err
-            guard let data = data else {return}
-            do {
-                
-                let welcome = try JSONDecoder().decode(Welcome.self, from: data)
-                
-                DispatchQueue.main.async {
-                    
-                    for n in welcome.results {
-                        
-                        if n.cities.contains(Int(self.idArray.last!)!) {
-                            self.countryList.append(n)
-                            
-                            
-                        }
-                        
-                    }
-                   
-                   self.countryList.shuffle()
-                   self.marketlerTableView.reloadData()
-                   self.activityIndicator.stopAnimating()
-                   
-                    
-                }
-                
-                
-            } catch let jsonError {
-                print("Error serializing json:", jsonError)
-            }
-        }.resume()
-        
-        
-        
     }
+    
+    
     
     
     

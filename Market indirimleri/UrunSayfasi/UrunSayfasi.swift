@@ -129,7 +129,7 @@ class UrunSayfasi: UIViewController {
         altView.addSubview(lblSV)
         
         
-        _ = ustView.anchor(top: view.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = ustView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = imgUrun.anchor(top: ustView.topAnchor, bottom: ustView.bottomAnchor, leading: ustView.leadingAnchor, trailing: ustView.trailingAnchor)
         _ = btnLeft.anchor(top: ustView.topAnchor, bottom: nil, leading: ustView.leadingAnchor, trailing: nil,padding: .init(top: 45, left: 10, bottom: 0, right: 0))
          _ = btnFavori.anchor(top: ustView.topAnchor, bottom: nil, leading: nil, trailing: ustView.trailingAnchor,padding: .init(top: 45, left: 0, bottom: 0, right: 10))
@@ -168,9 +168,7 @@ class UrunSayfasi: UIViewController {
     
     
     func veriCekUrun() {
-              //bular lazim deyil coredatadan vericekmek idi onlar billem sielecehdim cox gozel
               
-        
                 print("Nicatalibli:\(itemid)")
               let jsonUrlString = "https://marketindirimleri.com/api/v1/products/\(itemid)?format=json"
               guard let url = URL(string: jsonUrlString) else {return}
@@ -183,26 +181,18 @@ class UrunSayfasi: UIViewController {
                                   
                       let welcomee = try JSONDecoder().decode(SingleProduct.self, from: data)
                    
-                    
-                    
-                  
-                    
                       DispatchQueue.main.async {
                         
                         self.lblIsim.text = welcomee.name
                         self.lblFiyat.text = welcomee.price
                         self.lblAciklama.text = welcomee.detail
                         
-                       
-                       
                         self.imgUrun.sd_setImage(with: URL(string: "\(welcomee.image.imageDefault)"))
                          
                           
                       }
                       
-                      
-                      
-                              
+                             
                       
                   } catch let jsonError {
                       print("Error serializing json:", jsonError)
