@@ -10,6 +10,21 @@ import UIKit
 import CoreData
 import SDWebImage
 
+extension SearchBar : UIGestureRecognizerDelegate {
+
+func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    if touch.view?.isDescendant(of: self.marketlerTableView) == true {
+        return false
+    } else if
+        touch.view?.isDescendant(of: self.urunlerTableView) == true {
+        return false
+    } else {
+        view.endEditing(true)
+        return true
+    }
+}
+}
+
 class SearchBar: UIViewController{
     
     //MARK: Control
@@ -142,8 +157,6 @@ class SearchBar: UIViewController{
         super.viewDidLoad()
         
         
-        
-        
         view.backgroundColor = .customYellow()
         
         //MARK: addSubview
@@ -217,7 +230,9 @@ class SearchBar: UIViewController{
         visualEffectView.alpha = 0
         
         let gestureREcongizer = UITapGestureRecognizer(target: self, action: #selector(handleDismissal))
+         gestureREcongizer.delegate = self
         view.addGestureRecognizer(gestureREcongizer)
+       
         
         //        let gestureREcongizer2 = UITapGestureRecognizer(target: self, action: #selector(handleDismissal2))
         //        view.addGestureRecognizer(gestureREcongizer2)
@@ -262,6 +277,7 @@ class SearchBar: UIViewController{
     }
     
     @objc func handleDismissal() {
+        view.endEditing(true)
         viewSetting.isHidden = true
         UIView.animate(withDuration: 0.3, animations: {
             self.aramaPop.alpha = 0
@@ -402,7 +418,6 @@ class SearchBar: UIViewController{
     
     
 }
-
 
 
 extension SearchBar : UITableViewDataSource,UITableViewDelegate {
@@ -684,6 +699,29 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
     }
     
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == marketlerTableView {
+            
+            let storeid = storeList[indexPath.row]
+            
+            let urunSayfasi = MarketSayfasi()
+            urunSayfasi.itemid = "\(storeid)"
+            urunSayfasi.modalPresentationStyle = .fullScreen
+            present(urunSayfasi, animated: true, completion: nil)
+            
+        }else{
+            
+            let productid =  productList[indexPath.row].id
+            
+            let urunSayfasi = UrunSayfasi()
+            urunSayfasi.itemid = "\(productid)"
+            urunSayfasi.modalPresentationStyle = .fullScreen
+            present(urunSayfasi, animated: true, completion: nil)
+           
+        }
+    }
+    
+    
 }
 
 extension SearchBar : UIPickerViewDelegate,UIPickerViewDataSource {
@@ -730,3 +768,5 @@ extension SearchBar : UISearchBarDelegate {
     }
     
 }
+
+

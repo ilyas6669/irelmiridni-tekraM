@@ -371,6 +371,7 @@ class HomeBar: UIViewController {
     }
     
     func veriCekUrun() {
+        //Deyirdin favori olanda nese deyisilecehhh ana seyfede....
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
               let context = appDelegate.persistentContainer.viewContext
@@ -485,9 +486,30 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             }
             //
             let cell2 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
-            cell2.lblIsim.text = countryList2[indexPath.row].name
+            //cell2.lblIsim.text = countryList2[indexPath.row].name
             cell2.lblFiyat.text = countryList2[indexPath.row].price
             cell2.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
+            
+        
+            //"2020-05-13"
+            let isoDate = countryList2[indexPath.row].validDates[1]
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let date = dateFormatter.date(from:isoDate)
+                      
+            let currentdate = Date()
+          
+            var counter = datesRange(from: currentdate, to: date!).count
+            if counter == 0 {
+                cell2.lblIsim.text = "Bugün son gün!"
+            }else if counter > 0 {
+                cell2.lblIsim.text = "\(counter) gün kaldı"
+            }else {
+                cell2.lblIsim.text = "Bitti"
+            }
+                
+         
             
             let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
             let url = URL(string: jsonUrlString)
@@ -517,7 +539,8 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.marketCollectionView {
-            let storeid = countryList[indexPath.row]
+            
+            let storeid = countryList[indexPath.row].id
             
             let urunSayfasi = MarketSayfasi()
             urunSayfasi.itemid = "\(storeid)"
@@ -537,7 +560,21 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
         
     }
     
-    
+    func datesRange(from: Date, to: Date) -> [Date] {
+           // in case of the "from" date is more than "to" date,
+           // it should returns an empty array:
+           if from > to { return [Date]() }
+           
+           var tempDate = from
+           var array = [tempDate]
+           
+           while tempDate < to {
+               tempDate = Calendar.current.date(byAdding: .day, value: 1, to: tempDate)!
+               array.append(tempDate)
+           }
+           
+           return array
+       }
     
 }
 

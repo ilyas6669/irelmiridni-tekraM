@@ -231,9 +231,9 @@ class ProfilBar: UIViewController {
         
         
         
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleDismissal))
-//        //tap.delegate = self
-//        view.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleDismissal))
+        //tap.delegate = self
+        view.addGestureRecognizer(tap)
         
         view.addSubview(visualEffectView)
         visualEffectView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -436,6 +436,17 @@ class ProfilBar: UIViewController {
         }
         
     }
+    
+    @objc func handleDismissal() {
+           view.endEditing(true)
+           UIView.animate(withDuration: 0.3, animations: {
+               self.selectCityPop.alpha = 0
+               self.visualEffectView.alpha = 0
+               self.selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+           }) { (_) in
+               self.selectCityPop.removeFromSuperview()
+           }
+       }
     
 
     

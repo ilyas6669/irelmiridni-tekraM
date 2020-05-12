@@ -23,8 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //              window?.rootViewController = signUp
 
 
-        
-        
         let viewController = SplashView()
         window?.rootViewController = viewController
         

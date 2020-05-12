@@ -85,9 +85,11 @@ class BegendigimMarketler: UIViewController {
         
         activityIndicator.startAnimating()
         
-        veriCekMarket()
-        
-        
+        //searchbara yazilan soz query di yaxciii opurrr o seyide eliyey ? ana seyfede nece gul qaldi ne???
+        //demirdin revizede ana seyfede urunde nece gul qaldigi yazir he hee birde deirdine faovriye nese atanda haraxa deyisirrr
+        //oo 2 defe basmag idi  ahaha onun tempi var yetm internet cox pids idpsipisdi sizdendi beeeke bilmirem gir ana seyfeni collectionviewsina 
+        // "https://marketindirimleri.com/api/v1/products/?store=\(storeid)&q=\(query)&format=json";
+      
     }
     
     func duzenleCollectionView() {
@@ -112,6 +114,9 @@ class BegendigimMarketler: UIViewController {
             
             for result in results as! [NSManagedObject] {
                 if let id = result.value(forKey: "id") as? String {
+                    
+                    print("Nicatalibli:\(id)")
+                    //bu niye isdemir duz seyfedi baxmmm he he men yuxari basiridm
                     
                     let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(id)?format=json"
                     guard let url = URL(string: jsonUrlString) else {return}
@@ -201,5 +206,13 @@ extension BegendigimMarketler : UITableViewDataSource,UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storeid = countryList[indexPath.row]
+        let urunSayfasi = MarketSayfasi()
+        urunSayfasi.itemid = "\(storeid)"
+        urunSayfasi.modalPresentationStyle = .fullScreen
+        present(urunSayfasi, animated: true, completion: nil)
+    }
     
+   
 }
