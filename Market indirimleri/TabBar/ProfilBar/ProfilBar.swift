@@ -16,9 +16,32 @@ class ProfilBar: UIViewController {
     
     var countryList2 = [Resulttt]()
     var countryList3 = [SingleProduct]()
+    var countryList4 = [SingleStore]()
     
     
     //MARK: properties
+    
+    lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+    
+    lazy var scrolView: UIScrollView = {
+        let view = UIScrollView(frame: .zero)
+        view.backgroundColor = .customYellow()
+        view.frame = self.view.bounds
+        view.contentSize = contentViewSize
+        view.autoresizingMask = .flexibleHeight
+        view.showsHorizontalScrollIndicator = true
+        view.bounces = true
+        return view
+    }()
+    
+    lazy var containerView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .rgb(red: 0, green: 38, blue: 26)
+        view.frame.size = contentViewSize
+        return view
+    }()
+    
+    
     let viewTop : UIView = {
         let view = UIView()
         view.backgroundColor = .customYellow()
@@ -160,6 +183,8 @@ class ProfilBar: UIViewController {
         return lbl
     }()
     
+     var refreshControl : UIRefreshControl!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,6 +194,7 @@ class ProfilBar: UIViewController {
         veriCekUrun()
         veriCekMarket()
         lblBegendigimUrunDeyis()
+        lblBegendigimMarketDeyis()
         
     }
     
@@ -187,13 +213,15 @@ class ProfilBar: UIViewController {
         btn2SV.spacing = 15
         
         //MARK: addSubview
-        view.addSubview(viewTop)
+        view.addSubview(scrolView)
+        scrolView.addSubview(containerView)
+        containerView.addSubview(viewTop)
         viewTop.addSubview(lblTop)
-        view.addSubview(ustView)
+        containerView.addSubview(ustView)
         ustView.addSubview(btnSehir)
-        view.addSubview(altView)
+        containerView.addSubview(altView)
         altView.addSubview(btnSV)
-        view.addSubview(altView2)
+        containerView.addSubview(altView2)
         altView2.addSubview(btn2SV)
         btnBegendigimMarket.addSubview(imgBegendigimMarket)
         btnBegendigimMarket.addSubview(lblBegendigimMarket)
@@ -201,19 +229,19 @@ class ProfilBar: UIViewController {
         btnBegendigimUrun.addSubview(lblBegendigimUrun)
         
         //MARK: constraint
-        _ = viewTop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = viewTop.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         
         lblTop.merkezKonumlamdirmaSuperView()
         
-        _ = ustView.anchor(top: viewTop.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = ustView.anchor(top: viewTop.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         
         btnSehir.merkezKonumlamdirmaSuperView()
         
-        _ = altView.anchor(top: ustView.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = altView.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         
         _ = btnSV.anchor(top: altView.topAnchor, bottom: altView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
         
-        _ = altView2.anchor(top: altView.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = altView2.anchor(top: altView.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: view.trailingAnchor)
         
         _ = btn2SV.anchor(top: altView.bottomAnchor, bottom: nil, leading: altView2.leadingAnchor, trailing: altView2.trailingAnchor,padding: .init(top: 20, left: 10, bottom: 0, right: 10))
         
@@ -231,9 +259,9 @@ class ProfilBar: UIViewController {
         
         
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleDismissal))
-        //tap.delegate = self
-        view.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+//        //tap.delegate = self
+//        view.addGestureRecognizer(tap)
         
         view.addSubview(visualEffectView)
         visualEffectView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -242,8 +270,47 @@ class ProfilBar: UIViewController {
         visualEffectView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         visualEffectView.alpha = 0
         
+        refreshControlAction()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        
         
     }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @objc func keyboardWillChange(notification:Notification) {
+       
+        
+    }
+    
+  
+    
+    func refreshControlAction() {
+          
+          scrolView.alwaysBounceVertical = true
+          scrolView.bounces = true
+          refreshControl = UIRefreshControl()
+          refreshControl.tintColor = .white
+          refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+          self.scrolView.addSubview(refreshControl)
+          
+      }
+    
+    @objc func didPullToRefresh() {
+          refreshControl.endRefreshing()
+          veriCekUrun()
+        veriCekMarket()
+        lblBegendigimUrunDeyis()
+        lblBegendigimMarketDeyis()
+          
+      }
     
     
     func veriCekMarket() {
@@ -363,6 +430,63 @@ class ProfilBar: UIViewController {
         
     }
     
+    func lblBegendigimMarketDeyis() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        countryList4.removeAll(keepingCapacity: false)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? String {
+                    
+                    let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(id)?format=json"
+                    guard let url = URL(string: jsonUrlString) else {return}
+                    
+                    URLSession.shared.dataTask(with: url) { (data, response, error) in
+                              //perhaps check err
+                              guard let data = data else {return}
+                              
+                              do {
+                                  
+                                  let singleproduct = try JSONDecoder().decode(SingleStore.self, from: data)
+                                  
+                                  DispatchQueue.main.async {
+                                      
+                                    self.countryList4.append(singleproduct)
+                                    self.countryList4.reverse()
+                                      self.lblBegendigimMarket.text = "\(self.countryList4.count)"
+                                    
+                                      
+                                  }
+                                  
+                                  
+                                  
+                              } catch let jsonError {
+                                  print("Error serializing json:", jsonError)
+                                  
+                                  
+                              }
+                              
+                          }.resume()
+                          
+                    
+                    
+                }
+            }
+            
+        } catch {
+            print("error")
+        }
+        
+        
+    }
+    
+    
     
     func lblBegendigimUrunDeyis() {
               let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -426,7 +550,7 @@ class ProfilBar: UIViewController {
     @objc func btnSehirSecAction() {
         view.addSubview(selectCityPop)
         self.selectCityPop.sehirTableView.separatorColor = .white
-        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 40, left: 20, bottom: 40, right: 20))
+        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 40, left: 20, bottom: 20, right: 20))
         selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         selectCityPop.alpha = 0
         UIView.animate(withDuration: 0.5) {

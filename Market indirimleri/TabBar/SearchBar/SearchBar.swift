@@ -146,19 +146,68 @@ class SearchBar: UIViewController{
         return refreshControl
     }()
     
+    let visualEffectView2 : UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let view = UIVisualEffectView(effect: blurEffect)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     let imgRight : UIImageView = {
-       let img = UIImageView(image: UIImage(named: "ic_uparrow_right_long_white"))
+        let img = UIImageView(image: UIImage(named: "ic_uparrow_right_long_white"))
         img.heightAnchor.constraint(equalToConstant: 300).isActive = true
         img.widthAnchor.constraint(equalToConstant: 50).isActive = true
         return img
     }()
     
+    let lblRight : UILabel = {
+       let lbl = UILabel()
+        lbl.text = "ARAMA TERCİHİ ŞANSI"
+        lbl.textColor = .white
+        lbl.textAlignment = .center
+        lbl.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 24)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
+    
+    let imgLeft : UIImageView = {
+        let img = UIImageView(image: UIImage(named: "ic_uparrow_left_long_white"))
+        img.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        img.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        return img
+    }()
+    
+    let lblLeft : UILabel = {
+          let lbl = UILabel()
+           lbl.text = "ŞEHİR TERCİHİ ŞANSI"
+           lbl.textColor = .white
+           lbl.textAlignment = .center
+           lbl.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 24)
+           lbl.translatesAutoresizingMaskIntoConstraints = false
+           return lbl
+       }()
+    
+    var tamamid = ""
+    
+    let btnTamam : UIButton = {
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = .customYellow()
+        btn.setTitle("TAMAM", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.addTarget(self, action: #selector(tamamBtnAction), for: .touchUpInside)
+        return btn
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         view.backgroundColor = .customYellow()
         
+        
+       
         //MARK: addSubview
         view.addSubview(viewTop)
         viewTop.addSubview(lblTop)
@@ -174,8 +223,7 @@ class SearchBar: UIViewController{
         viewSetting.addSubview(pickerView)
         searchBar.addSubview(activityIndicator)
        
-//        view.addSubview(imgRight)
-//        _ = imgRight.anchor(top: btnTopSetting.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor)
+
         
         
         //viewSetting.merkezKonumlamdirmaSuperView()
@@ -241,8 +289,120 @@ class SearchBar: UIViewController{
         pickerView.delegate = self
         searchBar.delegate = self
         
-        
         aramaPop.btnTamam.addTarget(self, action: #selector(btnTamamAction), for: .touchUpInside)
+        
+        
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SearchBardialog")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        var selectedid = ""
+        var datacontrol = false
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? String {
+                    selectedid = id
+                    datacontrol = true
+                }
+            }
+            
+            if datacontrol{ ///kayit olub
+                visualEffectView2.alpha = 0
+                lblLeft.isHidden = true
+                lblRight.isHidden = true
+                imgRight.isHidden = true
+                imgLeft.isHidden = true
+                btnTamam.isHidden = true
+                
+                
+            }else{ ///kayit olmuyub
+                
+                view.addSubview(visualEffectView2)
+                _ = visualEffectView2.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+                visualEffectView2.alpha = 0.3
+                
+                view.addSubview(imgRight)
+                _ = imgRight.anchor(top: btnTopSetting.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 5, left: 0, bottom: 0, right: 5))
+                
+                view.addSubview(lblRight)
+                _ = lblRight.anchor(top: imgRight.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 5, left: 0, bottom: 0, right: 5))
+                
+                view.addSubview(imgLeft)
+                _ = imgLeft.anchor(top: btnTopLeft.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 10, bottom: 0, right: 0))
+                
+                view.addSubview(lblLeft)
+                _ = lblLeft.anchor(top: imgLeft.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
+                
+                view.addSubview(btnTamam)
+                _ = btnTamam.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 25, bottom: 10, right: 25))
+                
+                
+                view.addSubview(visualEffectView2)
+                _ = visualEffectView2.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+                visualEffectView2.alpha = 0.3
+                
+                view.addSubview(imgRight)
+                _ = imgRight.anchor(top: btnTopSetting.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 5, left: 0, bottom: 0, right: 5))
+                
+                view.addSubview(lblRight)
+                _ = lblRight.anchor(top: imgRight.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 5, left: 0, bottom: 0, right: 5))
+                
+                view.addSubview(imgLeft)
+                _ = imgLeft.anchor(top: btnTopLeft.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 10, bottom: 0, right: 0))
+                
+                view.addSubview(lblLeft)
+                _ = lblLeft.anchor(top: imgLeft.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
+                
+                view.addSubview(btnTamam)
+                _ = btnTamam.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 25, bottom: 10, right: 25))
+                
+                
+            }
+            
+        } catch {
+            print("error")
+        }
+        
+        
+        
+        
+        //tanitim vieww
+    
+        
+    }
+    
+    @objc func tamamBtnAction() {
+        
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let newPainting = NSEntityDescription.insertNewObject(forEntityName: "SearchBardialog", into: context)
+        
+        newPainting.setValue("1", forKey: "id")
+        
+        do {
+            try context.save()
+            print("Succes")
+        } catch {
+            print("error")
+        }
+      
+        
+        
+        visualEffectView2.alpha = 0
+        lblLeft.isHidden = true
+        lblRight.isHidden = true
+        imgRight.isHidden = true
+        imgLeft.isHidden = true
+        btnTamam.isHidden = true
+        
         
     }
     

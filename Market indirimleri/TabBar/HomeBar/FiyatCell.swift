@@ -18,10 +18,13 @@ class FiyatCell: UICollectionViewCell {
     
     @IBOutlet weak var lblIsim2: UILabel!
     
-   
+    
+    @IBOutlet weak var lblTarih: UILabel!
+    
     @IBOutlet weak var imgLiked: UIImageView!
     
     @IBOutlet weak var likeImageViewWidthConstraint: NSLayoutConstraint!
+
     
    lazy var likeAnimator = LikeAnimator(container: contentView, layoutConstraint: likeImageViewWidthConstraint)
     
@@ -34,7 +37,7 @@ class FiyatCell: UICollectionViewCell {
         return tapRecognizer
     }()
     
-    
+     var btnTapAction : (()->())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,13 +51,14 @@ class FiyatCell: UICollectionViewCell {
     }
     
     @objc func didDoubleTap() {
+       btnTapAction?()
         
-       likeAnimator.animate { [weak self] in
+        likeAnimator.animate { [weak self] in
             
-            self?.imgLiked.isHidden = false
+            
         }
         
     }
     
-
+    
 }

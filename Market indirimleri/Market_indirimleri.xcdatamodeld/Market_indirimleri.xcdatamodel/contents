@@ -10,9 +10,13 @@
     <entity name="FavoriteStore" representedClassName="FavoriteStore" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="SearchBardialog" representedClassName="SearchBardialog" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="City" positionX="-63" positionY="-18" width="128" height="73"/>
         <element name="FavoriteProduct" positionX="-63" positionY="9" width="128" height="58"/>
         <element name="FavoriteStore" positionX="-54" positionY="9" width="128" height="58"/>
+        <element name="SearchBardialog" positionX="-54" positionY="0" width="128" height="58"/>
     </elements>
 </model>

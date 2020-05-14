@@ -11,6 +11,7 @@ import CoreData
 import SDWebImage
 import GoogleMobileAds
 
+
 class CartBar: UIViewController {
     
     var countryList2 = [SingleProduct]()
@@ -32,6 +33,7 @@ class CartBar: UIViewController {
         return lbl
     }()
     
+  
     let viewBulunmadi : UIView = {
         let view = UIView()
         view.backgroundColor = .customWhite()
@@ -75,12 +77,16 @@ class CartBar: UIViewController {
         return indicator
     }()
     
-   var bannerView = GADBannerView()
+    var refreshControl : UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        return refreshControl
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
-       
+        
         
         
         //MARK: addSubview
@@ -104,35 +110,29 @@ class CartBar: UIViewController {
         
         urunlerCollectionView.delegate = self
         urunlerCollectionView.dataSource = self
-        urunlerCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
+        urunlerCollectionView.register(UINib(nibName: "CartBarCell", bundle: nil), forCellWithReuseIdentifier: "CartBarCell")
+        urunlerCollectionView.refreshControl = refreshControl
         
         
         if let layout = urunlerCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = CGSize(width: view.frame.width, height: 310)
+            layout.itemSize = CGSize(width: view.frame.width, height: 334)
             layout.minimumLineSpacing = 10
             layout.minimumInteritemSpacing = 10
             layout.sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         }
         
         
-        view.addSubview(bannerView)
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        bannerView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        bannerView.widthAnchor.constraint(equalToConstant: 320).isActive = true
-
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
         
         veriCekUrun()
         
     }
     
-  
+    @objc private func refresh(sender:UIRefreshControl) {
+        sender.endRefreshing()
+        veriCekUrun()
+    }
     
-  
+    
     
     func veriCekUrun() {
         
@@ -141,45 +141,54 @@ class CartBar: UIViewController {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
         fetchRequest.returnsObjectsAsFaults = false
         
-        countryList2.removeAll(keepingCapacity: false)
         
         do {
             let results = try context.fetch(fetchRequest)
             
+            if results.count == 0 {
+               
+                viewBulunmadi.isHidden = false
+                urunlerCollectionView.isHidden = true
+            }else{
+                viewBulunmadi.isHidden = true
+                urunlerCollectionView.isHidden = false
+            }
+           countryList2.removeAll(keepingCapacity: false)
+                 
             for result in results as! [NSManagedObject] {
+                
                 if let id = result.value(forKey: "id") as? String {
                     
                     let jsonUrlString = "https://marketindirimleri.com/api/v1/products/\(id)?format=json"
                     guard let url = URL(string: jsonUrlString) else {return}
                     
                     URLSession.shared.dataTask(with: url) { (data, response, error) in
-                              //perhaps check err
-                              guard let data = data else {return}
-                              
-                              do {
-                                  
-                                  let singleproduct = try JSONDecoder().decode(SingleProduct.self, from: data)
-                                  
-                                  DispatchQueue.main.async {
-                                      
-                                    
-                                    self.countryList2.append(singleproduct)
-                                    self.countryList2.reverse()
-                                    self.urunlerCollectionView.reloadData()
-                                    self.activityIndicator.stopAnimating()
-                                      
-                                  }
-                                  
-                                  
-                                  
-                              } catch let jsonError {
-                                  print("Error serializing json:", jsonError)
-                                  
-                                  
-                              }
-                              
-                          }.resume()
+                        //perhaps check err
+                        guard let data = data else {return}
                         
+                        do {
+                            
+                            let singleproduct = try JSONDecoder().decode(SingleProduct.self, from: data)
+                            
+                            DispatchQueue.main.async {
+                                
+                                
+                                self.countryList2.append(singleproduct)
+//                                self.countryList2.reverse()
+                                self.urunlerCollectionView.reloadData()
+                                self.activityIndicator.stopAnimating()
+                                
+                            }//reversi yox ele gor burda? ana seyfede ne dexlisi ana sayfada normal gorsenirde 10 nan bir ahahahahahah sikim zordu bele :D noldu ala silende hamisi sikdirdi yroex elaqesi yoxdu onan di elaqesi duzeldiki nese cox dimdix veziyyte olur
+                            
+                            
+                        } catch let jsonError {
+                            print("Error serializing json:", jsonError)
+                            
+                            
+                        }
+                        
+                    }.resume()
+                    
                 }
             }
             
@@ -187,7 +196,7 @@ class CartBar: UIViewController {
             print("error")
         }
         
-     
+        
     }
     
     
@@ -199,10 +208,51 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
+        if indexPath.row % 10 == 1 {
+            let cell1 = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "CartBarCell", for: indexPath) as! CartBarCell
+            cell1.lblIsim.isHidden = true
+            cell1.lblFiyat.isHidden = true
+            cell1.imgUrun.isHidden = true
+            cell1.lblIsim2.isHidden = true
+            cell1.lblTarih.isHidden = true
+            var bannerView = GADBannerView()
+            cell1.addSubview(bannerView)
+            bannerView.translatesAutoresizingMaskIntoConstraints = false
+            bannerView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+            bannerView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+            bannerView.centerXAnchor.constraint(equalTo: cell1.centerXAnchor).isActive = true
+            bannerView.centerYAnchor.constraint(equalTo: cell1.centerYAnchor).isActive = true
+            bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+            bannerView.rootViewController = self
+            bannerView.load(GADRequest())
+            return cell1
+            
+            
+        }
+        let cell = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "CartBarCell", for: indexPath) as! CartBarCell
         cell.lblIsim.text = countryList2[indexPath.row].name
         cell.lblFiyat.text = countryList2[indexPath.row].price
         cell.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
+        
+        //"2020-05-13"
+        let isoDate = countryList2[indexPath.row].validDates[1]
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from:isoDate)
+        
+        let currentdate = Date()
+        
+        var counter = datesRange(from: currentdate, to: date!).count
+        if counter == 0 {
+            cell.lblTarih.text = "Bugün son gün!"
+        }else if counter > 0 {
+            cell.lblTarih.text = "\(counter) gün kaldı"
+        }else {
+            cell.lblTarih.text = "Bitti"
+        }
+        
+        
         let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
         let url = URL(string: jsonUrlString)
         
@@ -234,5 +284,44 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
         urunSayfasi.modalPresentationStyle = .fullScreen
         present(urunSayfasi, animated: true, completion: nil)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+      
+        //
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                
+                if let id = result.value(forKey: "id") as? String {
+                    
+                    if id == "\(countryList2[indexPath.row].id)" {
+                        context.delete(result as NSManagedObject)
+                        countryList2.remove(at: indexPath.row)
+                        urunlerCollectionView.deleteItems(at: [indexPath])
+                        
+                    }
+                   
+                    
+                }
+                
+            }
+            do {
+                try context.save()
+            } catch {
+                print("bir hata var")
+            }
+            
+        } catch {}
+                  
+    }
+    
+    
     
 }

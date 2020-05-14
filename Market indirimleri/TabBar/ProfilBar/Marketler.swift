@@ -215,14 +215,104 @@ extension Marketler : UITableViewDataSource,UITableViewDelegate {
             print("error")
         }
         
+       ///--------------------------FAVORI BUTON CLICK----------------------------------------------------------------
+       cell.btnTapAction = { //favori buton
+           () in
+           
+           let tagstatus = cell.btnFavori.tag
+           
+           if tagstatus == 0 { //favori degil ise
+               
+               let appDelegate = UIApplication.shared.delegate as! AppDelegate
+               let context = appDelegate.persistentContainer.viewContext
+               
+               let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteStore", into: context)
+               favoriteproduct.setValue("\(self.countryList[indexPath.row].id)", forKey: "id")
+               
+               cell.btnFavori.tag = 1
+               cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+               
+               
+               do {
+                   try context.save()
+               } catch {
+                   print("bir hata var")
+               }
+               
+           }else{ //favori ise
+               
+               let appDelegate = UIApplication.shared.delegate as! AppDelegate
+               let context = appDelegate.persistentContainer.viewContext
+               
+               let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+               fetchRequest.returnsObjectsAsFaults = false
+               
+               do {
+                   let results = try context.fetch(fetchRequest)
+                   
+                   for result in results as! [NSManagedObject] {
+                       
+                       if let id = result.value(forKey: "id") as? String {
+                           
+                           if id == "\(self.countryList[indexPath.row].id)" {
+                               context.delete(result as NSManagedObject)
+                           }
+                           
+                       }
+                       
+                   }
+                   do {
+                       try context.save()
+                   } catch {
+                       print("bir hata var")
+                   }
+                   
+               } catch {}
+               
+               cell.btnFavori.tag = 0
+               cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+               
+           }
+           
+       }
+       ///--------------------------URUN FAVORI MI CONTROL ----------------------------------------------------------------
+       let fetchRequestCityFavorite = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+       fetchRequestCityFavorite.returnsObjectsAsFaults = false
        
-        
+       var favoriteproductcontrol = false
+       do {
+           let results = try context.fetch(fetchRequestCityFavorite)
+           
+           for result in results as! [NSManagedObject] {
+               
+               if let id = result.value(forKey: "id") as? String {
+                   
+                   
+                   if id == "\(self.countryList[indexPath.row].id)" {
+                       favoriteproductcontrol = true
+                       break
+                   }else{
+                       favoriteproductcontrol = false
+                   }
+                   
+               }
+               
+           }
+           if favoriteproductcontrol{
+               cell.btnFavori.tag = 1
+               cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+           }else{
+               cell.btnFavori.tag = 0
+               cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+           }
+           
+       } catch {}
+      
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storeid = countryList[indexPath.row]
-       
+        let storeid = countryList[indexPath.row].id
         let urunSayfasi = MarketSayfasi()
         urunSayfasi.itemid = "\(storeid)"
         urunSayfasi.modalPresentationStyle = .fullScreen

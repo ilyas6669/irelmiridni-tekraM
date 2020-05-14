@@ -11,6 +11,8 @@ import CoreData
 
 class UrunSayfasi: UIViewController {
     
+    var storeid = ""
+    
     let ustView : UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -105,6 +107,17 @@ class UrunSayfasi: UIViewController {
            return lbl
        }()
     
+    let offerText : UILabel = {
+          let lbl = UILabel()
+             lbl.textColor = .darkGray
+             lbl.textAlignment = .left
+             lbl.text = ""
+             lbl.numberOfLines = 2
+             lbl.translatesAutoresizingMaskIntoConstraints = false
+          lbl.font = UIFont.boldSystemFont(ofSize: 17)
+             return lbl
+         }()
+    
     var itemid = ""
     
   
@@ -112,11 +125,12 @@ class UrunSayfasi: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .customYellow()
+        view.backgroundColor = .white
         veriCekUrun()
-      
+       
+  
         
-        let lblSV = UIStackView(arrangedSubviews: [lblIsim,lblFiyat,lblAciklama,lblTarih,lblIsim2])
+        let lblSV = UIStackView(arrangedSubviews: [lblIsim,lblFiyat,lblAciklama,lblTarih,lblIsim2,offerText])
         lblSV.axis = .vertical
         lblSV.spacing = 0
         
@@ -128,10 +142,10 @@ class UrunSayfasi: UIViewController {
         altView.addSubview(lblSV)
         
         
-        _ = ustView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = ustView.anchor(top: view.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = imgUrun.anchor(top: ustView.topAnchor, bottom: ustView.bottomAnchor, leading: ustView.leadingAnchor, trailing: ustView.trailingAnchor)
-        _ = btnLeft.anchor(top: ustView.topAnchor, bottom: nil, leading: ustView.leadingAnchor, trailing: nil,padding: .init(top: 10, left: 10, bottom: 0, right: 0))
-         _ = btnFavori.anchor(top: ustView.topAnchor, bottom: nil, leading: nil, trailing: ustView.trailingAnchor,padding: .init(top: 10, left: 0, bottom: 0, right: 10))
+        _ = btnLeft.anchor(top: ustView.topAnchor, bottom: nil, leading: ustView.leadingAnchor, trailing: nil,padding: .init(top: 45, left: 10, bottom: 0, right: 0))
+         _ = btnFavori.anchor(top: ustView.topAnchor, bottom: nil, leading: nil, trailing: ustView.trailingAnchor,padding: .init(top: 45, left: 0, bottom: 0, right: 10))
         _ = altView.anchor(top: ustView.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = lblSV.anchor(top: ustView.bottomAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: altView.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
         
@@ -139,6 +153,42 @@ class UrunSayfasi: UIViewController {
 
         downSwipe.direction = .up
         view.addGestureRecognizer(downSwipe)
+        
+        ///--------------------------FAVORI CONTROL----------------------------------------------------------------
+          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+          let context = appDelegate.persistentContainer.viewContext
+          
+          let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+          fetchRequest.returnsObjectsAsFaults = false
+          
+          var favoriteproductcontrol = false
+          do {
+              let results = try context.fetch(fetchRequest)
+              
+              for result in results as! [NSManagedObject] {
+                  
+                  if let id = result.value(forKey: "id") as? String {
+                      
+                      if id == "\(itemid)" {
+                          favoriteproductcontrol = true
+                          break
+                      }else{
+                          favoriteproductcontrol = false
+                      }
+                      
+                  }
+                  
+              }
+              if favoriteproductcontrol{
+                  btnFavori.tag = 1
+                  btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+              }else{
+                  btnFavori.tag = 0
+                  btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+              }
+              
+              //fsyo baxmm
+          } catch {}
     }
     
    
@@ -146,9 +196,18 @@ class UrunSayfasi: UIViewController {
         if sender.state == .ended {
             switch sender.direction {
             case .up:
-               let alturunsayfasi = AltUrunSayfasi()
-               alturunsayfasi.modalPresentationStyle = .fullScreen
-                present(alturunsayfasi, animated: true, completion: nil)
+                
+                if storeid != ""{
+
+                    let alturunsayfasi = AltUrunSayfasi()
+                    alturunsayfasi.iditem = itemid
+                    alturunsayfasi.idstore = storeid
+                    alturunsayfasi.modalPresentationStyle = .fullScreen
+                    present(alturunsayfasi, animated: true, completion: nil)
+
+                    
+                }
+                
             default: break
                 
             }
@@ -162,13 +221,71 @@ class UrunSayfasi: UIViewController {
     }
     
     @objc func btnFavoriAction() {
-        print("favori")
+      
+        let tagstatus = btnFavori.tag
+        
+        if tagstatus == 0 { //favori degil ise
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
+            //urunun id si nedi adi
+            favoriteproduct.setValue("\(itemid)", forKey: "id")
+            
+            btnFavori.tag = 1
+            btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+            
+            
+            do {
+                try context.save()
+            } catch {
+                print("bir hata var")
+            }
+            
+        }else{ //favori ise
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do {
+                let results = try context.fetch(fetchRequest)
+                
+                for result in results as! [NSManagedObject] {
+                    
+                    if let id = result.value(forKey: "id") as? String {
+                        
+                        if id == "\(itemid)" {
+                            context.delete(result as NSManagedObject)
+                        }
+                        
+                    }
+                    
+                }
+                do {
+                    try context.save()
+                } catch {
+                    print("bir hata var")
+                }
+                
+            } catch {}
+            
+            btnFavori.tag = 0
+            btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+            
+        }
+        
+        
+        
     }
     
     
     func veriCekUrun() {
               
-                print("Nicatalibli:\(itemid)")
+               
               let jsonUrlString = "https://marketindirimleri.com/api/v1/products/\(itemid)?format=json"
               guard let url = URL(string: jsonUrlString) else {return}
               
@@ -187,15 +304,10 @@ class UrunSayfasi: UIViewController {
                         self.lblAciklama.text = welcomee.detail
                         self.lblTarih.text = "Geçerlilik Tarihi: \(welcomee.validDates[0]) - \(welcomee.validDates[1])"
                         self.imgUrun.sd_setImage(with: URL(string: "\(welcomee.image.imageDefault)"))
-                        //welcomee.offerText
-                        
+                        self.storeid = "\(welcomee.storeID)"
                         self.lblIsim2Deyis(storeid: "\(welcomee.storeID)")
+                        self.offerText.text = welcomee.offerText
                         
-                        //BUrda tarixi cekkmemmedim dediyin kimi
-                        //self.lblTarih.text burdaki ne tarixi idi ? o deyirdiye nece gun qalb ne revize atmisdi sende funsion yazmisdine
-                        // o burda deyil burdadi sene atdigim en axrinci apkdan bax b
-                        //?onu deirdim burda yazmax olmur sen yazasanmen ora ataram sen ordakini tam gosterse burda GEceerlili ktarihi: kimi yazilir bildime indi sen yazdigin funsionne tema idi be o bilsen hansidi ana seyfedeki urunlerin altinda gelir onu indi qoyum yazaxxx? he mora kec  bideki bideki burda eksik var burda , offer text atmalisen ora bide offer text nedi??? nese bildirim seyi kimi biseydi dbdan gelir yaxci ataramm bideki ana seyfede market adin yazdirrige altda onu burda eledim oda niese olmadi
-                         
                           
                       }
                       
@@ -214,8 +326,7 @@ class UrunSayfasi: UIViewController {
     
     
     func lblIsim2Deyis(storeid : String) {
-        //myqinnn bayaxki temaya gore imishh? bu countrlist2[0].storeid nedi
-        //qeweyy gedirihh indi demeli kececiy cetin meselelere 
+       
         let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(storeid)?format=json"
                    let url = URL(string: jsonUrlString)
                    

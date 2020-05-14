@@ -267,7 +267,7 @@ class HomeBar: UIViewController {
         
         
         if let layout = fiyatlarCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = CGSize(width: view.frame.width, height: 310)
+            layout.itemSize = CGSize(width: view.frame.width, height: 334)
             layout.minimumLineSpacing = 10
             layout.minimumInteritemSpacing = 5
             layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
@@ -371,32 +371,32 @@ class HomeBar: UIViewController {
     }
     
     func veriCekUrun() {
-        //Deyirdin favori olanda nese deyisilecehhh ana seyfede....
+        
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-              let context = appDelegate.persistentContainer.viewContext
-              
-              let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
-              fetchRequest.returnsObjectsAsFaults = false
-              
-              var selectcounrty = ""
-              var selectid = ""
-              
-              do {
-                  let results = try context.fetch(fetchRequest)
-                  
-                  for result in results as! [NSManagedObject] {
-                      if let id = result.value(forKey: "id") as? String {
-                           selectid = id
-                      }
-                      if let name = result.value(forKey: "name") as? String {
-                          selectcounrty = name
-                      }
-                  }
-                  
-              } catch {
-                  print("error")
-              }
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        var selectcounrty = ""
+        var selectid = ""
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? String {
+                    selectid = id
+                }
+                if let name = result.value(forKey: "name") as? String {
+                    selectcounrty = name
+                }
+            }
+            
+        } catch {
+            print("error")
+        }
         
         let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(selectid)&format=json"
         guard let url = URL(string: jsonUrlString) else {return}
@@ -406,7 +406,7 @@ class HomeBar: UIViewController {
             guard let data = data else {return}
             
             do {
-                            
+                
                 let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
                 
                 DispatchQueue.main.async {
@@ -420,7 +420,7 @@ class HomeBar: UIViewController {
                 
                 
                 //bulardaki apiden gelen verilerdi
-                        
+                
                 
             } catch let jsonError {
                 print("Error serializing json:", jsonError)
@@ -471,6 +471,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
                 cell3.lblFiyat.isHidden = true
                 cell3.lblIsim2.isHidden = true
                 cell3.imgUrun.isHidden = true
+                cell3.lblTarih.isHidden = true
                 var bannerView = GADBannerView()
                 cell3.addSubview(bannerView)
                 bannerView.translatesAutoresizingMaskIntoConstraints = false
@@ -486,7 +487,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             }
             //
             let cell2 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
-            //cell2.lblIsim.text = countryList2[indexPath.row].name
+            cell2.lblIsim.text = countryList2[indexPath.row].name
             cell2.lblFiyat.text = countryList2[indexPath.row].price
             cell2.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
             
@@ -502,14 +503,14 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
           
             var counter = datesRange(from: currentdate, to: date!).count
             if counter == 0 {
-                cell2.lblIsim.text = "Bugün son gün!"
+                cell2.lblTarih.text = "Bugün son gün!"
             }else if counter > 0 {
-                cell2.lblIsim.text = "\(counter) gün kaldı"
+                cell2.lblTarih.text = "\(counter) gün kaldı"
             }else {
-                cell2.lblIsim.text = "Bitti"
+                cell2.lblTarih.text = "Bitti"
             }
                 
-         
+         //qoymamisam
             
             let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
             let url = URL(string: jsonUrlString)
@@ -530,6 +531,111 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
                 
                 
             }.resume()
+            
+            ///--------------------------FAVORI CONTROL----------------------------------------------------------------
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            var favoriteproductcontrol = false
+            do {
+                let results = try context.fetch(fetchRequest)
+                
+                for result in results as! [NSManagedObject] {
+                    
+                    if let id = result.value(forKey: "id") as? String {
+                        
+                        if id == "\(self.countryList2[indexPath.row].id)" {
+                            favoriteproductcontrol = true
+                            break
+                        }else{
+                            favoriteproductcontrol = false
+                        }
+                        
+                    }
+                    
+                }
+                if favoriteproductcontrol{
+                    cell2.imgLiked.tag = 1
+                    cell2.imgLiked.isHidden = false
+                }else{
+                    cell2.imgLiked.tag = 0
+                    cell2.imgLiked.isHidden = true
+                }
+                
+                
+            } catch {}
+                      
+            
+            cell2.btnTapAction = {
+                   () in
+                print("test")
+                //MARK: Problem : iki defe basinlanda dogurdan favori olmasi
+                //favori imagei var ha hansi image bunda ba beledi yeni 2 defe bsanda qiraxda cixani deirsen? he bildmm deyan sekil ite he gerey? billem
+                
+                let tagstatus = cell2.imgLiked.tag
+                
+                if tagstatus == 0 { //favori degil ise
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let context = appDelegate.persistentContainer.viewContext
+                    
+                    let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
+                    //bu urunlerin oldugu list hansidi ? sen duzgun ad veremmirsende buna country nedi ala :D
+                    favoriteproduct.setValue("\(self.countryList2[indexPath.row].id)", forKey: "id")
+                    
+                    cell2.imgLiked.tag = 1
+                    cell2.imgLiked.isHidden = false
+                    
+                    do {
+                        try context.save()
+                    } catch {
+                        print("bir hata var")
+                    }
+                    
+                }else{ //favori ise
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let context = appDelegate.persistentContainer.viewContext
+                    
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+                    fetchRequest.returnsObjectsAsFaults = false
+                    
+                    do {
+                        let results = try context.fetch(fetchRequest)
+                        
+                        for result in results as! [NSManagedObject] {
+                            
+                            if let id = result.value(forKey: "id") as? String {
+                                
+                                if id == "\(self.countryList2[indexPath.row].id)" {
+                                    context.delete(result as NSManagedObject)
+                                }
+                                
+                            }
+                            
+                        }
+
+                        cell2.imgLiked.tag = 0
+                        cell2.imgLiked.isHidden = true
+                        
+                        do {
+                            try context.save()
+                        } catch {
+                            print("bir hata var")
+                        }
+                        
+                    } catch {}
+                    
+                    
+                }
+                
+                
+            }
+            
+            
             
             return cell2
             
@@ -560,21 +666,6 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
         
     }
     
-    func datesRange(from: Date, to: Date) -> [Date] {
-           // in case of the "from" date is more than "to" date,
-           // it should returns an empty array:
-           if from > to { return [Date]() }
-           
-           var tempDate = from
-           var array = [tempDate]
-           
-           while tempDate < to {
-               tempDate = Calendar.current.date(byAdding: .day, value: 1, to: tempDate)!
-               array.append(tempDate)
-           }
-           
-           return array
-       }
     
 }
 
