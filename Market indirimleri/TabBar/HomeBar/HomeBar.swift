@@ -21,8 +21,11 @@ class HomeBar: UIViewController {
     var photoList = [Resullt]()
     
     
-    
     lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height+10000)
+    
+        //a;a bashja seyelere baxdaa bunu duzeltmey lazimdiye ilisecey buna telefonda bu qederde problem yaratmirrr simulatrida cox bilinirr yaxsi sen bura sene demistime offertext atmisan onu ? he yetim onu qiymetin altina at en alta yox yaxshii ne rengde ? Gecerlilik tarihinin renginde yaxsi eliyeem
+    ///offer text yerini deiysmek
+    ///ala favorilere gore ana seyfe deyisirdiye onu yazmigiski ?  yox diesen
     
     lazy var scrolView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
@@ -80,7 +83,7 @@ class HomeBar: UIViewController {
         let lbl = UILabel()
         lbl.textColor = .black
         lbl.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 24)
-        lbl.text = "marketindirimleri"
+        lbl.text = "Marketindirimleri.com"
         return lbl
     }()
     
@@ -161,22 +164,124 @@ class HomeBar: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
-        callFunction()
+        layoutDuzenle()
+        collectionViewDuzenle()
+        veriCekFoto()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
         
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            if results.count == 0 {
+                print("Nicatalibli")
+                veriCekMarket()
+                veriCekUrun()
+                
+                activityIndicator.startAnimating()
+                activityIndicator2.startAnimating()
+                //refreshControlAction()
+            }else {
+                print("Nicatalibli")
+                favoriveriCekMarket()
+                favoriveriCekUrun()
+                
+                activityIndicator.startAnimating()
+                activityIndicator2.startAnimating()
+                //refreshControlAction()
+            }
+            
+        } catch {
+            print("error")
+        }
+        
+        
+        
+        refreshControlAction()
+        
+       
         
     }
     
-    func callFunction() {
-        
-         veriCekFoto()
-        layoutDuzenle()
-        collectionViewDuzenle()
-        veriCekMarket()
-        veriCekUrun()
-        activityIndicator.startAnimating()
-        activityIndicator2.startAnimating()
-        refreshControlAction()
-    }
+    func layoutDuzenle() {
+           
+           //MARK: addSubview
+           view.addSubview(scrolView)
+           scrolView.addSubview(containerView)
+           containerView.addSubview(ustView)
+           ustView.addSubview(lblTop)
+           ustView.addSubview(btnTopSearch)
+           containerView.addSubview(ortaView1)
+           ortaView1.addSubview(imgReklam)
+           containerView.addSubview(ortaView2)
+           ortaView2.addSubview(lblMarket)
+           ortaView2.addSubview(marketCollectionView)
+           containerView.addSubview(altView)
+           altView.addSubview(lblFiyat)
+           altView.addSubview(fiyatlarCollectionView)
+           fiyatlarCollectionView.addSubview(activityIndicator)
+           marketCollectionView.addSubview(activityIndicator2)
+           
+           
+           //MARK: constraint
+           
+           _ = ustView.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           lblTop.merkezKonumlamdirmaSuperView()
+           btnTopSearch.merkezYSuperView()
+           btnTopSearch.leadingAnchor.constraint(equalTo: ustView.leadingAnchor,constant: 5).isActive = true
+           _ = ortaView1.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           _ = imgReklam.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           
+           _ = ortaView2.anchor(top: ortaView1.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           _ = lblMarket.anchor(top: ortaView2.topAnchor, bottom: nil, leading: ortaView2.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
+           _ = marketCollectionView.anchor(top: lblMarket.bottomAnchor, bottom: ortaView2.bottomAnchor, leading: ortaView2.leadingAnchor, trailing: ortaView2.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+           _ = altView.anchor(top: ortaView2.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           
+           _ = lblFiyat.anchor(top: ortaView2.bottomAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
+           _ = fiyatlarCollectionView.anchor(top: lblFiyat.bottomAnchor, bottom: containerView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
+           
+           
+           activityIndicator.centerXAnchor.constraint(equalTo: fiyatlarCollectionView.centerXAnchor).isActive = true
+           activityIndicator.topAnchor.constraint(equalTo: fiyatlarCollectionView.topAnchor,constant: 100).isActive = true
+           
+           activityIndicator2.centerXAnchor.constraint(equalTo: marketCollectionView.centerXAnchor).isActive = true
+           activityIndicator2.topAnchor.constraint(equalTo: marketCollectionView.topAnchor,constant: 50).isActive = true
+           
+           
+           
+       }
+       
+       func collectionViewDuzenle() {
+           marketCollectionView.delegate = self
+           marketCollectionView.dataSource = self
+           marketCollectionView.register(UINib(nibName: "MarketCell", bundle: nil), forCellWithReuseIdentifier: "MarketCell")
+           
+           
+           
+           fiyatlarCollectionView.delegate = self
+           fiyatlarCollectionView.dataSource = self
+           fiyatlarCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
+           
+           if let layout = marketCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+               layout.itemSize = CGSize(width: 100, height: 100)
+               layout.minimumLineSpacing = 10
+               layout.minimumInteritemSpacing = 5
+               layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+           }
+           
+           
+           if let layout = fiyatlarCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+               layout.itemSize = CGSize(width: view.frame.width, height: 334)
+               layout.minimumLineSpacing = 10
+               layout.minimumInteritemSpacing = 5
+               layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+           }
+           
+       }
+    
     
     func refreshControlAction() {
         
@@ -191,89 +296,46 @@ class HomeBar: UIViewController {
     
     @objc func didPullToRefresh() {
         refreshControl.endRefreshing()
-        callFunction()
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                      let context = appDelegate.persistentContainer.viewContext
+                      
+                      let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+                      fetchRequest.returnsObjectsAsFaults = false
+                      
+                      do {
+                          let results = try context.fetch(fetchRequest)
+                          
+                          if results.count == 0 {
+                              print("Nicatalibli")
+                              veriCekMarket()
+                              veriCekUrun()
+                              
+                              activityIndicator.startAnimating()
+                              activityIndicator2.startAnimating()
+                              //refreshControlAction()
+                          }else {
+                              print("Nicatalibli")
+                              favoriveriCekMarket()
+                              favoriveriCekUrun()
+                              
+                              activityIndicator.startAnimating()
+                              activityIndicator2.startAnimating()
+                              //refreshControlAction()
+                          }
+                          
+                      } catch {
+                          print("error")
+                      }
+                      
+               
+               
+        
+        
+       
     }
     
-    func layoutDuzenle() {
-        
-        
-        
-        //MARK: addSubview
-        view.addSubview(scrolView)
-        scrolView.addSubview(containerView)
-        containerView.addSubview(ustView)
-        ustView.addSubview(lblTop)
-        ustView.addSubview(btnTopSearch)
-        containerView.addSubview(ortaView1)
-        ortaView1.addSubview(imgReklam)
-        containerView.addSubview(ortaView2)
-        ortaView2.addSubview(lblMarket)
-        ortaView2.addSubview(marketCollectionView)
-        containerView.addSubview(altView)
-        altView.addSubview(lblFiyat)
-        altView.addSubview(fiyatlarCollectionView)
-        fiyatlarCollectionView.addSubview(activityIndicator)
-        marketCollectionView.addSubview(activityIndicator2)
-        
-        
-        //MARK: constraint
-        
-        _ = ustView.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-        lblTop.merkezKonumlamdirmaSuperView()
-        btnTopSearch.merkezYSuperView()
-        btnTopSearch.leadingAnchor.constraint(equalTo: ustView.leadingAnchor,constant: 5).isActive = true
-        _ = ortaView1.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-        _ = imgReklam.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-        
-        _ = ortaView2.anchor(top: ortaView1.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-        _ = lblMarket.anchor(top: ortaView2.topAnchor, bottom: nil, leading: ortaView2.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
-        _ = marketCollectionView.anchor(top: lblMarket.bottomAnchor, bottom: ortaView2.bottomAnchor, leading: ortaView2.leadingAnchor, trailing: ortaView2.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        _ = altView.anchor(top: ortaView2.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-        
-        _ = lblFiyat.anchor(top: ortaView2.bottomAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
-        _ = fiyatlarCollectionView.anchor(top: lblFiyat.bottomAnchor, bottom: containerView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
-        
-        
-        activityIndicator.centerXAnchor.constraint(equalTo: fiyatlarCollectionView.centerXAnchor).isActive = true
-        activityIndicator.topAnchor.constraint(equalTo: fiyatlarCollectionView.topAnchor,constant: 100).isActive = true
-        
-        activityIndicator2.centerXAnchor.constraint(equalTo: marketCollectionView.centerXAnchor).isActive = true
-        activityIndicator2.topAnchor.constraint(equalTo: marketCollectionView.topAnchor,constant: 50).isActive = true
-        
-    }
-    
-    func collectionViewDuzenle() {
-        marketCollectionView.delegate = self
-        marketCollectionView.dataSource = self
-        marketCollectionView.register(UINib(nibName: "MarketCell", bundle: nil), forCellWithReuseIdentifier: "MarketCell")
-        
-        
-        
-        fiyatlarCollectionView.delegate = self
-        fiyatlarCollectionView.dataSource = self
-        fiyatlarCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
-        
-        
-        
-        
-        
-        if let layout = marketCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = CGSize(width: 100, height: 100)
-            layout.minimumLineSpacing = 10
-            layout.minimumInteritemSpacing = 5
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        }
-        
-        
-        if let layout = fiyatlarCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = CGSize(width: view.frame.width, height: 334)
-            layout.minimumLineSpacing = 10
-            layout.minimumInteritemSpacing = 5
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        }
-        
-    }
+   
     
     func veriCekFoto() {
         let jsonUrlString = "https://marketindirimleri.com/api/v1/banners/?format=json"
@@ -307,6 +369,61 @@ class HomeBar: UIViewController {
         
     }
     
+    func favoriveriCekMarket() {
+          
+          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+          let context = appDelegate.persistentContainer.viewContext
+          let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+          fetchRequest.returnsObjectsAsFaults = false
+          
+        
+          do {
+              let results = try context.fetch(fetchRequest)
+            
+              countryList.removeAll(keepingCapacity: false)
+
+              for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? String {
+                
+                    let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(id)?format=json"
+                    guard let url = URL(string: jsonUrlString) else {return}
+                    
+                    URLSession.shared.dataTask(with: url) { (data, response, error) in
+                        //perhaps check err
+                        guard let data = data else {return}
+                        do {
+                            
+                            let welcome = try JSONDecoder().decode(Resultt.self, from: data)
+                            
+                            DispatchQueue.main.async {
+                                
+                                self.countryList.append(welcome)
+                                
+                                self.countryList.shuffle()
+//                                self.lblMarket.text = "\(selectcounrty) marketleri"
+                                self.marketCollectionView.reloadData()
+                                self.activityIndicator2.stopAnimating()
+                                
+                            }
+                            
+                            
+                        } catch let jsonError {
+                            print("Error serializing json:", jsonError)
+                        }
+                    }.resume()
+                    
+                    
+                }
+              }
+              
+          } catch {
+              print("error")
+          }
+          
+        
+          
+      }
+      
     
     func veriCekMarket() {
         
@@ -334,6 +451,8 @@ class HomeBar: UIViewController {
             print("error")
         }
         
+        countryList.removeAll(keepingCapacity: false)
+        
         let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
         guard let url = URL(string: jsonUrlString) else {return}
         
@@ -355,7 +474,7 @@ class HomeBar: UIViewController {
                     }
                     
                     self.countryList.shuffle()
-                    self.lblMarket.text = "\(selectcounrty) 'market indirimleri"
+                    self.lblMarket.text = "\(selectcounrty) marketleri"
                     self.marketCollectionView.reloadData()
                     self.activityIndicator2.stopAnimating()
                     
@@ -369,6 +488,71 @@ class HomeBar: UIViewController {
        
         
     }
+    
+    func favoriveriCekUrun() {
+        
+        
+       let appDelegate = UIApplication.shared.delegate as! AppDelegate
+          let context = appDelegate.persistentContainer.viewContext
+          let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+          fetchRequest.returnsObjectsAsFaults = false
+          
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            countryList2.removeAll(keepingCapacity: false)
+
+            
+            for result in results as! [NSManagedObject] {
+                if let id = result.value(forKey: "id") as? String {
+                 
+                    let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?store=\(id)&format=json"
+                    guard let url = URL(string: jsonUrlString) else {return}
+                    
+                    
+                    URLSession.shared.dataTask(with: url) { (data, response, error) in
+                        //perhaps check err
+                        guard let data = data else {return}
+                        
+                        do {
+                            
+                            let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
+                            
+                            DispatchQueue.main.async {
+                                                                
+                                self.countryList2.append(contentsOf: welcomee.results)
+                                self.countryList2.shuffle()
+                                self.fiyatlarCollectionView.reloadData()
+                                self.activityIndicator.stopAnimating()
+                            }
+                            
+                            
+                            //bulardaki apiden gelen verilerdi
+                            
+                            
+                        } catch let jsonError {
+                            print("Error serializing json:", jsonError)
+                            
+                            
+                        }
+                        
+                        
+                    }.resume()
+                    
+                }
+            }
+            
+        } catch {
+            print("error")
+        }
+        
+         
+      
+        
+        
+    }
+    
+    
     
     func veriCekUrun() {
         
@@ -398,6 +582,8 @@ class HomeBar: UIViewController {
             print("error")
         }
         
+        countryList2.removeAll(keepingCapacity: false)
+        
         let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(selectid)&format=json"
         guard let url = URL(string: jsonUrlString) else {return}
         
@@ -415,7 +601,7 @@ class HomeBar: UIViewController {
                     self.countryList2.shuffle()
                     self.fiyatlarCollectionView.reloadData()
                     self.activityIndicator.stopAnimating()
-                    self.lblFiyat.text = "\(selectcounrty) 'da son fiyatlar "
+                    self.lblFiyat.text = "\(selectcounrty) market indirimleri "
                 }
                 
                 
@@ -446,6 +632,7 @@ class HomeBar: UIViewController {
 }
 
 
+
 extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.marketCollectionView {
@@ -464,7 +651,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             
         }else {
             
-            if indexPath.row % 10 == 1 {
+            if indexPath.row % 10 == 0 && indexPath.row != 0  {
                 
                 let cell3 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
                 cell3.lblIsim.isHidden = true
@@ -479,7 +666,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
                 bannerView.heightAnchor.constraint(equalToConstant: 250).isActive = true
                 bannerView.centerXAnchor.constraint(equalTo: cell3.centerXAnchor).isActive = true
                 bannerView.centerYAnchor.constraint(equalTo: cell3.centerYAnchor).isActive = true
-                bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+                bannerView.adUnitID = "ca-app-pub-3774834754218485/5943173506"
                 bannerView.rootViewController = self
                 bannerView.load(GADRequest())
                 return cell3
@@ -572,8 +759,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             cell2.btnTapAction = {
                    () in
                 print("test")
-                //MARK: Problem : iki defe basinlanda dogurdan favori olmasi
-                //favori imagei var ha hansi image bunda ba beledi yeni 2 defe bsanda qiraxda cixani deirsen? he bildmm deyan sekil ite he gerey? billem
+               
                 
                 let tagstatus = cell2.imgLiked.tag
                 

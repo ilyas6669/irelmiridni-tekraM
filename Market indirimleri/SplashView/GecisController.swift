@@ -78,6 +78,7 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
         pageController.currentPage = Int(x / view.frame.width)
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -114,7 +115,27 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
         btnAtla.isHidden = true
         btnHadiBaslayim.isHidden = true
         
+        view.addSubview(selectCityPop)
+        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 40, left: 20, bottom: 40, right: 20))
+        selectCityPop.isHidden = true
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
     }
+    
+    deinit {
+           NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+           NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+           NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+       }
+       
+       @objc func keyboardWillChange(notification:Notification) {
+           _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 40, left: 20, bottom: 230, right: 20))
+           
+       }
     
     
     
@@ -171,8 +192,7 @@ class GecisController : UICollectionViewController,UICollectionViewDelegateFlowL
     
     
     @objc func hadibaslayalimAction() {
-        view.addSubview(selectCityPop)
-        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 40, left: 20, bottom: 40, right: 20))
+        selectCityPop.isHidden = false
         selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         selectCityPop.alpha = 0
         UIView.animate(withDuration: 0.5) {

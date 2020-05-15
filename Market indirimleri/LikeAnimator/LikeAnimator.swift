@@ -26,7 +26,7 @@ class LikeAnimator {
         
         UIView.animate(withDuration: 0.7,
                        delay: 0,
-                       usingSpringWithDamping: 0.5,
+                       usingSpringWithDamping: 0.2,
                        initialSpringVelocity: 2,
                        options: .curveLinear,
                        animations: { [weak self] in

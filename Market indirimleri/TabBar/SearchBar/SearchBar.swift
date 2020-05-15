@@ -147,7 +147,8 @@ class SearchBar: UIViewController{
     }()
     
     let visualEffectView2 : UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: .systemChromeMaterialDark)
+        
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -200,6 +201,16 @@ class SearchBar: UIViewController{
         btn.addTarget(self, action: #selector(tamamBtnAction), for: .touchUpInside)
         return btn
     }()
+    
+    let btnImageLeft : UIImageView = {
+       let img = UIImageView(image: UIImage(named: "mapicon_dark"))
+        return img
+    }()
+    
+    let btnImageRight : UIImageView = {
+          let img = UIImageView(image: UIImage(named: "ic_setting_black"))
+           return img
+       }()
     
     
     override func viewDidLoad() {
@@ -319,13 +330,18 @@ class SearchBar: UIViewController{
                 imgRight.isHidden = true
                 imgLeft.isHidden = true
                 btnTamam.isHidden = true
+                btnImageRight.isHidden = true
+                btnImageLeft.isHidden = true
+                //fsoo
+                
+                //bunu duzeldemmirsen ? yoxx bele eliye bildim bilmirem ele nece ellriler cox pis deyan
                 
                 
             }else{ ///kayit olmuyub
                 
                 view.addSubview(visualEffectView2)
                 _ = visualEffectView2.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-                visualEffectView2.alpha = 0.3
+                visualEffectView2.alpha = 0.8
                 
                 view.addSubview(imgRight)
                 _ = imgRight.anchor(top: btnTopSetting.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 5, left: 0, bottom: 0, right: 5))
@@ -342,26 +358,12 @@ class SearchBar: UIViewController{
                 view.addSubview(btnTamam)
                 _ = btnTamam.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 25, bottom: 10, right: 25))
                 
+                view.addSubview(btnImageLeft)
+                _ = btnImageLeft.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: nil,padding: .init(top: 10, left: 5, bottom: 0, right: 0))
                 
-                view.addSubview(visualEffectView2)
-                _ = visualEffectView2.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-                visualEffectView2.alpha = 0.3
-                
-                view.addSubview(imgRight)
-                _ = imgRight.anchor(top: btnTopSetting.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 5, left: 0, bottom: 0, right: 5))
-                
-                view.addSubview(lblRight)
-                _ = lblRight.anchor(top: imgRight.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 5, left: 0, bottom: 0, right: 5))
-                
-                view.addSubview(imgLeft)
-                _ = imgLeft.anchor(top: btnTopLeft.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 10, bottom: 0, right: 0))
-                
-                view.addSubview(lblLeft)
-                _ = lblLeft.anchor(top: imgLeft.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
-                
-                view.addSubview(btnTamam)
-                _ = btnTamam.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 25, bottom: 10, right: 25))
-                
+                view.addSubview(btnImageRight)
+                _ = btnImageRight.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 10, left: 0, bottom: 0, right: 5))
+             
                 
             }
             
@@ -402,6 +404,8 @@ class SearchBar: UIViewController{
         imgRight.isHidden = true
         imgLeft.isHidden = true
         btnTamam.isHidden = true
+        btnImageRight.isHidden = true
+        btnImageLeft.isHidden = true
         
         
     }
@@ -489,13 +493,14 @@ class SearchBar: UIViewController{
                 break
             }
             
+            print("Nicatalibli:\(sortallcity)")
+            
             if !sortallcity {
                 url = "\(url)&city=\(selectid)"
             }
             
             guard let url2 = URL(string: url) else {return}
             
-            print("Nicatalibli:\(url2)")
             
             URLSession.shared.dataTask(with: url2) { (data, response, error) in
                 //perhaps check err
@@ -522,22 +527,39 @@ class SearchBar: UIViewController{
                         switch self.sortsetting{
                         case 0: //store
                             
-                            print("Nicatalibli:\(welcome.results)")
                             
                             self.storeList = welcome.results
                             
+                            if !self.sortallcity {
+                                
+                                var swapList = [Resultt]()
+                                
+                                for storeitem in self.storeList {
+                                    if storeitem.cities.contains(Int(selectid)!){
+                                        swapList.append(storeitem)
+                                    }
+                                }
+                                self.storeList = swapList
+                         
+                                self.marketlerTableView.reloadData()
+                                self.activityIndicator.stopAnimating()
+                                
+                                self.marketlerTableView.isHidden = false
+                                self.urunlerTableView.isHidden = true
+                                
+                            }else{
+                                self.marketlerTableView.reloadData()
+                                self.activityIndicator.stopAnimating()
+                                
+                                self.marketlerTableView.isHidden = false
+                                self.urunlerTableView.isHidden = true
+                            }
                             
                             
-                            self.marketlerTableView.reloadData()
-                            self.activityIndicator.stopAnimating()
-                            
-                            self.marketlerTableView.isHidden = false
-                            self.urunlerTableView.isHidden = true
-                            
+                         
                             break
                         case 1: //product
                             
-                            print("Nicatalibli:\(welcomee.results)")
                             
                             self.productList = welcomee.results
                             
@@ -560,7 +582,6 @@ class SearchBar: UIViewController{
                     
                     
                 } catch let jsonError {
-                    print("Nicatalibli:Error serializing json:", jsonError)
                     
                     
                 }
@@ -569,7 +590,7 @@ class SearchBar: UIViewController{
             }.resume()
             
             
-        } catch { print("Nicatalibli:error") }
+        } catch {  }
         
         
     }
@@ -695,7 +716,6 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
                     
                     if let id = result.value(forKey: "id") as? String {
                         
-                        print("Nicatalibli:\(id)")
                         if id == "\(self.storeList[indexPath.row].id)" {
                             favoriteproductcontrol = true
                             break
@@ -862,7 +882,7 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == marketlerTableView {
             
-            let storeid = storeList[indexPath.row]
+            let storeid = storeList[indexPath.row].id
             
             let urunSayfasi = MarketSayfasi()
             urunSayfasi.itemid = "\(storeid)"
@@ -903,10 +923,12 @@ extension SearchBar : UIPickerViewDelegate,UIPickerViewDataSource {
         
         if array[row] == "Ürün ara"{
             lblTop.text = "Ürün Ara"
+            lblMagazaAra.text = "Ürün Ara"
             sortsetting = 1
         }else{
             sortsetting = 0
             lblTop.text = "Mağaza Ara"
+            lblMagazaAra.text = "Mağaza Ara"
         }
         
     }

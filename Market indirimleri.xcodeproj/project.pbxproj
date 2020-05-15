@@ -756,8 +756,8 @@
 			children = (
 				0073F4BF24557C9F00AD8095 /* UrunSayfasi.swift */,
 				006D39FB24603C7400BE4736 /* AltUrunSayfasi.swift */,
-				0073F4C12455886A00AD8095 /* MarketSayfasi.swift */,
 				009AF814246B1F60009AAD07 /* HeaderVieww.swift */,
+				0073F4C12455886A00AD8095 /* MarketSayfasi.swift */,
 				009AF815246B1F60009AAD07 /* HeaderVieww.xib */,
 			);
 			path = UrunSayfasi;
@@ -1380,7 +1380,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 695LGZ67Y9;
+				DEVELOPMENT_TEAM = 3XLGNFVB8K;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1404,7 +1404,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 695LGZ67Y9;
+				DEVELOPMENT_TEAM = 3XLGNFVB8K;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

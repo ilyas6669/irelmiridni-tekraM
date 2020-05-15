@@ -54,8 +54,9 @@ class AltUrunSayfasi: UIViewController {
         lbl.textColor = .customYellow()
         lbl.textAlignment = .center
         lbl.text = "Label Label Label Label  "
-        lbl.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 18)
+        lbl.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 19)
         lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.numberOfLines = 3
         return lbl
     }()
     
@@ -140,8 +141,9 @@ class AltUrunSayfasi: UIViewController {
         btnFavori.topAnchor.constraint(equalTo: ustView.topAnchor,constant: 15).isActive = true
         lblIsim.merkezKonumlamdirmaSuperView()
         lblIsim.topAnchor.constraint(equalTo: view.topAnchor,constant: 15).isActive = true
-        //lblIsim.leadingAnchor.constraint(equalTo: btnLeft.trailingAnchor).isActive = true
-        //lblIsim.trailingAnchor.constraint(equalTo: btnFavori.leadingAnchor).isActive = true
+        lblIsim.leadingAnchor.constraint(equalTo: btnLeft.trailingAnchor).isActive = true
+        lblIsim.trailingAnchor.constraint(equalTo: btnFavori.leadingAnchor).isActive = true
+        lblIsim.bottomAnchor.constraint(equalTo: ustView.bottomAnchor).isActive = true
         _ = urunlerCollectionView.anchor(top: viewDigerUrunler.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
         

@@ -24,10 +24,32 @@ class CartBarCell: UICollectionViewCell,UIGestureRecognizerDelegate {
     var deleteLabel1: UIImageView!
     var deleteLabel2: UIImageView!
     
+    
+    @IBOutlet weak var likeImageViewWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var imgLiked: UIImageView!
+    
+
+    lazy var likeAnimator = LikeAnimator(container: contentView, layoutConstraint: likeImageViewWidthConstraint)
+     
+     lazy var doubleTapRecognizer: UITapGestureRecognizer = {
+         
+         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
+         
+         tapRecognizer.numberOfTapsRequired = 2
+         
+         return tapRecognizer
+     }()
+     
+      var btnTapAction : (()->())?
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         commonInit()
+         imgUrun.contentMode = .scaleAspectFit
+        imgUrun.addGestureRecognizer(doubleTapRecognizer)
      
     }
     
@@ -55,6 +77,17 @@ class CartBarCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         }
 
       }
+    
+    @objc func didDoubleTap() {
+          btnTapAction?()
+           
+           likeAnimator.animate { [weak self] in
+               
+               
+           }
+           
+       }
+    
 
     @objc func onPan(_ pan: UIPanGestureRecognizer) {
         if pan.state == UIGestureRecognizer.State.began {

@@ -168,7 +168,7 @@ class MarketSayfasi: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
         fetchRequest.returnsObjectsAsFaults = false
         
         var favoriteproductcontrol = false
@@ -197,7 +197,8 @@ class MarketSayfasi: UIViewController {
                 btnFavori.setImage(UIImage(named: "ic_favoriteicondark"), for: .normal)
             }
             
-            //fsyo baxmm
+            
+            
         } catch {}
         
         
@@ -354,12 +355,12 @@ class MarketSayfasi: UIViewController {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
             
-            let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
+            let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteStore", into: context)
             //urunun id si nedi adi
             favoriteproduct.setValue("\(itemid)", forKey: "id")
             
             btnFavori.tag = 1
-            btnFavori.setImage(UIImage(named: "ic_favoriteicondark"), for: .normal)
+            btnFavori.setImage(UIImage(named: "ic_favoriteicondarkselected"), for: .normal)
             
             
             do {
@@ -373,7 +374,7 @@ class MarketSayfasi: UIViewController {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
             
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
             fetchRequest.returnsObjectsAsFaults = false
             
             do {
@@ -399,7 +400,7 @@ class MarketSayfasi: UIViewController {
             } catch {}
             
             btnFavori.tag = 0
-            btnFavori.setImage(UIImage(named: "ic_favoriteicondarkselected"), for: .normal)
+            btnFavori.setImage(UIImage(named: "ic_favoriteicondark"), for: .normal)
             
         }
         

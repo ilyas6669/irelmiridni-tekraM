@@ -17,6 +17,27 @@ class BegendigimMarketler: UIViewController {
     var idArray = [Int]()
     
     //MARK: properties
+    
+    lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+       
+       lazy var scrolView: UIScrollView = {
+           let view = UIScrollView(frame: .zero)
+           view.backgroundColor = .customYellow()
+           view.frame = self.view.bounds
+           view.contentSize = contentViewSize
+           view.autoresizingMask = .flexibleHeight
+           view.showsHorizontalScrollIndicator = true
+           view.bounces = true
+           return view
+       }()
+       
+       lazy var containerView : UIView = {
+           let view = UIView()
+           view.backgroundColor = .customYellow()
+           view.frame.size = contentViewSize
+           return view
+       }()
+    
     let viewTop : UIView = {
         let view = UIView()
         view.backgroundColor = .customYellow()
@@ -83,12 +104,15 @@ class BegendigimMarketler: UIViewController {
           return refreshControl
       }()
     
+     var refreshControl2 : UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
         layoutDuzenle()
         duzenleCollectionView()
         veriCekMarket()
+        refreshControlAction()
         
         
     }
@@ -96,37 +120,56 @@ class BegendigimMarketler: UIViewController {
     func layoutDuzenle() {
         
         //MARK: addSubview
-        view.addSubview(viewTop)
+        view.addSubview(scrolView)
+        scrolView.addSubview(containerView)
+        containerView.addSubview(viewTop)
         viewTop.addSubview(lblTop)
-        view.addSubview(btnTopLeft)
-        view.addSubview(viewBulunmadi)
+        containerView.addSubview(btnTopLeft)
+        containerView.addSubview(viewBulunmadi)
         viewBulunmadi.addSubview(imgBulunmadi)
         viewBulunmadi.addSubview(lblBUlunmadi)
-        view.addSubview(marketlerTableView)
+        containerView.addSubview(marketlerTableView)
         marketlerTableView.addSubview(activityIndicator)
         
         //MARK: constraint
-        _ = viewTop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = viewTop.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         
         lblTop.merkezKonumlamdirmaSuperView()
         
         btnTopLeft.centerYAnchor.constraint(equalTo: viewTop.centerYAnchor).isActive = true
         btnTopLeft.leftAnchor.constraint(equalTo: viewTop.leftAnchor,constant: 10).isActive = true
         
-        _ = viewBulunmadi.anchor(top: viewTop.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = viewBulunmadi.anchor(top: viewTop.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         imgBulunmadi.merkezKonumlamdirmaSuperView()
         _ = lblBUlunmadi.anchor(top: imgBulunmadi.bottomAnchor, bottom: nil, leading: viewBulunmadi.leadingAnchor, trailing: viewBulunmadi.trailingAnchor)
         
-        _ = marketlerTableView.anchor(top: viewTop.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = marketlerTableView.anchor(top: viewTop.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         
         activityIndicator.centerXAnchor.constraint(equalTo: marketlerTableView.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: marketlerTableView.centerYAnchor).isActive = true
         
         activityIndicator.startAnimating()
         
-     
+   
       
     }
+    
+    func refreshControlAction() {
+           
+           scrolView.alwaysBounceVertical = true
+           scrolView.bounces = true
+           refreshControl = UIRefreshControl()
+           refreshControl.tintColor = .white
+           refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+           self.scrolView.addSubview(refreshControl)
+           
+       }
+       
+       @objc func didPullToRefresh() {
+           refreshControl.endRefreshing()
+          veriCekMarket()
+           
+       }
     
     func duzenleCollectionView() {
         marketlerTableView.delegate = self
@@ -354,7 +397,7 @@ extension BegendigimMarketler : UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storeid = countryList[indexPath.row]
+        let storeid = countryList[indexPath.row].id
         let urunSayfasi = MarketSayfasi()
         urunSayfasi.itemid = "\(storeid)"
         urunSayfasi.modalPresentationStyle = .fullScreen

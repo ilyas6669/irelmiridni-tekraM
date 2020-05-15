@@ -18,6 +18,28 @@ class CartBar: UIViewController {
     var idArray = [Int]()
     
     //MARK: properties
+    
+    
+    lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+    
+    lazy var scrolView: UIScrollView = {
+        let view = UIScrollView(frame: .zero)
+        view.backgroundColor = .customYellow()
+        view.frame = self.view.bounds
+        view.contentSize = contentViewSize
+        view.autoresizingMask = .flexibleHeight
+        view.showsHorizontalScrollIndicator = true
+        view.bounces = true
+        return view
+    }()
+    
+    lazy var containerView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .customYellow()
+        view.frame.size = contentViewSize
+        return view
+    }()
+    
     let viewTop : UIView = {
         let view = UIView()
         view.backgroundColor = .customYellow()
@@ -59,7 +81,7 @@ class CartBar: UIViewController {
         return lbl
     }()
     
-    fileprivate let urunlerCollectionView : UICollectionView = {
+     let urunlerCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -83,25 +105,29 @@ class CartBar: UIViewController {
         return refreshControl
     }()
     
+    var refreshControl2 : UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
-        
+       
         
         
         //MARK: addSubview
-        view.addSubview(viewTop)
+        view.addSubview(scrolView)
+        scrolView.addSubview(containerView)
+        containerView.addSubview(viewTop)
         viewTop.addSubview(lblTop)
-        view.addSubview(viewBulunmadi)
+        containerView.addSubview(viewBulunmadi)
         viewBulunmadi.addSubview(imgBulunmadi)
         viewBulunmadi.addSubview(lblBUlunmadi)
         view.addSubview(urunlerCollectionView)
         urunlerCollectionView.addSubview(activityIndicator)
         
         //MARK: constraint
-        _ = viewTop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = viewTop.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         lblTop.merkezKonumlamdirmaSuperView()
-        _ = viewBulunmadi.anchor(top: viewTop.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = viewBulunmadi.anchor(top: viewTop.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         imgBulunmadi.merkezKonumlamdirmaSuperView()
         _ = lblBUlunmadi.anchor(top: imgBulunmadi.bottomAnchor, bottom: nil, leading: viewBulunmadi.leadingAnchor, trailing: viewBulunmadi.trailingAnchor)
         _ = urunlerCollectionView.anchor(top: viewTop.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -124,12 +150,30 @@ class CartBar: UIViewController {
         
         
         veriCekUrun()
+        refreshControlAction()
         
     }
     
     @objc private func refresh(sender:UIRefreshControl) {
         sender.endRefreshing()
         veriCekUrun()
+    }
+    
+    func refreshControlAction() {
+        
+        scrolView.alwaysBounceVertical = true
+        scrolView.bounces = true
+        refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+        self.scrolView.addSubview(refreshControl)
+        
+    }
+    
+    @objc func didPullToRefresh() {
+        refreshControl.endRefreshing()
+       veriCekUrun()
+        
     }
     
     
@@ -200,6 +244,8 @@ class CartBar: UIViewController {
     }
     
     
+    
+    
 }
 
 extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
@@ -208,7 +254,8 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row % 10 == 1 {
+     
+        if indexPath.row % 4 == 0 && indexPath.row != 0 {
             let cell1 = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "CartBarCell", for: indexPath) as! CartBarCell
             cell1.lblIsim.isHidden = true
             cell1.lblFiyat.isHidden = true
@@ -222,7 +269,7 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             bannerView.heightAnchor.constraint(equalToConstant: 250).isActive = true
             bannerView.centerXAnchor.constraint(equalTo: cell1.centerXAnchor).isActive = true
             bannerView.centerYAnchor.constraint(equalTo: cell1.centerYAnchor).isActive = true
-            bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+            bannerView.adUnitID = "ca-app-pub-3774834754218485/5943173506"
             bannerView.rootViewController = self
             bannerView.load(GADRequest())
             return cell1
@@ -273,6 +320,73 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             
         }.resume()
         
+        cell.btnTapAction = {
+                          () in
+                       print("test")
+                      
+                       let tagstatus = cell.imgLiked.tag
+                       
+                       if tagstatus == 0 {
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        let context = appDelegate.persistentContainer.viewContext
+                        
+                        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+                        fetchRequest.returnsObjectsAsFaults = false
+                        
+                        do {
+                            let results = try context.fetch(fetchRequest)
+                            
+                            for result in results as! [NSManagedObject] {
+                                
+                                if let id = result.value(forKey: "id") as? String {
+                                    
+                                    if id == "\(self.countryList2[indexPath.row].id)" {
+                                        context.delete(result as NSManagedObject)
+                                    }
+                                    
+                                }
+                                
+                            }
+
+                            cell.imgLiked.tag = 0
+                            cell.imgLiked.isHidden = true
+                            
+                            do {
+                                try context.save()
+                            } catch {
+                                print("bir hata var")
+                            }
+                            
+                        } catch {}
+                        
+                        //favori degil ise
+                           
+                         
+                           
+                       }else{ //favori ise
+                           let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                                    let context = appDelegate.persistentContainer.viewContext
+                                                    
+                                                    let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
+                                                    //bu urunlerin oldugu list hansidi ? sen duzgun ad veremmirsende buna country nedi ala :D
+                                                    favoriteproduct.setValue("\(self.countryList2[indexPath.row].id)", forKey: "id")
+                                                    
+                                                    cell.imgLiked.tag = 1
+                                                    cell.imgLiked.isHidden = false
+                                                    
+                                                    do {
+                                                        try context.save()
+                                                    } catch {
+                                                        print("bir hata var")
+                                                    }
+                           
+                           
+                           
+                       }
+                       
+                       
+                   }
+        
         return cell
     }
     
@@ -301,13 +415,14 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
                 
                 if let id = result.value(forKey: "id") as? String {
                     
-                    if id == "\(countryList2[indexPath.row].id)" {
-                        context.delete(result as NSManagedObject)
-                        countryList2.remove(at: indexPath.row)
-                        urunlerCollectionView.deleteItems(at: [indexPath])
-                        
-                    }
-                   
+
+                        if id == "\(countryList2[indexPath.row].id)" {
+                            context.delete(result as NSManagedObject)
+                            countryList2.remove(at: indexPath.row)
+                            urunlerCollectionView.deleteItems(at: [indexPath])
+                            break
+                        }
+                        //gelende de 
                     
                 }
                 

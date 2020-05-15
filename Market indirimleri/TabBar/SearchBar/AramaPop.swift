@@ -52,11 +52,12 @@ class AramaPop: UIView {
     
     let btnSwitch : UISwitch = {
        let btn = UISwitch()
-         btn.setOn(true, animated: true)
+         btn.setOn(false, animated: true)
         btn.onTintColor = .customYellow()
         btn.thumbTintColor = .black
         btn.addTarget(self, action: #selector(btnSwitchAction), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
+        
         return btn
     }()
     

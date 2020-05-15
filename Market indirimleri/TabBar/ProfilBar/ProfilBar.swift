@@ -270,6 +270,11 @@ class ProfilBar: UIViewController {
         visualEffectView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         visualEffectView.alpha = 0
         
+        view.addSubview(selectCityPop)
+        self.selectCityPop.sehirTableView.separatorColor = .white
+        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 40, left: 20, bottom: 20, right: 20))
+        selectCityPop.isHidden = true
+        
         refreshControlAction()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -286,7 +291,7 @@ class ProfilBar: UIViewController {
     }
     
     @objc func keyboardWillChange(notification:Notification) {
-       
+        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 40, left: 20, bottom: 230, right: 20))
         
     }
     
@@ -337,6 +342,8 @@ class ProfilBar: UIViewController {
         
         let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
         guard let url = URL(string: jsonUrlString) else {return}
+        
+        countryList.removeAll(keepingCapacity: false)
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             //perhaps check err
@@ -548,9 +555,7 @@ class ProfilBar: UIViewController {
     
     
     @objc func btnSehirSecAction() {
-        view.addSubview(selectCityPop)
-        self.selectCityPop.sehirTableView.separatorColor = .white
-        _ = selectCityPop.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 40, left: 20, bottom: 20, right: 20))
+        selectCityPop.isHidden = false
         selectCityPop.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         selectCityPop.alpha = 0
         UIView.animate(withDuration: 0.5) {
