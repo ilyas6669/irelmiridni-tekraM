@@ -212,6 +212,31 @@ class SearchBar: UIViewController{
            return img
        }()
     
+    let viewBulunmadi : UIView = {
+        let view = UIView()
+        view.backgroundColor = .customWhite()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let imgBulunmadi : UIImageView = {
+        let img = UIImageView(image: UIImage(named: "ic_norecord_dark"))
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        img.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        return img
+    }()
+    
+    let lblBUlunmadi : UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .lightGray
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.text = "Hiç bir şey bulunamadı"
+        lbl.textAlignment = .center
+        lbl.font = UIFont.boldSystemFont(ofSize: 30)
+        return lbl
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -229,11 +254,13 @@ class SearchBar: UIViewController{
         viewMagazaAra.addSubview(lblMagazaAra)
         view.addSubview(marketlerTableView)
         view.addSubview(urunlerTableView)
+        view.addSubview(viewBulunmadi)
+        viewBulunmadi.addSubview(imgBulunmadi)
+        viewBulunmadi.addSubview(lblBUlunmadi)
         view.addSubview(viewSetting)
         viewSetting.addSubview(lblAramaModu)
         viewSetting.addSubview(pickerView)
         searchBar.addSubview(activityIndicator)
-       
 
         
         
@@ -255,6 +282,12 @@ class SearchBar: UIViewController{
         btnTopSetting.merkezYSuperView()
         btnTopSetting.trailingAnchor.constraint(equalTo: viewTop.trailingAnchor,constant: -5).isActive = true
         _ = searchBar.anchor(top: viewTop.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        
+        _ = viewBulunmadi.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        imgBulunmadi.merkezKonumlamdirmaSuperView()
+        _ = lblBUlunmadi.anchor(top: imgBulunmadi.bottomAnchor, bottom: nil, leading: viewBulunmadi.leadingAnchor, trailing: viewBulunmadi.trailingAnchor)
+        viewBulunmadi.isHidden = true
+        
         _ = viewMagazaAra.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         lblMagazaAra.merkezKonumlamdirmaSuperView()
         _ = marketlerTableView.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -541,18 +574,42 @@ class SearchBar: UIViewController{
                                 }
                                 self.storeList = swapList
                          
+                         
                                 self.marketlerTableView.reloadData()
                                 self.activityIndicator.stopAnimating()
                                 
                                 self.marketlerTableView.isHidden = false
                                 self.urunlerTableView.isHidden = true
+                                
+                                if self.storeList.count == 0 {
+                                    self.marketlerTableView.isHidden = true
+                                    self.viewBulunmadi.isHidden = false
+                                    
+                                }else{
+                                    self.marketlerTableView.isHidden = false
+                                    self.viewBulunmadi.isHidden = true
+                                    
+                                }
+                                                         
                                 
                             }else{
+                           
                                 self.marketlerTableView.reloadData()
                                 self.activityIndicator.stopAnimating()
                                 
                                 self.marketlerTableView.isHidden = false
                                 self.urunlerTableView.isHidden = true
+                           
+                                if self.storeList.count == 0 {
+                                    self.marketlerTableView.isHidden = true
+                                    self.viewBulunmadi.isHidden = false
+                                    
+                                }else{
+                                    self.marketlerTableView.isHidden = false
+                                    self.viewBulunmadi.isHidden = true
+                                    
+                                }
+                                
                             }
                             
                             
@@ -563,13 +620,25 @@ class SearchBar: UIViewController{
                             
                             self.productList = welcomee.results
                             
+                            
+                            self.marketlerTableView.isHidden = true
+                            self.urunlerTableView.isHidden = false
+                            
+                            if self.productList.count == 0 {
+                                self.urunlerTableView.isHidden = true
+                                self.viewBulunmadi.isHidden = false
+                                
+                                
+                            }else{
+                                self.urunlerTableView.isHidden = false
+                                self.viewBulunmadi.isHidden = true
+                                
+                            }
+                            
                             self.urunlerTableView.reloadData()
                             self.activityIndicator.stopAnimating()
                            
 
-                            
-                            self.marketlerTableView.isHidden = true
-                            self.urunlerTableView.isHidden = false
                             
                             break
                         default:

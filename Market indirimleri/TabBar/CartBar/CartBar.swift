@@ -189,6 +189,8 @@ class CartBar: UIViewController {
         do {
             let results = try context.fetch(fetchRequest)
             
+            print("nicatalibli:\(results.count)")
+            
             if results.count == 0 {
                
                 viewBulunmadi.isHidden = false
@@ -198,9 +200,13 @@ class CartBar: UIViewController {
                 urunlerCollectionView.isHidden = false
             }
            countryList2.removeAll(keepingCapacity: false)
-                 
+            
+            var counter = 0
+            
             for result in results as! [NSManagedObject] {
                 
+                counter = counter + 1
+        
                 if let id = result.value(forKey: "id") as? String {
                     
                     let jsonUrlString = "https://marketindirimleri.com/api/v1/products/\(id)?format=json"
@@ -213,17 +219,29 @@ class CartBar: UIViewController {
                         do {
                             
                             let singleproduct = try JSONDecoder().decode(SingleProduct.self, from: data)
-                            
+                            var adproduct = try JSONDecoder().decode(SingleProduct.self, from: data)
+
                             DispatchQueue.main.async {
+                               
+                               
+                                if self.countryList2.count % 3 == 0 && self.countryList2.count != 0 {
+
+                                    adproduct.name = "ADVIEW"
                                 
+                                    self.countryList2.append(adproduct)
+                                    
+                                    self.countryList2.append(singleproduct)
+                                }else{
+                                    self.countryList2.append(singleproduct)
+                                }
+                    
                                 
-                                self.countryList2.append(singleproduct)
-//                                self.countryList2.reverse()
+//                                self.countryList2.append(singleproduct)
+                               
                                 self.urunlerCollectionView.reloadData()
                                 self.activityIndicator.stopAnimating()
                                 
-                            }//reversi yox ele gor burda? ana seyfede ne dexlisi ana sayfada normal gorsenirde 10 nan bir ahahahahahah sikim zordu bele :D noldu ala silende hamisi sikdirdi yroex elaqesi yoxdu onan di elaqesi duzeldiki nese cox dimdix veziyyte olur
-                            
+                            }
                             
                         } catch let jsonError {
                             print("Error serializing json:", jsonError)
@@ -255,7 +273,7 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
      
-        if indexPath.row % 4 == 0 && indexPath.row != 0 {
+        if countryList2[indexPath.row].name == "ADVIEW" {
             let cell1 = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "CartBarCell", for: indexPath) as! CartBarCell
             cell1.lblIsim.isHidden = true
             cell1.lblFiyat.isHidden = true

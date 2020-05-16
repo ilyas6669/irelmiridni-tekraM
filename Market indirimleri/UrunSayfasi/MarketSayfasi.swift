@@ -110,6 +110,31 @@ class MarketSayfasi: UIViewController {
         let searchBar = UISearchBar()
         return searchBar
     }()
+    
+    let viewBulunmadi : UIView = {
+           let view = UIView()
+           view.backgroundColor = .customWhite()
+           view.translatesAutoresizingMaskIntoConstraints = false
+           return view
+       }()
+       
+       let imgBulunmadi : UIImageView = {
+           let img = UIImageView(image: UIImage(named: "ic_norecord_dark"))
+           img.translatesAutoresizingMaskIntoConstraints = false
+           img.heightAnchor.constraint(equalToConstant: 250).isActive = true
+           img.widthAnchor.constraint(equalToConstant: 250).isActive = true
+           return img
+       }()
+       
+       let lblBUlunmadi : UILabel = {
+           let lbl = UILabel()
+           lbl.textColor = .lightGray
+           lbl.translatesAutoresizingMaskIntoConstraints = false
+           lbl.text = "Hiç bir şey bulunamadı"
+           lbl.textAlignment = .center
+           lbl.font = UIFont.boldSystemFont(ofSize: 30)
+           return lbl
+       }()
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,12 +154,19 @@ class MarketSayfasi: UIViewController {
         topView.addSubview(btnFavori)
         view.addSubview(imgUrun)
         containerView.addSubview(urunlerCollectionView)
+        containerView.addSubview(viewBulunmadi)
+        viewBulunmadi.addSubview(imgBulunmadi)
+        viewBulunmadi.addSubview(lblBUlunmadi)
         
         
         
         _ = topView.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         _ = lblAciklama.anchor(top: imgUrun.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
         _ = searchBar.anchor(top: lblAciklama.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = viewBulunmadi.anchor(top: searchBar.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+        imgBulunmadi.merkezKonumlamdirmaSuperView()
+        imgBulunmadi.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -50).isActive = true
+        _ = lblBUlunmadi.anchor(top: imgBulunmadi.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = urunlerCollectionView.anchor(top: searchBar.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
         
         
@@ -145,7 +177,8 @@ class MarketSayfasi: UIViewController {
         imgUrun.centerYAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
         imgUrun.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-      
+        viewBulunmadi.isHidden = true
+        
         
         
         urunlerCollectionView.delegate = self
@@ -153,7 +186,6 @@ class MarketSayfasi: UIViewController {
         urunlerCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
         
        
-        
 //        urunlerCollectionView.register(UINib(nibName: "HeaderVieww", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderVieww")
         
         
@@ -242,10 +274,7 @@ class MarketSayfasi: UIViewController {
     
     func veriCekUrun() {
        
-       //MARK: PROBLEM: burda bu marketin urunlerin cekmeli idim cekemmedim umumi cekmisem
-        //biz marketin urunlerini hardasa cekmemisik ? yox markerleri cekmish bu city nedi yazmisan burda ? idide  orsedhean  sgeehlselihr nedi sehere gore alirsan ya magazaya gore ? billemki sehere goreee
-        //linki atmisdimda sene kopyalayip atsan duzelecey ana seyfeden kopyaliyib yapistirmisan bura osturag gede bura deiyl ? buradids  bududa magazanin idsi handis i? yetm ezber her seyi bilmirem ha ne deirsen brat magazaya basib bu seyfeye gondeririye bu seyfedeki maga
-        //alim yetim ? D: D: al balammm
+       
         let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?store=\(itemid)&format=json"
         guard let url = URL(string: jsonUrlString) else {return}
         
@@ -260,6 +289,19 @@ class MarketSayfasi: UIViewController {
                 DispatchQueue.main.async {
                     
                     self.countryList2 = welcomee.results
+                    
+                    if self.countryList2.count == 0 {
+
+                        //MARK: urun yoxdu
+                        self.viewBulunmadi.isHidden = false
+                        self.urunlerCollectionView.isHidden = true
+                        print("Nicatalibli:URUNYOK")
+                    }else{
+                        //urun var
+                        self.viewBulunmadi.isHidden = true
+                        self.urunlerCollectionView.isHidden = false
+                    }
+                    
                     self.countryList2.shuffle()
                     self.urunlerCollectionView.reloadData()
                     

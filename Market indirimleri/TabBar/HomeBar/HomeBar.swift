@@ -21,29 +21,14 @@ class HomeBar: UIViewController {
     var photoList = [Resullt]()
     
     
-    lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height+10000)
-    
-        //a;a bashja seyelere baxdaa bunu duzeltmey lazimdiye ilisecey buna telefonda bu qederde problem yaratmirrr simulatrida cox bilinirr yaxsi sen bura sene demistime offertext atmisan onu ? he yetim onu qiymetin altina at en alta yox yaxshii ne rengde ? Gecerlilik tarihinin renginde yaxsi eliyeem
-    ///offer text yerini deiysmek
-    ///ala favorilere gore ana seyfe deyisirdiye onu yazmigiski ?  yox diesen
-    
-    lazy var scrolView: UIScrollView = {
-        let view = UIScrollView(frame: .zero)
-        view.backgroundColor = .customYellow()
-        view.frame = self.view.bounds
-        view.contentSize = contentViewSize
-        view.autoresizingMask = .flexibleHeight
-        view.showsHorizontalScrollIndicator = true
-        view.bounces = true
-        return view
+    var scrolView : UIScrollView = {
+       let scrolView = UIScrollView()
+        scrolView.backgroundColor = .red
+        scrolView.translatesAutoresizingMaskIntoConstraints = false
+       
+        return scrolView
     }()
-    
-    lazy var containerView : UIView = {
-        let view = UIView()
-        view.backgroundColor = .rgb(red: 0, green: 38, blue: 26)
-        view.frame.size = contentViewSize
-        return view
-    }()
+ 
     
     //MARK: properties
     
@@ -210,16 +195,15 @@ class HomeBar: UIViewController {
            
            //MARK: addSubview
            view.addSubview(scrolView)
-           scrolView.addSubview(containerView)
-           containerView.addSubview(ustView)
+           scrolView.addSubview(ustView)
            ustView.addSubview(lblTop)
            ustView.addSubview(btnTopSearch)
-           containerView.addSubview(ortaView1)
+           scrolView.addSubview(ortaView1)
            ortaView1.addSubview(imgReklam)
-           containerView.addSubview(ortaView2)
+           scrolView.addSubview(ortaView2)
            ortaView2.addSubview(lblMarket)
            ortaView2.addSubview(marketCollectionView)
-           containerView.addSubview(altView)
+           scrolView.addSubview(altView)
            altView.addSubview(lblFiyat)
            altView.addSubview(fiyatlarCollectionView)
            fiyatlarCollectionView.addSubview(activityIndicator)
@@ -227,21 +211,25 @@ class HomeBar: UIViewController {
            
            
            //MARK: constraint
+        scrolView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrolView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scrolView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scrolView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
            
-           _ = ustView.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           _ = ustView.anchor(top: scrolView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
            lblTop.merkezKonumlamdirmaSuperView()
            btnTopSearch.merkezYSuperView()
            btnTopSearch.leadingAnchor.constraint(equalTo: ustView.leadingAnchor,constant: 5).isActive = true
-           _ = ortaView1.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-           _ = imgReklam.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           _ = ortaView1.anchor(top: ustView.bottomAnchor, bottom: nil, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
+           _ = imgReklam.anchor(top: ustView.bottomAnchor, bottom: nil, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
            
-           _ = ortaView2.anchor(top: ortaView1.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           _ = ortaView2.anchor(top: ortaView1.bottomAnchor, bottom: nil, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
            _ = lblMarket.anchor(top: ortaView2.topAnchor, bottom: nil, leading: ortaView2.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
            _ = marketCollectionView.anchor(top: lblMarket.bottomAnchor, bottom: ortaView2.bottomAnchor, leading: ortaView2.leadingAnchor, trailing: ortaView2.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-           _ = altView.anchor(top: ortaView2.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           _ = altView.anchor(top: ortaView2.bottomAnchor, bottom: scrolView.bottomAnchor, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
            
            _ = lblFiyat.anchor(top: ortaView2.bottomAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
-           _ = fiyatlarCollectionView.anchor(top: lblFiyat.bottomAnchor, bottom: containerView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
+           _ = fiyatlarCollectionView.anchor(top: lblFiyat.bottomAnchor, bottom: scrolView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
            
            
            activityIndicator.centerXAnchor.constraint(equalTo: fiyatlarCollectionView.centerXAnchor).isActive = true
@@ -376,6 +364,29 @@ class HomeBar: UIViewController {
           let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
           fetchRequest.returnsObjectsAsFaults = false
           
+        
+        let fetchRequest2 = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        fetchRequest2.returnsObjectsAsFaults = false
+        
+        var selectcounrty = ""
+        
+        do {
+            let results = try context.fetch(fetchRequest2)
+            
+            for result in results as! [NSManagedObject] {
+                if let name = result.value(forKey: "name") as? String {
+                    selectcounrty = name
+                }
+            }
+            
+            self.lblFiyat.text = "\(selectcounrty) market indirimleri "
+            self.lblMarket.text = "\(selectcounrty) marketleri"
+                  
+            
+        } catch {
+            print("error")
+        }
+            
         
           do {
               let results = try context.fetch(fetchRequest)

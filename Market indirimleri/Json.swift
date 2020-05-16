@@ -145,7 +145,7 @@ struct SingleStore: Codable {
 // MARK: - SingleProduct
 struct SingleProduct: Codable {
     let id, storeID: Int
-    let name, detail: String
+    var name, detail: String
     let image: Image
     let price, pricePrefixText, priceSuffixText, offerText: String
     let validDates: [String]
