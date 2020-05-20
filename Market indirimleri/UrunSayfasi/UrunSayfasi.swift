@@ -16,7 +16,7 @@ class UrunSayfasi: UIViewController {
     let ustView : UIView = {
         let view = UIView()
         view.backgroundColor = .black
-        view.heightAnchor.constraint(equalToConstant: 430).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 330).isActive = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -58,7 +58,7 @@ class UrunSayfasi: UIViewController {
         lbl.textAlignment = .left
         lbl.text = ""
         lbl.numberOfLines = 4
-        lbl.font = UIFont.boldSystemFont(ofSize: 24)
+        lbl.font = UIFont.systemFont(ofSize: 24)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -89,7 +89,7 @@ class UrunSayfasi: UIViewController {
         let lbl = UILabel()
         lbl.textColor = .lightGray
         lbl.textAlignment = .left
-        lbl.text = "Tarih"
+        lbl.text = ""
         lbl.numberOfLines = 2
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont.boldSystemFont(ofSize: 17)
@@ -100,7 +100,7 @@ class UrunSayfasi: UIViewController {
         let lbl = UILabel()
            lbl.textColor = .darkGray
            lbl.textAlignment = .left
-           lbl.text = "Market Isim"
+           lbl.text = ""
            lbl.numberOfLines = 2
            lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont.boldSystemFont(ofSize: 17)

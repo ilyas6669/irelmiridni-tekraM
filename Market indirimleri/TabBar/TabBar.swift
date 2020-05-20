@@ -7,31 +7,68 @@
 //
 
 import UIKit
+import CoreData
 
-class TabBar: UITabBarController{
+class TabBar: UITabBarController, UITabBarControllerDelegate{
     
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        self.delegate = self
        
     }
     
-  
-//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        if item == (self.tabBar.items!)[0]{
-//            print("Nicatalibli:0")
-//           //Do something if index is 0
-//        }
-//        else if item == (self.tabBar.items!)[1]{
-//            print("Nicatalibli:1")
-//        }else if item == (self.tabBar.items!)[2]{
-//            CartBar().urunlerCollectionView.reloadData()
-//            CartBar().veriCekUrun()
-//        }
-//    }
-   
-   
 
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
+        
+        if let homebar = viewController as? HomeBar {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do {
+                let results = try context.fetch(fetchRequest)
+                
+                if results.count == 0 {
+                    homebar.veriCekMarket()
+                    homebar.veriCekUrun()
+                    
+                    homebar.activityIndicator.startAnimating()
+                    homebar.activityIndicator2.startAnimating()
+                    //refreshControlAction()
+                }else {
+                    homebar.favoriveriCekMarket()
+                    homebar.favoriveriCekUrun()
+                    
+                    homebar.activityIndicator.startAnimating()
+                    homebar.activityIndicator2.startAnimating()
+                    //refreshControlAction()
+                }
+                
+            } catch {
+                print("error")
+            }
+        }
+        
+        if let cartbar = viewController as? CartBar {
+            cartbar.veriCekUrun()
+        } else if let profilbar = viewController as? ProfilBar {
+            profilbar.lblBegendigimUrunDeyis()
+            profilbar.lblBegendigimMarketDeyis()
+        }
+        
+        //        if viewController is CartBar {
+        //            print("First tab")
+        //        } else if viewController is SearchBar {
+        //            print("Second tab")
+        //        }
+    }
+    
+    
+    
 }

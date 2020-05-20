@@ -31,19 +31,23 @@ class FiyatCell: UICollectionViewCell {
     lazy var doubleTapRecognizer: UITapGestureRecognizer = {
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
-        
+    
         tapRecognizer.numberOfTapsRequired = 2
+        tapRecognizer.numberOfTouchesRequired = 1
         
         return tapRecognizer
     }()
     
+ 
      var btnTapAction : (()->())?
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         imgUrun.contentMode = .scaleAspectFit
         imgUrun.addGestureRecognizer(doubleTapRecognizer)
+        
         
        
         
@@ -60,5 +64,5 @@ class FiyatCell: UICollectionViewCell {
         
     }
     
-    
+   
 }

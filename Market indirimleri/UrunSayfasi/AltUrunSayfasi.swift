@@ -253,7 +253,7 @@ class AltUrunSayfasi: UIViewController {
                               let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
                               
                               DispatchQueue.main.async {
-                               self.lblDigerUrunler.text = "\(welcomee.name) de diğer ürünler" 
+                               self.lblDigerUrunler.text = "\(welcomee.name)diğer ürünler" 
                               }
                               
                           } catch let jsonError {print("Error serializing json:", jsonError)}

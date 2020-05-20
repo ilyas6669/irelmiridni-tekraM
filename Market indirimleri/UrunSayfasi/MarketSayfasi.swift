@@ -171,9 +171,9 @@ class MarketSayfasi: UIViewController {
         
         
         btnLeft.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
-        btnLeft.leftAnchor.constraint(equalTo: topView.leftAnchor,constant: 5).isActive = true
+        btnLeft.leftAnchor.constraint(equalTo: topView.leftAnchor,constant: 10).isActive = true
         btnFavori.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
-        btnFavori.rightAnchor.constraint(equalTo: topView.rightAnchor,constant: -5).isActive = true
+        btnFavori.rightAnchor.constraint(equalTo: topView.rightAnchor,constant: -10).isActive = true
         imgUrun.centerYAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
         imgUrun.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
@@ -552,6 +552,9 @@ extension MarketSayfasi : UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         getitem(searchkeyword: searchBar.text!)
+        searchBar.resignFirstResponder()
     }
+    
+    
 
 }

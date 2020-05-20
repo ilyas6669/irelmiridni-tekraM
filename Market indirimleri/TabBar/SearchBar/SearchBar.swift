@@ -1014,8 +1014,8 @@ extension SearchBar : UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         activityIndicator.startAnimating()
-        
         getitem(searchkeyword: searchBar.text!)
+        searchBar.resignFirstResponder()
     }
     
 }

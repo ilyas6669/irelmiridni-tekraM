@@ -21,13 +21,25 @@ class HomeBar: UIViewController {
     var photoList = [Resullt]()
     
     
-    var scrolView : UIScrollView = {
-       let scrolView = UIScrollView()
-        scrolView.backgroundColor = .red
-        scrolView.translatesAutoresizingMaskIntoConstraints = false
+    lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
        
-        return scrolView
-    }()
+       lazy var scrolView: UIScrollView = {
+           let view = UIScrollView(frame: .zero)
+           view.backgroundColor = .customYellow()
+           view.frame = self.view.bounds
+           view.contentSize = contentViewSize
+           view.autoresizingMask = .flexibleHeight
+           view.showsHorizontalScrollIndicator = true
+           view.bounces = true
+           return view
+       }()
+       
+       lazy var containerView : UIView = {
+           let view = UIView()
+           view.backgroundColor = .customYellow()
+           view.frame.size = contentViewSize
+           return view
+       }()
  
     
     //MARK: properties
@@ -124,6 +136,9 @@ class HomeBar: UIViewController {
         return cv
     }()
     
+    
+
+    
     var activityIndicator : UIActivityIndicatorView = {
         var indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
@@ -154,18 +169,18 @@ class HomeBar: UIViewController {
         veriCekFoto()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        
+
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
         fetchRequest.returnsObjectsAsFaults = false
-        
+
         do {
             let results = try context.fetch(fetchRequest)
-            
+
             if results.count == 0 {
                 print("Nicatalibli")
                 veriCekMarket()
                 veriCekUrun()
-                
+
                 activityIndicator.startAnimating()
                 activityIndicator2.startAnimating()
                 //refreshControlAction()
@@ -173,68 +188,64 @@ class HomeBar: UIViewController {
                 print("Nicatalibli")
                 favoriveriCekMarket()
                 favoriveriCekUrun()
-                
+
                 activityIndicator.startAnimating()
                 activityIndicator2.startAnimating()
                 //refreshControlAction()
             }
-            
+
         } catch {
             print("error")
         }
-        
-        
-        
+
+
+
         refreshControlAction()
-        
-       
+
+
         
     }
     
     func layoutDuzenle() {
            
-           //MARK: addSubview
            view.addSubview(scrolView)
-           scrolView.addSubview(ustView)
+           scrolView.addSubview(containerView)
+           containerView.addSubview(ustView)
            ustView.addSubview(lblTop)
            ustView.addSubview(btnTopSearch)
-           scrolView.addSubview(ortaView1)
+           containerView.addSubview(ortaView1)
            ortaView1.addSubview(imgReklam)
-           scrolView.addSubview(ortaView2)
+           containerView.addSubview(ortaView2)
            ortaView2.addSubview(lblMarket)
            ortaView2.addSubview(marketCollectionView)
-           scrolView.addSubview(altView)
+           containerView.addSubview(altView)
            altView.addSubview(lblFiyat)
            altView.addSubview(fiyatlarCollectionView)
            fiyatlarCollectionView.addSubview(activityIndicator)
            marketCollectionView.addSubview(activityIndicator2)
-           
-           
+
+
            //MARK: constraint
-        scrolView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrolView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        scrolView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scrolView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-           
-           _ = ustView.anchor(top: scrolView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
+        
+           _ = ustView.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
            lblTop.merkezKonumlamdirmaSuperView()
            btnTopSearch.merkezYSuperView()
            btnTopSearch.leadingAnchor.constraint(equalTo: ustView.leadingAnchor,constant: 5).isActive = true
-           _ = ortaView1.anchor(top: ustView.bottomAnchor, bottom: nil, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
-           _ = imgReklam.anchor(top: ustView.bottomAnchor, bottom: nil, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
-           
-           _ = ortaView2.anchor(top: ortaView1.bottomAnchor, bottom: nil, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
+           _ = ortaView1.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+           _ = imgReklam.anchor(top: ustView.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+
+           _ = ortaView2.anchor(top: ortaView1.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
            _ = lblMarket.anchor(top: ortaView2.topAnchor, bottom: nil, leading: ortaView2.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
            _ = marketCollectionView.anchor(top: lblMarket.bottomAnchor, bottom: ortaView2.bottomAnchor, leading: ortaView2.leadingAnchor, trailing: ortaView2.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-           _ = altView.anchor(top: ortaView2.bottomAnchor, bottom: scrolView.bottomAnchor, leading: scrolView.leadingAnchor, trailing: scrolView.trailingAnchor)
-           
+           _ = altView.anchor(top: ortaView2.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+
            _ = lblFiyat.anchor(top: ortaView2.bottomAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
-           _ = fiyatlarCollectionView.anchor(top: lblFiyat.bottomAnchor, bottom: scrolView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
-           
-           
+           _ = fiyatlarCollectionView.anchor(top: lblFiyat.bottomAnchor, bottom: containerView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
+
+
            activityIndicator.centerXAnchor.constraint(equalTo: fiyatlarCollectionView.centerXAnchor).isActive = true
            activityIndicator.topAnchor.constraint(equalTo: fiyatlarCollectionView.topAnchor,constant: 100).isActive = true
-           
+
            activityIndicator2.centerXAnchor.constraint(equalTo: marketCollectionView.centerXAnchor).isActive = true
            activityIndicator2.topAnchor.constraint(equalTo: marketCollectionView.topAnchor,constant: 50).isActive = true
            
@@ -259,7 +270,7 @@ class HomeBar: UIViewController {
                layout.minimumInteritemSpacing = 5
                layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
            }
-           
+
            
            if let layout = fiyatlarCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
                layout.itemSize = CGSize(width: view.frame.width, height: 334)
@@ -295,7 +306,6 @@ class HomeBar: UIViewController {
                           let results = try context.fetch(fetchRequest)
                           
                           if results.count == 0 {
-                              print("Nicatalibli")
                               veriCekMarket()
                               veriCekUrun()
                               
@@ -303,7 +313,6 @@ class HomeBar: UIViewController {
                               activityIndicator2.startAnimating()
                               //refreshControlAction()
                           }else {
-                              print("Nicatalibli")
                               favoriveriCekMarket()
                               favoriveriCekUrun()
                               
@@ -662,7 +671,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             
         }else {
             
-            if indexPath.row % 10 == 0 && indexPath.row != 0  {
+            if indexPath.row % 10 == 1{
                 
                 let cell3 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
                 cell3.lblIsim.isHidden = true
