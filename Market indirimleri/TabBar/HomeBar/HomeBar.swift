@@ -671,7 +671,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             
         }else {
             
-            if indexPath.row % 10 == 1{
+            if indexPath.row % 9 == 0 && indexPath.row != 0 {
                 
                 let cell3 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
                 cell3.lblIsim.isHidden = true
