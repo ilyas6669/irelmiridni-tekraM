@@ -49,8 +49,6 @@ class FiyatCell: UICollectionViewCell {
         imgUrun.addGestureRecognizer(doubleTapRecognizer)
         
         
-       
-        
         
     }
     

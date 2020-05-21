@@ -263,6 +263,8 @@ class HomeBar: UIViewController {
            fiyatlarCollectionView.delegate = self
            fiyatlarCollectionView.dataSource = self
            fiyatlarCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
+        
+       
            
            if let layout = marketCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
                layout.itemSize = CGSize(width: 100, height: 100)
@@ -566,12 +568,9 @@ class HomeBar: UIViewController {
             print("error")
         }
         
-         
       
         
-        
     }
-    
     
     
     func veriCekUrun() {
@@ -660,6 +659,7 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
         }
         return countryList2.count
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.marketCollectionView {
@@ -871,6 +871,18 @@ extension HomeBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
         
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+       
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "UrunlerHeader", for: indexPath)
+            return header
+      
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .init(width: view.frame.width, height: 200)
+    }
+    
     
     
 }

@@ -49,10 +49,10 @@
             </objects>
             <point key="canvasLocation" x="1604" y="823"/>
         </scene>
-        <!--Home Bar-->
+        <!--Home-->
         <scene sceneID="798-Of-3aP">
             <objects>
-                <viewController storyboardIdentifier="HomeBar" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VMQ-Xe-kTo" customClass="HomeBar" customModule="Market_indirimleri" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeBar" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VMQ-Xe-kTo" customClass="Home" customModule="Market_indirimleri" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rkg-OL-6iF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
