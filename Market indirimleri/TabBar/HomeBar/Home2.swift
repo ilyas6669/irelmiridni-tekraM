@@ -32,9 +32,13 @@ class Home2: UIViewController {
     
     @IBOutlet weak var fiyatlarCollectionView: UICollectionView!
     
+    @IBOutlet weak var lblTop: UILabel!
+    
+//    @IBOutlet weak var topViewTopConstraint: NSLayoutConstraint!
+    
+//    @IBOutlet weak var topViewTopConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var topViewTopConstraint: NSLayoutConstraint!
-    
-    
     var activityIndicator : UIActivityIndicatorView = {
         var indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
@@ -103,9 +107,6 @@ class Home2: UIViewController {
 
 
 
-             
-
-
                
     }
     
@@ -116,6 +117,8 @@ class Home2: UIViewController {
          imgReklam.contentMode = .scaleAspectFill
         fiyatlarCollectionView.backgroundColor = .customWhite()
         marketCollectionView.backgroundColor = .customWhite()
+        lblTop.textColor = .black
+               lblTop.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 24)
     }
     
     func collectionViewDuzenle() {
@@ -459,7 +462,7 @@ class Home2: UIViewController {
         let constentOffset = scrollView.contentOffset.y - oldContentOffset.y
         
         if scrollView.contentOffset.y > 0 && constentOffset > 0 {
-            if topViewTopConstraint.constant > -336 {
+            if topViewTopConstraint.constant > -412 {
                 topViewTopConstraint.constant -= constentOffset
                 scrollView.contentOffset.y -= constentOffset
                 
@@ -481,6 +484,9 @@ class Home2: UIViewController {
     }
     
     
+    @IBAction func searchButton(_ sender: Any) {
+         tabBarController?.selectedIndex = 1
+    }
     
     
     

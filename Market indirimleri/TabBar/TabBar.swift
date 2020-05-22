@@ -24,7 +24,7 @@ class TabBar: UITabBarController, UITabBarControllerDelegate{
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
         
-        if let homebar = viewController as? Home  {
+        if let homebar = viewController as? Home2  {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
             
@@ -37,6 +37,8 @@ class TabBar: UITabBarController, UITabBarControllerDelegate{
                 if results.count == 0 {
                    
                     homebar.veriCekUrun()
+                    homebar.veriCekMarket()
+                    
                 
                     homebar.activityIndicator.startAnimating()
                    
@@ -44,6 +46,7 @@ class TabBar: UITabBarController, UITabBarControllerDelegate{
                 }else {
                    
                     homebar.favoriveriCekUrun()
+                    homebar.favoriveriCekMarket()
                     
                  
                     
