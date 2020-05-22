@@ -23,15 +23,24 @@ class CollectionReusableView: UICollectionReusableView {
     
     @IBOutlet weak var lblFiyat: UILabel!
     
+    var activityIndicator2 : UIActivityIndicatorView = {
+        var indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.style = .medium
+        indicator.color = .black
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        activityIndicator2.startAnimating()
         layoutDuzenle()
         collectionViewDuzenle()
         veriCekFoto()
-        favoriveriCekMarket()
+        favoriControl()
         veriCekMarket()
-        
-        
+        favoriveriCekMarket()
         
     }
     
@@ -40,6 +49,10 @@ class CollectionReusableView: UICollectionReusableView {
         imgReklam.contentMode = .scaleAspectFill
         marketCollectionView.backgroundColor = .customWhite()
         marketCollectionView.showsHorizontalScrollIndicator = false
+        
+        marketCollectionView.addSubview(activityIndicator2)
+        activityIndicator2.centerXAnchor.constraint(equalTo: marketCollectionView.centerXAnchor).isActive = true
+        activityIndicator2.topAnchor.constraint(equalTo: marketCollectionView.topAnchor,constant: 50).isActive = true
         
     }
     
@@ -112,12 +125,12 @@ class CollectionReusableView: UICollectionReusableView {
                 
                 self.lblFiyat.text = "\(selectcounrty) market indirimleri "
                 self.lblMarket.text = "\(selectcounrty) marketleri"
-                      
+                self.activityIndicator2.stopAnimating()
                 
             } catch {
                 print("error")
-            }
-                
+        }
+        
             
               do {
                   let results = try context.fetch(fetchRequest)
@@ -144,7 +157,7 @@ class CollectionReusableView: UICollectionReusableView {
                                     self.countryList.shuffle()
     //                                self.lblMarket.text = "\(selectcounrty) marketleri"
                                     self.marketCollectionView.reloadData()
-                                   
+                                   self.activityIndicator2.stopAnimating()
                                     
                                 }
                                 
@@ -161,8 +174,6 @@ class CollectionReusableView: UICollectionReusableView {
               } catch {
                   print("error")
               }
-              
-            
               
           }
     
@@ -210,6 +221,7 @@ class CollectionReusableView: UICollectionReusableView {
                            
                            if n.cities.contains(Int(self.idArray.last!)!) {
                                self.countryList.append(n)
+                            
                            }
                            
                        }
@@ -218,6 +230,7 @@ class CollectionReusableView: UICollectionReusableView {
                        self.lblMarket.text = "\(selectcounrty) marketleri"
                        self.lblFiyat.text = "\(selectcounrty) market indirimleri "
                        self.marketCollectionView.reloadData()
+                       self.activityIndicator2.stopAnimating()
                        
                    }
                    
@@ -229,6 +242,34 @@ class CollectionReusableView: UICollectionReusableView {
           
            
        }
+    
+    func favoriControl() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+        fetchRequest.returnsObjectsAsFaults = false
+
+        do {
+            let results = try context.fetch(fetchRequest)
+
+            if results.count == 0 {
+                veriCekMarket()
+                activityIndicator2.startAnimating()
+                //refreshControlAction()
+            }else {
+                print("Nicatalibli")
+                favoriveriCekMarket()
+                activityIndicator2.startAnimating()
+                //refreshControlAction()
+            }
+
+        } catch {
+            print("error")
+        }
+
+
+    }
     
     
 }

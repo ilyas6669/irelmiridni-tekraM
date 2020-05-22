@@ -12,33 +12,7 @@ import CoreData
 
 class MarketSayfasi: UIViewController {
     
-    lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height+10000)
-       
-       lazy var scrolView: UIScrollView = {
-           let view = UIScrollView(frame: .zero)
-           view.backgroundColor = .customYellow()
-           view.frame = self.view.bounds
-           view.contentSize = contentViewSize
-           view.autoresizingMask = .flexibleHeight
-           view.showsHorizontalScrollIndicator = true
-           view.bounces = true
-           return view
-       }()
-       
-       lazy var containerView : UIView = {
-           let view = UIView()
-           view.backgroundColor = .customWhite()
-           view.frame.size = contentViewSize
-           return view
-       }()
-    
-    let altView : UIView = {
-        let view = UIView()
-        view.backgroundColor = .customYellow()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
+
     
     let topView : UIView = {
         let view = UIView()
@@ -47,6 +21,16 @@ class MarketSayfasi: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    
+    let ortaView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .customYellow()
+         //view.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     
   
     let btnLeft : UIButton = {
@@ -79,7 +63,6 @@ class MarketSayfasi: UIViewController {
     }()
     
   
-    
     fileprivate let urunlerCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -145,29 +128,30 @@ class MarketSayfasi: UIViewController {
         veriCekUrun()
         
        
-        view.addSubview(scrolView)
-        scrolView.addSubview(containerView)
-        containerView.addSubview(topView)
-        containerView.addSubview(lblAciklama)
-        containerView.addSubview(searchBar)
+       
+        view.addSubview(topView)
+        view.addSubview(ortaView)
+        ortaView.addSubview(lblAciklama)
+        ortaView.addSubview(searchBar)
         topView.addSubview(btnLeft)
         topView.addSubview(btnFavori)
         view.addSubview(imgUrun)
-        containerView.addSubview(urunlerCollectionView)
-        containerView.addSubview(viewBulunmadi)
+        view.addSubview(urunlerCollectionView)
+        view.addSubview(viewBulunmadi)
         viewBulunmadi.addSubview(imgBulunmadi)
         viewBulunmadi.addSubview(lblBUlunmadi)
         
         
         
-        _ = topView.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
-        _ = lblAciklama.anchor(top: imgUrun.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
-        _ = searchBar.anchor(top: lblAciklama.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        _ = viewBulunmadi.anchor(top: searchBar.bottomAnchor, bottom: nil, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+        _ = topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = ortaView.anchor(top: imgUrun.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = lblAciklama.anchor(top: ortaView.topAnchor, bottom: nil, leading: ortaView.leadingAnchor, trailing: ortaView.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
+        _ = searchBar.anchor(top: lblAciklama.bottomAnchor, bottom: ortaView.bottomAnchor, leading: ortaView.leadingAnchor, trailing: ortaView.trailingAnchor)
+        _ = viewBulunmadi.anchor(top: ortaView.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         imgBulunmadi.merkezKonumlamdirmaSuperView()
         imgBulunmadi.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -50).isActive = true
         _ = lblBUlunmadi.anchor(top: imgBulunmadi.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        _ = urunlerCollectionView.anchor(top: searchBar.bottomAnchor, bottom: containerView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor)
+        _ = urunlerCollectionView.anchor(top: ortaView.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
         
         btnLeft.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
@@ -323,18 +307,11 @@ class MarketSayfasi: UIViewController {
     
     func getitem (searchkeyword: String) {
         
-        
         var url = ""
-        
-        //MARK: PROBLEM2 : yetm burda axtarisda dediyin linki qoyuram axtarir hecne tapmir bu searcdeki linki qoyuram tapir
-        // "https://marketindirimleri.com/api/v1/products/?store=\(storeid)&q=\(query)&format=json";
         
         url = "https://marketindirimleri.com/api/v1/products/?store=\(itemid)&q=\(searchkeyword)&format=json"
         
-        //bu bilgiler yazilan yere padding verde yetim haeasina ne harsina verm paddingi burda magazanin detaylari yazilibe girib ic ice deyilki sol terefine bax yaxciii versen indi ? yo hele
-        
-
-        
+     
         guard let url2 = URL(string: url) else {return}
         
         print("Nicatalibli:\(url2)")
@@ -526,7 +503,7 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
 //        return .init(width: view.frame.width, height: 57)
 //    }
-    
+//
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (scrollView.contentOffset.y < self.lastContentOffset) {
@@ -538,8 +515,8 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
         else if (scrollView.contentOffset.y > self.lastContentOffset) {
            
             
-            imgUrun.heightAnchor.constraint(equalToConstant: 80).isActive = true
-            imgUrun.widthAnchor.constraint(equalToConstant: 80).isActive = true
+            imgUrun.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            imgUrun.widthAnchor.constraint(equalToConstant: 100).isActive = true
             
         }
         self.lastContentOffset = scrollView.contentOffset.y

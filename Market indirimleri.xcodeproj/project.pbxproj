@@ -3,13 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		002772A92475F398003FB62F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002772A82475F398003FB62F /* Home.swift */; };
 		002772AE2475F64D003FB62F /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002772AC2475F64D003FB62F /* CollectionReusableView.swift */; };
 		002772AF2475F64D003FB62F /* CollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 002772AD2475F64D003FB62F /* CollectionReusableView.xib */; };
+		00687B2024774BB5001C19AF /* MarketlerSayfasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00687B1F24774BB5001C19AF /* MarketlerSayfasi.swift */; };
+		00687B3124774DCD001C19AF /* Home2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00687B3024774DCD001C19AF /* Home2.swift */; };
 		006D39F8245F78EC00BE4736 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006D39F7245F78EC00BE4736 /* Json.swift */; };
 		006D39FC24603C7400BE4736 /* AltUrunSayfasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006D39FB24603C7400BE4736 /* AltUrunSayfasi.swift */; };
 		006DA749246C2A490043DD3F /* CartBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006DA747246C2A490043DD3F /* CartBarCell.swift */; };
@@ -282,6 +284,8 @@
 		00507D70246A0D900081F7CF /* FlexibleHeightBarDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarDemoTests.swift; sourceTree = "<group>"; };
 		00507D71246A0D900081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00507D72246A0D900081F7CF /* FlexibleHeightBarDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = FlexibleHeightBarDemo.xcodeproj; sourceTree = "<group>"; };
+		00687B1F24774BB5001C19AF /* MarketlerSayfasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketlerSayfasi.swift; sourceTree = "<group>"; };
+		00687B3024774DCD001C19AF /* Home2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home2.swift; sourceTree = "<group>"; };
 		006D39F7245F78EC00BE4736 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		006D39FB24603C7400BE4736 /* AltUrunSayfasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltUrunSayfasi.swift; sourceTree = "<group>"; };
 		006DA747246C2A490043DD3F /* CartBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBarCell.swift; sourceTree = "<group>"; };
@@ -765,6 +769,7 @@
 				009AF814246B1F60009AAD07 /* HeaderVieww.swift */,
 				0073F4C12455886A00AD8095 /* MarketSayfasi.swift */,
 				009AF815246B1F60009AAD07 /* HeaderVieww.xib */,
+				00687B1F24774BB5001C19AF /* MarketlerSayfasi.swift */,
 			);
 			path = UrunSayfasi;
 			sourceTree = "<group>";
@@ -861,6 +866,7 @@
 				00CA3C582453EB6B00F76E49 /* FiyatCell.swift */,
 				00CA3C592453EB6B00F76E49 /* FiyatCell.xib */,
 				002772A82475F398003FB62F /* Home.swift */,
+				00687B3024774DCD001C19AF /* Home2.swift */,
 				002772AC2475F64D003FB62F /* CollectionReusableView.swift */,
 				002772AD2475F64D003FB62F /* CollectionReusableView.xib */,
 			);
@@ -928,7 +934,7 @@
 				};
 			};
 			buildConfigurationList = 008DEE082451F9E8003ACEB2 /* Build configuration list for PBXProject "Market indirimleri" */;
-			compatibilityVersion = "Xcode 11.4";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1167,6 +1173,8 @@
 				008DEE3324523B12003ACEB2 /* HomeBar.swift in Sources */,
 				0073F4A1245519AB00AD8095 /* MarketlerCel.swift in Sources */,
 				008DEE2B2452028C003ACEB2 /* Constraints.swift in Sources */,
+				00687B2024774BB5001C19AF /* MarketlerSayfasi.swift in Sources */,
+				00687B3124774DCD001C19AF /* Home2.swift in Sources */,
 				008DEE3524523B23003ACEB2 /* SearchBar.swift in Sources */,
 				008DEE292451FBD7003ACEB2 /* UIColor.swift in Sources */,
 				006D39FC24603C7400BE4736 /* AltUrunSayfasi.swift in Sources */,

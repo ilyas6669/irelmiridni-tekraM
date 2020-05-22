@@ -37,6 +37,7 @@ class CartBarCell: UICollectionViewCell,UIGestureRecognizerDelegate {
          let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
          
          tapRecognizer.numberOfTapsRequired = 2
+         tapRecognizer.delaysTouchesBegan = true
          
          return tapRecognizer
      }()

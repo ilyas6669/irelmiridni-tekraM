@@ -24,7 +24,7 @@ class TabBar: UITabBarController, UITabBarControllerDelegate{
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
         
-        if let homebar = viewController as? HomeBar {
+        if let homebar = viewController as? Home  {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
             
@@ -35,18 +35,20 @@ class TabBar: UITabBarController, UITabBarControllerDelegate{
                 let results = try context.fetch(fetchRequest)
                 
                 if results.count == 0 {
-                    homebar.veriCekMarket()
+                   
                     homebar.veriCekUrun()
-                    
+                
                     homebar.activityIndicator.startAnimating()
-                    homebar.activityIndicator2.startAnimating()
+                   
                     //refreshControlAction()
                 }else {
-                    homebar.favoriveriCekMarket()
+                   
                     homebar.favoriveriCekUrun()
                     
+                 
+                    
                     homebar.activityIndicator.startAnimating()
-                    homebar.activityIndicator2.startAnimating()
+                   
                     //refreshControlAction()
                 }
                 
@@ -54,6 +56,8 @@ class TabBar: UITabBarController, UITabBarControllerDelegate{
                 print("error")
             }
         }
+      
+        
         
         if let cartbar = viewController as? CartBar {
             cartbar.veriCekUrun()

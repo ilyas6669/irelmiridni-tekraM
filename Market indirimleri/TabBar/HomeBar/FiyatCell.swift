@@ -29,16 +29,14 @@ class FiyatCell: UICollectionViewCell {
    lazy var likeAnimator = LikeAnimator(container: contentView, layoutConstraint: likeImageViewWidthConstraint)
     
     lazy var doubleTapRecognizer: UITapGestureRecognizer = {
-        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
-    
         tapRecognizer.numberOfTapsRequired = 2
-        tapRecognizer.numberOfTouchesRequired = 1
-        
+        tapRecognizer.delaysTouchesBegan = true
         return tapRecognizer
     }()
-    
- 
+
+
+
      var btnTapAction : (()->())?
     
     
@@ -54,12 +52,12 @@ class FiyatCell: UICollectionViewCell {
     
     @objc func didDoubleTap() {
        btnTapAction?()
-        
+
         likeAnimator.animate { [weak self] in
-            
-            
+
+
         }
-        
+
     }
     
    

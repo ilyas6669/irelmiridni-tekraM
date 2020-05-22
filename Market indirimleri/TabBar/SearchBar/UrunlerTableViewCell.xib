@@ -31,7 +31,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B5T-Fo-xKY">
-                        <rect key="frame" x="280" y="11" width="33" height="28"/>
+                        <rect key="frame" x="277" y="11" width="33" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="33" id="Eig-ep-nda"/>
                             <constraint firstAttribute="height" constant="28" id="ny4-Zt-02E"/>
@@ -65,7 +65,7 @@
                     <constraint firstAttribute="bottom" secondItem="50a-bx-Q6L" secondAttribute="bottom" constant="10" id="SsK-26-82U"/>
                     <constraint firstItem="50a-bx-Q6L" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="adJ-RK-Bj8"/>
                     <constraint firstItem="50a-bx-Q6L" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="b3j-On-tEk"/>
-                    <constraint firstAttribute="trailing" secondItem="B5T-Fo-xKY" secondAttribute="trailing" constant="7" id="dW6-TB-AdB"/>
+                    <constraint firstAttribute="trailing" secondItem="B5T-Fo-xKY" secondAttribute="trailing" constant="10" id="dW6-TB-AdB"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
