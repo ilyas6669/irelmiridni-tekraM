@@ -417,6 +417,77 @@ extension AltUrunSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFl
                        
                        
                    }.resume()
+        
+        
+        
+                  cell.btnTapAction = {
+                         () in
+                      print("test")
+
+
+                      let tagstatus = cell.imgLiked.tag
+
+                      if tagstatus == 0 { //favori degil ise
+
+                          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                          let context = appDelegate.persistentContainer.viewContext
+
+                          let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
+                          //bu urunlerin oldugu list hansidi ? sen duzgun ad veremmirsende buna country nedi ala :D
+                          favoriteproduct.setValue("\(self.countryList2[indexPath.row].id)", forKey: "id")
+
+                          cell.imgLiked.tag = 1
+                          cell.imgLiked.isHidden = false
+
+                          do {
+                              try context.save()
+                          } catch {
+                              print("bir hata var")
+                          }
+
+                      }else{ //favori ise
+
+                          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                          let context = appDelegate.persistentContainer.viewContext
+
+                          let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+                          fetchRequest.returnsObjectsAsFaults = false
+
+                          do {
+                              let results = try context.fetch(fetchRequest)
+
+                              for result in results as! [NSManagedObject] {
+
+                                  if let id = result.value(forKey: "id") as? String {
+
+                                      if id == "\(self.countryList2[indexPath.row].id)" {
+                                          context.delete(result as NSManagedObject)
+                                      }
+
+                                  }
+
+                              }
+
+                              cell.imgLiked.tag = 0
+                              cell.imgLiked.isHidden = true
+
+                              do {
+                                  try context.save()
+                              } catch {
+                                  print("bir hata var")
+                              }
+
+                          } catch {}
+
+
+                      }
+
+
+                  }
+
+
+                  
+        
         return cell
     }
     

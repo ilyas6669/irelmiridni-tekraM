@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class FiyatCell: UICollectionViewCell {
-
+    
+    
+    @IBOutlet weak var bannerVIew: GADBannerView!
+    
     @IBOutlet weak var imgUrun: UIImageView!
     
     @IBOutlet weak var lblIsim: UILabel!

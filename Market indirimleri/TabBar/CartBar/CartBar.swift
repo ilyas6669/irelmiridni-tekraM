@@ -16,8 +16,7 @@ class CartBar: UIViewController {
     
     var countryList2 = [SingleProduct]()
     var idArray = [Int]()
-    
-    //MARK: properties
+    var swapList = [SingleProduct]()    //MARK: properties
     
     
     lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
@@ -55,7 +54,7 @@ class CartBar: UIViewController {
         return lbl
     }()
     
-  
+    
     let viewBulunmadi : UIView = {
         let view = UIView()
         view.backgroundColor = .customWhite()
@@ -81,7 +80,7 @@ class CartBar: UIViewController {
         return lbl
     }()
     
-     let urunlerCollectionView : UICollectionView = {
+    let urunlerCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -99,18 +98,20 @@ class CartBar: UIViewController {
         return indicator
     }()
     
-    var refreshControl : UIRefreshControl = {
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
-        return refreshControl
-    }()
+//    var refreshControl : UIRefreshControl = {
+//        let refreshControl = UIRefreshControl()
+//        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+//        return refreshControl
+//    }()
     
     var refreshControl2 : UIRefreshControl!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
-       
+        
         
         
         //MARK: addSubview
@@ -137,7 +138,7 @@ class CartBar: UIViewController {
         urunlerCollectionView.delegate = self
         urunlerCollectionView.dataSource = self
         urunlerCollectionView.register(UINib(nibName: "CartBarCell", bundle: nil), forCellWithReuseIdentifier: "CartBarCell")
-        urunlerCollectionView.refreshControl = refreshControl
+//        urunlerCollectionView.refreshControl = refreshControl
         
         
         if let layout = urunlerCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -150,31 +151,34 @@ class CartBar: UIViewController {
         
         
         veriCekUrun()
-        refreshControlAction()
+        //refreshControlAction()
         
     }
     
-    @objc private func refresh(sender:UIRefreshControl) {
-        sender.endRefreshing()
-        veriCekUrun()
-    }
+//    @objc private func refresh(sender:UIRefreshControl) {
+//        sender.endRefreshing()
+//        veriCekUrun()
+//    }
     
-    func refreshControlAction() {
-        
-        scrolView.alwaysBounceVertical = true
-        scrolView.bounces = true
-        refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .white
-        refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
-        self.scrolView.addSubview(refreshControl)
-        
-    }
-    
-    @objc func didPullToRefresh() {
-        refreshControl.endRefreshing()
-       veriCekUrun()
-        
-    }
+//    func refreshControlAction() {
+//
+//        scrolView.alwaysBounceVertical = true
+//        scrolView.bounces = true
+//        refreshControl = UIRefreshControl()
+//        refreshControl.tintColor = .white
+//        refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+//        self.scrolView.addSubview(refreshControl)
+//
+//    }
+   
+//    @objc func didPullToRefresh() {
+//        refreshControl.endRefreshing()
+//        veriCekUrun()
+//        viewBulunmadi.isHidden = false
+//        urunlerCollectionView.isHidden = true
+//
+//
+//    }
     
     
     
@@ -191,22 +195,22 @@ class CartBar: UIViewController {
             
             print("nicatalibli:\(results.count)")
             
-            if results.count == 0 {
-               
+            if results.count == 0 { //sen viewbulunamadini en basdan goster bidene
                 viewBulunmadi.isHidden = false
                 urunlerCollectionView.isHidden = true
             }else{
                 viewBulunmadi.isHidden = true
                 urunlerCollectionView.isHidden = false
             }
-           countryList2.removeAll(keepingCapacity: false)
+            countryList2.removeAll(keepingCapacity: false)
+            swapList.removeAll(keepingCapacity: false)
             
-            var counter = 0
-            
+            print("Nicatalibli:ListCountry:\(countryList2.count)")
+            print("Nicatalibli:ListSwapList:\(swapList.count)")
+
             for result in results as! [NSManagedObject] {
                 
-                counter = counter + 1
-        
+                
                 if let id = result.value(forKey: "id") as? String {
                     
                     let jsonUrlString = "https://marketindirimleri.com/api/v1/products/\(id)?format=json"
@@ -220,33 +224,79 @@ class CartBar: UIViewController {
                             
                             let singleproduct = try JSONDecoder().decode(SingleProduct.self, from: data)
                             var adproduct = try JSONDecoder().decode(SingleProduct.self, from: data)
-
+                         
                             DispatchQueue.main.async {
-                               
-                               
-                                if self.countryList2.count % 3 == 0 && self.countryList2.count != 0 {
+                            
+                                self.countryList2.append(singleproduct)
+                                            
+                              
+                              
+                                
+//                                print("Nicatalibl:LASTINDEX:\( self.countryList2.count)")
+//                                print("Nicatalibl:LASTINDEX:\(results.count-1)")
 
-                                    adproduct.name = "ADVIEW"
-                                
-                                    self.countryList2.append(adproduct)
+                                if self.countryList2.count == results.count-1 { /// last index
+
+//                                print("Nicatalibl:LASTINDEX")
                                     
-                                    self.countryList2.append(singleproduct)
+                                for x in 0..<self.countryList2.count {
+                                   
+                                if x % 4 == 0 && x != 0 {
+                                    print("Nicatalibl:ADVIEW:\(x)")
+                                    adproduct.name = "ADVIEW"
+                                    self.swapList.append(adproduct)
+                                    self.swapList.append(self.countryList2[x])
+                            
                                 }else{
-                                    self.countryList2.append(singleproduct)
+                                    print("Nicatalibl:ITEM:\(x)")
+                                    self.swapList.append(self.countryList2[x])
                                 }
-                    
+                                    
+                                }
                                 
-//                                self.countryList2.append(singleproduct)
-                               
-                                self.urunlerCollectionView.reloadData()
-                                self.activityIndicator.stopAnimating()
+                           
+                                    self.countryList2 = self.swapList
+
+                                    
+                                    
+                                    self.urunlerCollectionView.reloadData()
+                                    self.activityIndicator.stopAnimating()
+                                }
+                            
+                              //bu favori duymesine basanda ne olsun hara yazmisan onu
+                                
+                              
                                 
                             }
                             
                         } catch let jsonError {
-                            print("Error serializing json:", jsonError)
+
+                            self.activityIndicator.stopAnimating()
                             
-                            
+                            do {
+                                let results = try context.fetch(fetchRequest)
+                                
+                                for result in results as! [NSManagedObject] {
+                                    
+                                    if let id2 = result.value(forKey: "id") as? String {
+                                        
+                                        if id2 == id {
+                                            context.delete(result as NSManagedObject)
+                                            break
+                                        }
+                                        
+                                    }
+                                    
+                                }
+                                
+                                do {
+                                    try context.save()
+                                } catch {
+                                    print("bir hata var")
+                                }
+                                
+                            } catch {}
+                          
                         }
                         
                     }.resume()
@@ -272,29 +322,30 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-     
-        if countryList2[indexPath.row].name == "ADVIEW" {
-            let cell1 = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "CartBarCell", for: indexPath) as! CartBarCell
-            cell1.lblIsim.isHidden = true
-            cell1.lblFiyat.isHidden = true
-            cell1.imgUrun.isHidden = true
-            cell1.lblIsim2.isHidden = true
-            cell1.lblTarih.isHidden = true
-            var bannerView = GADBannerView()
-            cell1.addSubview(bannerView)
-            bannerView.translatesAutoresizingMaskIntoConstraints = false
-            bannerView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-            bannerView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-            bannerView.centerXAnchor.constraint(equalTo: cell1.centerXAnchor).isActive = true
-            bannerView.centerYAnchor.constraint(equalTo: cell1.centerYAnchor).isActive = true
-            bannerView.adUnitID = "ca-app-pub-3774834754218485/5943173506"
-            bannerView.rootViewController = self
-            bannerView.load(GADRequest())
-            return cell1
-            
-            
-        }
+        
         let cell = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "CartBarCell", for: indexPath) as! CartBarCell
+        
+//        if countryList2[indexPath.row].name == "ADVIEW" {
+        if countryList2[indexPath.row].name == "ADVIEW" {
+            cell.lblIsim.isHidden = true
+            cell.lblFiyat.isHidden = true
+            cell.imgUrun.isHidden = true
+            cell.lblIsim2.isHidden = true
+            cell.lblTarih.isHidden = true
+            cell.bannerVIew.isHidden = false
+            cell.bannerVIew.adUnitID = "ca-app-pub-3774834754218485/5943173506"
+            cell.bannerVIew.rootViewController = self
+            cell.bannerVIew.load(GADRequest())
+            return cell
+        }else{
+      
+            cell.lblIsim.isHidden = false
+                      cell.lblFiyat.isHidden = false
+                      cell.imgUrun.isHidden = false
+                      cell.lblIsim2.isHidden = false
+                      cell.lblTarih.isHidden = false
+                      cell.bannerVIew.isHidden = true
+            
         cell.lblIsim.text = countryList2[indexPath.row].name
         cell.lblFiyat.text = countryList2[indexPath.row].price
         cell.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
@@ -337,75 +388,57 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             
             
         }.resume()
-        
+      
         cell.btnTapAction = {
-                          () in
-                       print("test")
-                      
-                       let tagstatus = cell.imgLiked.tag
-                       
-                       if tagstatus == 0 {
-                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                        let context = appDelegate.persistentContainer.viewContext
+            () in
+            
+         
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do {
+                let results = try context.fetch(fetchRequest)
+                
+                for result in results as! [NSManagedObject] {
+                    
+                    if let id = result.value(forKey: "id") as? String {
                         
-                        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
-                        fetchRequest.returnsObjectsAsFaults = false
-                        
-                        do {
-                            let results = try context.fetch(fetchRequest)
-                            
-                            for result in results as! [NSManagedObject] {
-                                
-                                if let id = result.value(forKey: "id") as? String {
-                                    
-                                    if id == "\(self.countryList2[indexPath.row].id)" {
-                                        context.delete(result as NSManagedObject)
-                                    }
-                                    
-                                }
-                                
-                            }
-
-                            cell.imgLiked.tag = 0
-                            cell.imgLiked.isHidden = true
-                            
-                            do {
-                                try context.save()
-                            } catch {
-                                print("bir hata var")
-                            }
-                            
-                        } catch {}
-                        
-                        //favori degil ise
-                           
-                         
-                           
-                       }else{ //favori ise
-                           let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                                                    let context = appDelegate.persistentContainer.viewContext
-                                                    
-                                                    let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
-                                                    //bu urunlerin oldugu list hansidi ? sen duzgun ad veremmirsende buna country nedi ala :D
-                                                    favoriteproduct.setValue("\(self.countryList2[indexPath.row].id)", forKey: "id")
-                                                    
-                                                    cell.imgLiked.tag = 1
-                                                    cell.imgLiked.isHidden = false
-                                                    
-                                                    do {
-                                                        try context.save()
-                                                    } catch {
-                                                        print("bir hata var")
-                                                    }
-                           
-                           
-                           
-                       }
-                       
-                       
-                   }
+                        if id == "\(self.countryList2[indexPath.row].id)" {
+                            context.delete(result as NSManagedObject)
+                            self.countryList2.remove(at: indexPath.row)
+                            self.urunlerCollectionView.deleteItems(at: [indexPath])
+                            break
+                        }
+                        //bunu ytazdigim yere gelib niye poxu cidki? yazdnn deyeee poxu cixmiyib axi en basa gelibde ora onsuz isdemirdide senin yazdliikgl like dada nese oldu senin yazdiglarin silindi mennen sonra he bide o kod silinib fsyo
+                    }
+                    
+                }
+                
+                cell.imgLiked.tag = 0
+                cell.imgLiked.isHidden = true
+                
+                do {
+                    try context.save()
+                } catch {
+                    print("bir hata var")
+                }
+                
+            } catch {}
+            
+            
+            
+            
+            
+        }
         
-        return cell
+        
+        
+         return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -418,7 +451,7 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
     }
     
     func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-      
+        
         //
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
@@ -433,14 +466,14 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
                 
                 if let id = result.value(forKey: "id") as? String {
                     
-
-                        if id == "\(countryList2[indexPath.row].id)" {
-                            context.delete(result as NSManagedObject)
-                            countryList2.remove(at: indexPath.row)
-                            urunlerCollectionView.deleteItems(at: [indexPath])
-                            break
-                        }
-                        //gelende de 
+                    
+                    if id == "\(countryList2[indexPath.row].id)" {
+                        context.delete(result as NSManagedObject)
+                        countryList2.remove(at: indexPath.row)
+                        urunlerCollectionView.deleteItems(at: [indexPath])
+                        break
+                    }
+                    //gelende de
                     
                 }
                 
@@ -452,9 +485,12 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             }
             
         } catch {}
-                  
+        
     }
     
     
     
 }
+
+
+//yetmm tema nedi addview atirsan sennn zibili cxr deyan mellim duz deyr deyesen :D ala urun elave eliyende olure goren niye lee olurki birince defe duz isdiyirde cixax bebe colee yaxsi sen cix bura gelene qeder men baxacam sonra bagliyaram anydeski yaxcii

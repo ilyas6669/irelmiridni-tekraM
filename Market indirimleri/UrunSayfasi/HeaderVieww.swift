@@ -12,10 +12,15 @@ class HeaderVieww: UICollectionReusableView {
    
     @IBOutlet weak var searchBar: UISearchBar!
     
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         backgroundColor = .customWhite()
+        
+       
     }
     
 }
+

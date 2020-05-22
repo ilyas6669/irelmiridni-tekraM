@@ -296,7 +296,11 @@ class UrunSayfasi: UIViewController {
                   do {
                                   
                       let welcomee = try JSONDecoder().decode(SingleProduct.self, from: data)
-                   
+
+                      print("Nicatalibli:\(welcomee.image.imageDefault)")
+                      print("Nicatalibli:\(URL(string: "\(welcomee.image.imageDefault)"))")
+
+                    
                       DispatchQueue.main.async {
                         
                         self.lblIsim.text = welcomee.name
@@ -308,7 +312,6 @@ class UrunSayfasi: UIViewController {
                         self.lblIsim2Deyis(storeid: "\(welcomee.storeID)")
                         self.offerText.text = welcomee.offerText
                         
-                          
                       }
                       
                              

@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class CartBarCell: UICollectionViewCell,UIGestureRecognizerDelegate {
     @IBOutlet weak var imgUrun: UIImageView!
     
+    @IBOutlet weak var bannerVIew: GADBannerView!
     @IBOutlet weak var lblIsim: UILabel!
     
     

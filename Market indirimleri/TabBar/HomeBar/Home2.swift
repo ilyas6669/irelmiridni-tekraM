@@ -39,10 +39,11 @@ class Home2: UIViewController {
 //    @IBOutlet weak var topViewTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var topViewTopConstraint: NSLayoutConstraint!
+    
     var activityIndicator : UIActivityIndicatorView = {
         var indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
-        indicator.style = .medium
+        indicator.style = .large
         indicator.color = .black
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -57,7 +58,14 @@ class Home2: UIViewController {
         return indicator
     }()
     
-    var refreshControl : UIRefreshControl!
+   
+    
+    var refreshControl : UIRefreshControl = {
+           let refreshControl = UIRefreshControl()
+           refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+           return refreshControl
+       }()
+    
     
     var oldContentOffset = CGPoint.zero
     override func viewDidLoad() {
@@ -66,11 +74,25 @@ class Home2: UIViewController {
         collectionViewDuzenle()
         favoriKontrol()
         veriCekFoto()
+        
+        view.addSubview(activityIndicator)
+        activityIndicator.merkezKonumlamdirmaSuperView()
+        activityIndicator.startAnimating()
+        
+        view.addSubview(activityIndicator2)
+        activityIndicator2.merkezKonumlamdirmaSuperView()
+        activityIndicator2.startAnimating()
+        
+         fiyatlarCollectionView.refreshControl = refreshControl
       
         
         
-        
-        
+    }
+    
+    @objc private func refresh(sender:UIRefreshControl) {
+        sender.endRefreshing()
+        veriCekUrun()
+      
     }
     
     func favoriKontrol() {
@@ -502,6 +524,7 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    
         if collectionView == self.marketCollectionView {
             let cell1 = marketCollectionView.dequeueReusableCell(withReuseIdentifier: "MarketCell", for: indexPath) as! MarketCell
             cell1.lblIsim.text = countryList[indexPath.row].name
@@ -510,30 +533,36 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
             
             
         }else {
-            
-            if indexPath.row % 9 == 0 && indexPath.row != 0 {
-                
-                let cell3 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
-                cell3.lblIsim.isHidden = true
-                cell3.lblFiyat.isHidden = true
-                cell3.lblIsim2.isHidden = true
-                cell3.imgUrun.isHidden = true
-                cell3.lblTarih.isHidden = true
-                var bannerView = GADBannerView()
-                cell3.addSubview(bannerView)
-                bannerView.translatesAutoresizingMaskIntoConstraints = false
-                bannerView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-                bannerView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-                bannerView.centerXAnchor.constraint(equalTo: cell3.centerXAnchor).isActive = true
-                bannerView.centerYAnchor.constraint(equalTo: cell3.centerYAnchor).isActive = true
-                bannerView.adUnitID = "ca-app-pub-3774834754218485/5943173506"
-                bannerView.rootViewController = self
-                bannerView.load(GADRequest())
-                return cell3
-                
-            }
-            //
+        
             let cell2 = fiyatlarCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
+            
+           if indexPath.row % 9 == 0 && indexPath.row != 0 {
+            
+                cell2.lblIsim.isHidden = true
+                cell2.lblFiyat.isHidden = true
+                cell2.lblIsim2.isHidden = true
+                cell2.imgUrun.isHidden = true
+                cell2.lblTarih.isHidden = true
+                cell2.bannerVIew.isHidden = false
+//                bannerView.translatesAutoresizingMaskIntoConstraints = false
+//                bannerView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+//                bannerView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+//                bannerView.centerXAnchor.constraint(equalTo: cell2.centerXAnchor).isActive = true
+//                bannerView.centerYAnchor.constraint(equalTo: cell2.centerYAnchor).isActive = true
+            cell2.bannerVIew.adUnitID = "ca-app-pub-3774834754218485/5943173506"
+            cell2.bannerVIew.rootViewController = self
+            cell2.bannerVIew.load(GADRequest())
+
+                return cell2
+           }else{
+        
+            cell2.lblIsim.isHidden = false
+                        cell2.lblFiyat.isHidden = false
+                        cell2.lblIsim2.isHidden = false
+                        cell2.imgUrun.isHidden = false
+                        cell2.lblTarih.isHidden = false
+                        cell2.bannerVIew.isHidden = true
+                
             cell2.lblIsim.text = countryList2[indexPath.row].name
             cell2.lblFiyat.text = countryList2[indexPath.row].price
             cell2.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
@@ -556,8 +585,6 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
             }else {
                 cell2.lblTarih.text = "Bitti"
             }
-                
-         //qoymamisam
             
             let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
             let url = URL(string: jsonUrlString)
@@ -675,29 +702,31 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
 
                     } catch {}
 
-
+                //qaqaqs burda basqa kod isdiyir ograsi
                 }
-
-
+          
             }
-
-
-            
             return cell2
-            
+            }
         }
         
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.marketCollectionView {
-            
-            let storeid = countryList[indexPath.row].id
-            
+
+           let storeid = countryList[indexPath.row].id
+
             let urunSayfasi = MarketSayfasi()
             urunSayfasi.itemid = "\(storeid)"
             urunSayfasi.modalPresentationStyle = .fullScreen
             present(urunSayfasi, animated: true, completion: nil)
+            
+//            let storyboard: UIStoryboard = UIStoryboard (name: "Main", bundle: nil)
+//                   let vc: MarketlerSayfasi = storyboard.instantiateViewController(withIdentifier: "MarketlerSayfasi") as! MarketlerSayfasi
+//                   vc.modalPresentationStyle = .fullScreen
+//                    vc.itemid = "\(storeid)"
+//                   self.present(vc, animated: true, completion: nil)
             
         }else{
             let productid =  countryList2[indexPath.row].id

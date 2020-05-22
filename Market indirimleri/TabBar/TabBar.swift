@@ -63,7 +63,10 @@ class TabBar: UITabBarController, UITabBarControllerDelegate{
         
         
         if let cartbar = viewController as? CartBar {
+            cartbar.countryList2.removeAll()
+            cartbar.swapList.removeAll()
             cartbar.veriCekUrun()
+            //buradaaaa
         } else if let profilbar = viewController as? ProfilBar {
             profilbar.lblBegendigimUrunDeyis()
             profilbar.lblBegendigimMarketDeyis()
