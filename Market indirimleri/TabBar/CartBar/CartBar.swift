@@ -231,11 +231,11 @@ class CartBar: UIViewController {
                                             
                               
                               
-                                
+                                //urun seyfesine ged he
 //                                print("Nicatalibl:LASTINDEX:\( self.countryList2.count)")
 //                                print("Nicatalibl:LASTINDEX:\(results.count-1)")
 
-                                if self.countryList2.count == results.count-1 { /// last index
+                                if self.countryList2.count == results.count { /// last index
 
 //                                print("Nicatalibl:LASTINDEX")
                                     
@@ -351,11 +351,11 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
         cell.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
         
         //"2020-05-13"
-        let isoDate = countryList2[indexPath.row].validDates[1]
+            let isoDate = countryList2[indexPath.row].validDates?[1]
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX oldi? he mence
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = dateFormatter.date(from:isoDate)
+            let date = dateFormatter.date(from:isoDate!)
         
         let currentdate = Date()
         
@@ -389,51 +389,54 @@ extension CartBar : UICollectionViewDataSource,UICollectionViewDelegateFlowLayou
             
         }.resume()
       
-        cell.btnTapAction = {
-            () in
-            
-         
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
-            fetchRequest.returnsObjectsAsFaults = false
-            
-            do {
-                let results = try context.fetch(fetchRequest)
-                
-                for result in results as! [NSManagedObject] {
-                    
-                    if let id = result.value(forKey: "id") as? String {
-                        
-                        if id == "\(self.countryList2[indexPath.row].id)" {
-                            context.delete(result as NSManagedObject)
-                            self.countryList2.remove(at: indexPath.row)
-                            self.urunlerCollectionView.deleteItems(at: [indexPath])
-                            break
-                        }
-                        //bunu ytazdigim yere gelib niye poxu cidki? yazdnn deyeee poxu cixmiyib axi en basa gelibde ora onsuz isdemirdide senin yazdliikgl like dada nese oldu senin yazdiglarin silindi mennen sonra he bide o kod silinib fsyo
-                    }
-                    
-                }
-                
-                cell.imgLiked.tag = 0
-                cell.imgLiked.isHidden = true
-                
-                do {
-                    try context.save()
-                } catch {
-                    print("bir hata var")
-                }
-                
-            } catch {}
-            
-            
-            
-            
-            
-        }
+//        cell.btnTapAction = {
+//            () in
+//
+//
+//
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            let context = appDelegate.persistentContainer.viewContext
+//
+//            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+//            fetchRequest.returnsObjectsAsFaults = false
+//
+//            do {
+//                let results = try context.fetch(fetchRequest)
+//
+//                for result in results as! [NSManagedObject] {
+//
+//                    if let id = result.value(forKey: "id") as? String {
+//
+//                        print("Nicatalibl:ERROR:\(indexPath.row)")
+//
+//
+//                        if id == "\(self.countryList2[indexPath.row].id)" {
+//                            context.delete(result as NSManagedObject)
+//                            self.countryList2.remove(at: indexPath.row)
+//                            self.urunlerCollectionView.deleteItems(at: [indexPath])
+//                            break
+//                        }
+//                        //bunu ytazdigim yere gelib niye poxu cidki? yazdnn deyeee poxu cixmiyib axi en basa gelibde ora onsuz isdemirdide senin yazdliikgl like dada nese oldu senin yazdiglarin silindi mennen sonra he bide o kod silinib fsyo
+//                    }
+//
+//                }
+//
+//                cell.imgLiked.tag = 0
+//                cell.imgLiked.isHidden = true
+//
+//                do {
+//                    try context.save()
+//                } catch {
+//                    print("bir hata var")
+//                }
+//
+//            } catch {}
+//
+//
+//
+//
+//
+//        }
         
         
         

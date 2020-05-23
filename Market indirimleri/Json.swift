@@ -147,8 +147,8 @@ struct SingleProduct: Codable {
     let id, storeID: Int
     var name, detail: String
     let image: Image
-    let price, pricePrefixText, priceSuffixText, offerText: String
-    let validDates: [String]
+    let price, pricePrefixText, priceSuffixText, offerText: String? //bura qoy olrukii gorumm bu olur
+    let validDates: [String]?
 
     enum CodingKeys: String, CodingKey {
         case id

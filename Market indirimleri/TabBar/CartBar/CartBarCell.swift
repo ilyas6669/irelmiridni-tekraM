@@ -84,10 +84,7 @@ class CartBarCell: UICollectionViewCell,UIGestureRecognizerDelegate {
     @objc func didDoubleTap() {
           btnTapAction?()
            
-           likeAnimator.animate { [weak self] in
-               
-               
-           }
+          
            
        }
     

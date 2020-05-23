@@ -297,21 +297,21 @@ class UrunSayfasi: UIViewController {
                                   
                       let welcomee = try JSONDecoder().decode(SingleProduct.self, from: data)
 
-                      print("Nicatalibli:\(welcomee.image.imageDefault)")
-                      print("Nicatalibli:\(URL(string: "\(welcomee.image.imageDefault)"))")
-
+                     //bu SingleProduct hardadi burda eliyecih deyesen gelmese olsun defaul value odu men bilen
                     
                       DispatchQueue.main.async {
                         
                         self.lblIsim.text = welcomee.name
-                        self.lblFiyat.text = welcomee.price
+                        self.lblFiyat.text = welcomee.price ?? ""
                         self.lblAciklama.text = welcomee.detail
-                        self.lblTarih.text = "Geçerlilik Tarihi: \(welcomee.validDates[0]) - \(welcomee.validDates[1])"
+                        
+                        self.lblTarih.text = "Geçerlilik Tarihi: \(self.convertdates(date: welcomee.validDates?[0] ?? "")) - \(self.convertdates(date: welcomee.validDates?[1] ?? ""))"
+                        
                         self.imgUrun.sd_setImage(with: URL(string: "\(welcomee.image.imageDefault)"))
                         self.storeid = "\(welcomee.storeID)"
                         self.lblIsim2Deyis(storeid: "\(welcomee.storeID)")
-                        self.offerText.text = welcomee.offerText
-                        
+                        self.offerText.text = welcomee.offerText ?? ""
+                        //ayee hee bunu refresh eliyende niyese olmmur gerey bele eliyesen yetm refresh eliyende marketler refreshlenmir ona gore cox pis bos seydi insallah
                       }
                       
                              
@@ -327,6 +327,67 @@ class UrunSayfasi: UIViewController {
               
           }
     
+    func convertdates(date : String) -> String{
+        
+        let dateARR = date.components(separatedBy: "-")
+
+        var year = dateARR[0]
+        var month = dateARR[1]
+        var day = dateARR[2]
+        
+     
+        
+        
+        let daycharacters = Array(day)
+
+        if daycharacters[0] == "0"{
+            day = "\(daycharacters[1])"
+        }
+        
+        switch (month) {
+                   case "01":
+                       month = "Ocak";
+                       break;
+                   case "02":
+                       month = "Şubat";
+                       break;
+                   case "03":
+                       month = "Mart";
+                       break;
+                   case "04":
+                       month = "Nisan";
+                       break;
+                   case "05":
+                       month = "Mayıs";
+                       break;
+                   case "06":
+                       month = "Haziran";
+                       break;
+                   case "07":
+                       month = "Temmuz";
+                       break;
+                   case "08":
+                       month = "Ağustos";
+                       break;
+                   case "09":
+                       month = "Eylül";
+                       break;
+                   case "10":
+                       month = "Ekim";
+                       break;
+                   case "11":
+                       month = "Kasım";
+                       break;
+                   case "12":
+                       month = "Aralık";
+                       break;
+                   default:
+                       month = "";
+                       break;
+               }
+
+        return "\(day) \(month)"
+    }
     
     func lblIsim2Deyis(storeid : String) {
        

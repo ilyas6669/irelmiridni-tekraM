@@ -82,7 +82,7 @@ class MarketSayfasi: UIViewController {
        let lbl = UILabel()
         lbl.text = ""
         lbl.textColor = .darkGray
-        lbl.font = UIFont.systemFont(ofSize: 15)
+        lbl.font = UIFont.systemFont(ofSize: 12)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.numberOfLines = 100
         return lbl
@@ -120,7 +120,7 @@ class MarketSayfasi: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-       view.backgroundColor = .customYellow()
+        view.backgroundColor = .customWhite()
         searchBar.delegate = self
              
         veriCek()
@@ -146,7 +146,7 @@ class MarketSayfasi: UIViewController {
         _ = ortaView.anchor(top: imgUrun.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = lblAciklama.anchor(top: ortaView.topAnchor, bottom: nil, leading: ortaView.leadingAnchor, trailing: ortaView.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
         _ = searchBar.anchor(top: lblAciklama.bottomAnchor, bottom: ortaView.bottomAnchor, leading: ortaView.leadingAnchor, trailing: ortaView.trailingAnchor)
-        _ = viewBulunmadi.anchor(top: ortaView.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = viewBulunmadi.anchor(top: ortaView.bottomAnchor, bottom: view.bottomAnchor  , leading: view.leadingAnchor, trailing: view.trailingAnchor)
         imgBulunmadi.merkezKonumlamdirmaSuperView()
         imgBulunmadi.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -50).isActive = true
         _ = lblBUlunmadi.anchor(top: imgBulunmadi.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -218,6 +218,15 @@ class MarketSayfasi: UIViewController {
         
         
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if #available(iOS 13, *)
+        {
+            let statusBar = UIView(frame: (UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame)!)
+            statusBar.backgroundColor = UIColor.customYellow()
+            UIApplication.shared.keyWindow?.addSubview(statusBar)
+        }
     }
     
     func veriCek() {
@@ -330,19 +339,23 @@ class MarketSayfasi: UIViewController {
                 
                 DispatchQueue.main.async {
                     
-                    
-                    
-                    
-                    
-                    
+                   //?? burda neyi eledim amma nese sehflik oldu baaa olmuyanda bulunmadi view gorsensin istirem
+                    //axtarmani byurda eliysen ? hee
                     self.countryList2 = welcomee.results
                     
+                    if self.countryList2.count == 0 { //urun yoxdu
+                        self.urunlerCollectionView.isHidden = true
+                        self.viewBulunmadi.isHidden = false
+                    }else{ //urun var  yetme mende bele eledime poxu cixdi eke ele bidene men bisen neyi sehv elemisemm bu reloadin zadin yerin sehv qoymusam olabiler basqa nese qaldi yetim qalmiyibsa guncelle baxm testfli ghttan b idene favori yeri gotbas isdiyir nese profil seyfesinde elirem yaxshi
+                       
+                        self.urunlerCollectionView.isHidden = false
+                        self.viewBulunmadi.isHidden = true
+                    }
+                    
                     self.urunlerCollectionView.reloadData()
-                    
-                    
+                  
                     
                 }
-                
                 
                 
             } catch let jsonError {
