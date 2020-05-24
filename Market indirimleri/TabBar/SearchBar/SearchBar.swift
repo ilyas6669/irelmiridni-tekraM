@@ -32,7 +32,10 @@ class SearchBar: UIViewController{
     var sortsetting = 0 // 0 = store | 1 = product
     
     var storeList = [Resultt]()
+    var searchstoreList = [Resultt]()
     var productList = [Resulttt]()
+    var seacrhproductList = [Resulttt]()
+    
     
     //MARK: properties
     let viewTop : UIView = {
@@ -517,16 +520,17 @@ class SearchBar: UIViewController{
            
             switch sortsetting {
             case 0:
-                url = "https://marketindirimleri.com/api/v1/stores/?format=json&q=\(searchkeyword)"
+//                url = "https://marketindirimleri.com/api/v1/stores/?format=json&q=\(searchkeyword)"
+                url = "https://marketindirimleri.com/api/v1/stores/?format=json"
                 break
             case 1:
-                url = "https://marketindirimleri.com/api/v1/products/?format=json&q=\(searchkeyword)"
+//                url = "https://marketindirimleri.com/api/v1/products/?format=json&q=\(searchkeyword)"
+                url = "https://marketindirimleri.com/api/v1/products/?format=json"
                 break
             default:
                 break
             }
-        
-            
+           
             if !sortallcity {
                 url = "\(url)&city=\(selectid)"
             }
@@ -568,7 +572,7 @@ class SearchBar: UIViewController{
                             if !self.sortallcity {
                                 
                                 var swapList = [Resultt]()
-                                
+                               
                                 for storeitem in self.storeList {
                                     if storeitem.cities.contains(Int(selectid)!){
                                         swapList.append(storeitem)
@@ -675,9 +679,12 @@ class SearchBar: UIViewController{
 extension SearchBar : UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == marketlerTableView {
-            return storeList.count
+            
+            
+            
+            return searchstoreList.count
         }else {
-            return productList.count
+            return seacrhproductList.count
         }
     }
     
@@ -685,7 +692,7 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
         
         if tableView == marketlerTableView {
             let cell = marketlerTableView.dequeueReusableCell(withIdentifier: "MarketlerCel", for: indexPath) as! MarketlerCel
-            cell.lblIsim.text = storeList[indexPath.row].name
+            cell.lblIsim.text = searchstoreList[indexPath.row].name
             
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
@@ -712,7 +719,7 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
                 print("error")
             }
             cell.lblSehir.text = selectcounrty
-            cell.imgUrun.sd_setImage(with: URL(string: "\(storeList[indexPath.row].image.imageDefault)"))
+            cell.imgUrun.sd_setImage(with: URL(string: "\(searchstoreList[indexPath.row].image.imageDefault)"))
             
             
             ///--------------------------FAVORI BUTON CLICK----------------------------------------------------------------
@@ -727,7 +734,7 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
                     let context = appDelegate.persistentContainer.viewContext
                     
                     let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteStore", into: context)
-                    favoriteproduct.setValue("\(self.storeList[indexPath.row].id)", forKey: "id")
+                    favoriteproduct.setValue("\(self.searchstoreList[indexPath.row].id)", forKey: "id")
                     
                     cell.btnFavori.tag = 1
                     cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
@@ -754,7 +761,7 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
                             
                             if let id = result.value(forKey: "id") as? String {
                                 
-                                if id == "\(self.storeList[indexPath.row].id)" {
+                                if id == "\(self.searchstoreList[indexPath.row].id)" {
                                     context.delete(result as NSManagedObject)
                                 }
                                 
@@ -787,7 +794,7 @@ extension SearchBar : UITableViewDataSource,UITableViewDelegate {
                     
                     if let id = result.value(forKey: "id") as? String {
                         
-                        if id == "\(self.storeList[indexPath.row].id)" {
+                        if id == "\(self.searchstoreList[indexPath.row].id)" {
                             favoriteproductcontrol = true
                             break
                         }else{
@@ -1010,16 +1017,62 @@ extension SearchBar : UIPickerViewDelegate,UIPickerViewDataSource {
     
     
 }
-
+ 
 extension SearchBar : UISearchBarDelegate {
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        activityIndicator.startAnimating()
-        getitem(searchkeyword: searchBar.text!)
-        searchBar.resignFirstResponder()
+        
+        if searchBar.text == nil || searchBar.text == "" {
+            
+            
+            switch self.sortsetting{
+                                case 0: //store
+                                    self.marketlerTableView.reloadData()
+                                    break
+                                case 1: //product
+                                    self.urunlerTableView.reloadData()
+                                    break
+                                default:
+                                    break
+                                }
+            
+                 
+                  view.endEditing(true)
+
+              }
+              else {
+            activityIndicator.startAnimating()
+            
+            switch self.sortsetting{
+            case 0: //store
+                searchstoreList = storeList.filter({ value -> Bool in
+                    guard let text =  searchBar.text else { return false}
+                    return value.name.contains(text)
+                    
+                })
+                marketlerTableView.reloadData()
+                break
+            case 1: //product
+                seacrhproductList = productList.filter({ value -> Bool in
+                    guard let text =  searchBar.text else { return false}
+                    return value.name.contains(text)
+                    
+                })
+                self.urunlerTableView.reloadData()
+                break
+            default:
+                break
+            }
+            
+            
+                
+              }
+              searchBar.resignFirstResponder()
+        
     }
     
 }
 
 
+//
