@@ -28,14 +28,18 @@ func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive t
 class SearchBar: UIViewController{
     
     //MARK: Control
+    var idArray = [String]()
+    
     var sortallcity = false
     var sortsetting = 0 // 0 = store | 1 = product
     
     var storeList = [Resultt]()
     var searchstoreList = [Resultt]()
+    
     var productList = [Resulttt]()
     var seacrhproductList = [Resulttt]()
     
+     var isSearching = false
     
     //MARK: properties
     let viewTop : UIView = {
@@ -244,6 +248,8 @@ class SearchBar: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
+        veriCekMarket()
+        veriCekUrun()
         
         
        
@@ -303,6 +309,7 @@ class SearchBar: UIViewController{
         
         marketlerTableView.isHidden = true
         urunlerTableView.isHidden = true
+        viewBulunmadi.isHidden = true
         
         
         marketlerTableView.delegate = self
@@ -407,11 +414,7 @@ class SearchBar: UIViewController{
             print("error")
         }
         
-        
-        
-        
-        //tanitim vieww
-    
+  
         
     }
     
@@ -455,7 +458,17 @@ class SearchBar: UIViewController{
     
     @objc func btnTamamAction() {
         sortallcity = aramaPop.btnSwitch.isOn
-        handleDismissal()
+        
+        if sortallcity { // butun sehirler ise yetim indi burda koh ne seyleri silip tezelerini yukluyeciy
+
+            
+            
+            handleDismissal()
+        }else{
+
+            handleDismissal()
+        }
+        
     }
     
     @objc func btnTopLeftAction() {
@@ -520,12 +533,12 @@ class SearchBar: UIViewController{
            
             switch sortsetting {
             case 0:
-//                url = "https://marketindirimleri.com/api/v1/stores/?format=json&q=\(searchkeyword)"
-                url = "https://marketindirimleri.com/api/v1/stores/?format=json"
+                url = "https://marketindirimleri.com/api/v1/stores/?format=json&q=\(searchkeyword)"
+//                url = "https://marketindirimleri.com/api/v1/stores/?format=json"
                 break
             case 1:
-//                url = "https://marketindirimleri.com/api/v1/products/?format=json&q=\(searchkeyword)"
-                url = "https://marketindirimleri.com/api/v1/products/?format=json"
+                url = "https://marketindirimleri.com/api/v1/products/?format=json&q=\(searchkeyword)"
+//                url = "https://marketindirimleri.com/api/v1/products/?format=json"
                 break
             default:
                 break
@@ -542,7 +555,9 @@ class SearchBar: UIViewController{
             URLSession.shared.dataTask(with: url2) { (data, response, error) in
                 //perhaps check err
                 guard let data = data else {return}
-              
+                guard let string = String(data: data, encoding: String.Encoding.isoLatin1) else {return}
+                guard let properData = string.data(using: .utf8, allowLossyConversion: true) else { return }
+                
                 do {
                     
                     print("Nicatalibli:Data:\(data)")
@@ -552,10 +567,10 @@ class SearchBar: UIViewController{
                     
                     switch self.sortsetting{
                     case 0://store
-                        welcome = try JSONDecoder().decode(Welcome.self, from: data)
+                        welcome = try JSONDecoder().decode(Welcome.self, from: properData)
                         break
                     case 1://product
-                        welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
+                        welcomee = try JSONDecoder().decode(Welcomee.self, from: properData)
                         break
                     default:
                         break
@@ -570,6 +585,7 @@ class SearchBar: UIViewController{
                             print("Nicatalibl:Storelist:\(welcome.results)")
                             
                             if !self.sortallcity {
+                                // bidene deyan kayd eleiyim men bu hisseni nese olsa poxu cixmasin
                                 
                                 var swapList = [Resultt]()
                                
@@ -670,6 +686,132 @@ class SearchBar: UIViewController{
         
     }
     
+     func veriCekMarket() {
+          
+          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+          let context = appDelegate.persistentContainer.viewContext
+          
+          let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+          fetchRequest.returnsObjectsAsFaults = false
+         
+          
+          do {
+              let results = try context.fetch(fetchRequest)
+              
+              for result in results as! [NSManagedObject] {
+                  if let id = result.value(forKey: "id") as? String {
+                      self.idArray.append(id)
+                  }
+              }
+              
+          } catch {
+              print("error")
+          }
+          
+          let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
+          guard let url = URL(string: jsonUrlString) else {return}
+          
+          storeList.removeAll(keepingCapacity: false)
+          
+          URLSession.shared.dataTask(with: url) { (data, response, error) in
+              //perhaps check err
+              guard let data = data else {return}
+              do {
+                  
+                  let welcome = try JSONDecoder().decode(Welcome.self, from: data)
+                  
+                  DispatchQueue.main.async {
+                      
+                      for n in welcome.results {
+                          
+                          if n.cities.contains(Int(self.idArray.last!)!) {
+                              self.storeList.append(n)
+                          }
+                          
+                      }
+                      
+//                      self.btnMarket.setTitle("\(self.countryList.count) Market", for: .normal)
+                     
+                     
+                      
+                  }
+                  
+                  
+              } catch let jsonError {
+                  print("Error serializing json:", jsonError)
+              }
+          }.resume()
+          
+          
+      }
+    
+    func veriCekUrun() {
+               
+               
+               let appDelegate = UIApplication.shared.delegate as! AppDelegate
+               let context = appDelegate.persistentContainer.viewContext
+               
+               let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+               fetchRequest.returnsObjectsAsFaults = false
+               
+               var selectcounrty = ""
+               var selectid = ""
+               
+               do {
+                   let results = try context.fetch(fetchRequest)
+                   
+                   for result in results as! [NSManagedObject] {
+                       if let id = result.value(forKey: "id") as? String {
+                           selectid = id
+                       }
+                       if let name = result.value(forKey: "name") as? String {
+                           selectcounrty = name
+                       }
+                   }
+                   
+               } catch {
+                   print("error")
+               }
+               
+               productList.removeAll(keepingCapacity: false)
+               
+               let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(selectid)&format=json"
+               guard let url = URL(string: jsonUrlString) else {return}
+               
+               URLSession.shared.dataTask(with: url) { (data, response, error) in
+                   //perhaps check err
+                   guard let data = data else {return}
+                   
+                   do {
+                       
+                       let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
+                       
+                       DispatchQueue.main.async {
+                           
+                           self.productList = welcomee.results
+                           self.productList.shuffle()
+                           self.urunlerTableView.reloadData()
+                           self.activityIndicator.stopAnimating()
+                          
+                       }
+                       
+                       
+                       //bulardaki apiden gelen verilerdi
+                       
+                       
+                   } catch let jsonError {
+                       print("Error serializing json:", jsonError)
+                       
+                       
+                   }
+                   
+                   
+               }.resume()
+               
+               
+           }
+           
+    
     
     
     
@@ -679,278 +821,559 @@ class SearchBar: UIViewController{
 extension SearchBar : UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == marketlerTableView {
-            
-            
-            
-            return searchstoreList.count
+            if isSearching {
+                return searchstoreList.count
+            }else{
+               return storeList.count
+            }
         }else {
-            return seacrhproductList.count
+            if isSearching {
+                return seacrhproductList.count
+            }else{
+                return productList.count
+            }
+            
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if tableView == marketlerTableView {
-            let cell = marketlerTableView.dequeueReusableCell(withIdentifier: "MarketlerCel", for: indexPath) as! MarketlerCel
-            cell.lblIsim.text = searchstoreList[indexPath.row].name
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            
-            let fetchRequestCity = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
-            fetchRequestCity.returnsObjectsAsFaults = false
-            
-            var selectcounrty = ""
-            var selectid = ""
-            
-            do {
-                let results = try context.fetch(fetchRequestCity)
+             let cell = marketlerTableView.dequeueReusableCell(withIdentifier: "MarketlerCel", for: indexPath) as! MarketlerCel
+            if isSearching {
+               
+                cell.lblIsim.text = searchstoreList[indexPath.row].name
+              
                 
-                for result in results as! [NSManagedObject] {
-                    if let id = result.value(forKey: "id") as? String {
-                        selectid = id
-                    }
-                    if let name = result.value(forKey: "name") as? String {
-                        selectcounrty = name
-                    }
-                }
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let context = appDelegate.persistentContainer.viewContext
                 
-            } catch {
-                print("error")
-            }
-            cell.lblSehir.text = selectcounrty
-            cell.imgUrun.sd_setImage(with: URL(string: "\(searchstoreList[indexPath.row].image.imageDefault)"))
-            
-            
-            ///--------------------------FAVORI BUTON CLICK----------------------------------------------------------------
-            cell.btnTapAction = { //favori buton
-                () in
+                let fetchRequestCity = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+                fetchRequestCity.returnsObjectsAsFaults = false
                 
-                let tagstatus = cell.btnFavori.tag
-                
-                if tagstatus == 0 { //favori degil ise
-                    
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let context = appDelegate.persistentContainer.viewContext
-                    
-                    let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteStore", into: context)
-                    favoriteproduct.setValue("\(self.searchstoreList[indexPath.row].id)", forKey: "id")
-                    
-                    cell.btnFavori.tag = 1
-                    cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
-                    
-                    
-                    do {
-                        try context.save()
-                    } catch {
-                        print("bir hata var")
-                    }
-                    
-                }else{ //favori ise
-                    
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let context = appDelegate.persistentContainer.viewContext
-                    
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
-                    fetchRequest.returnsObjectsAsFaults = false
-                    
-                    do {
-                        let results = try context.fetch(fetchRequest)
-                        
-                        for result in results as! [NSManagedObject] {
-                            
-                            if let id = result.value(forKey: "id") as? String {
-                                
-                                if id == "\(self.searchstoreList[indexPath.row].id)" {
-                                    context.delete(result as NSManagedObject)
-                                }
-                                
-                            }
-                            
-                        }
-                        do {
-                            try context.save()
-                        } catch {
-                            print("bir hata var")
-                        }
-                        
-                    } catch {}
-                    
-                    cell.btnFavori.tag = 0
-                    cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
-                    
-                }
-                
-            }
-            ///--------------------------URUN FAVORI MI CONTROL ----------------------------------------------------------------
-            let fetchRequestCityFavorite = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
-            fetchRequestCityFavorite.returnsObjectsAsFaults = false
-            
-            var favoriteproductcontrol = false
-            do {
-                let results = try context.fetch(fetchRequestCityFavorite)
-                
-                for result in results as! [NSManagedObject] {
-                    
-                    if let id = result.value(forKey: "id") as? String {
-                        
-                        if id == "\(self.searchstoreList[indexPath.row].id)" {
-                            favoriteproductcontrol = true
-                            break
-                        }else{
-                            favoriteproductcontrol = false
-                        }
-                        
-                    }
-                    
-                }
-                if favoriteproductcontrol{
-                    cell.btnFavori.tag = 1
-                    cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
-                }else{
-                    cell.btnFavori.tag = 0
-                    cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
-                }
-                
-                
-            } catch {}
-            
-            
-            
-            
-            return cell
-        } else {
-            
-            let cell1 = urunlerTableView.dequeueReusableCell(withIdentifier: "UrunlerTableViewCell", for: indexPath) as! UrunlerTableViewCell
-            cell1.lblIsim.text = productList[indexPath.row].name
-            cell1.lblFiyat.text = productList[indexPath.row].price
-            cell1.imgUrun.sd_setImage(with: URL(string: "\(productList[indexPath.row].image.imageDefault)"))
-            cell1.lblTarih.text = productList[indexPath.row].validDates[1]
-            
-            
-            let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(productList[indexPath.row].storeID)?format=json"
-            let url = URL(string: jsonUrlString)
-            
-            URLSession.shared.dataTask(with: url!) { (data, response, error) in
-                //perhaps check err
-                guard let data = data else {return}
+                var selectcounrty = ""
+                var selectid = ""
                 
                 do {
-                    let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
+                    let results = try context.fetch(fetchRequestCity)
                     
-                    DispatchQueue.main.async {
-                        cell1.lblUrunIsim.text = welcomee.name
-                        
-                        
-                        
-                    }
-                    
-                } catch let jsonError {print("Error serializing json:", jsonError)}
-            }.resume()
-            
-            
-            
-            ///--------------------------FAVORI BUTON CLICK---------------------------------------------------------------
-            
-            cell1.btnTapAction = { //favori buton
-                () in
-                
-                let tagstatus = cell1.btnFavori.tag
-                
-                if tagstatus == 0 { //favori degil ise
-                    
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let context = appDelegate.persistentContainer.viewContext
-                    
-                    let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
-                    favoriteproduct.setValue("\(self.productList[indexPath.row].id)", forKey: "id")
-                    
-                    cell1.btnFavori.tag = 1
-                    cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
-                    
-                    
-                    do {
-                        try context.save()
-                    } catch {
-                        print("bir hata var")
-                    }
-                    
-                }else{ //favori ise
-                    
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let context = appDelegate.persistentContainer.viewContext
-                    
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
-                    fetchRequest.returnsObjectsAsFaults = false
-                    
-                    do {
-                        let results = try context.fetch(fetchRequest)
-                        
-                        for result in results as! [NSManagedObject] {
-                            
-                            if let id = result.value(forKey: "id") as? String {
-                                
-                                if id == "\(self.productList[indexPath.row].id)" {
-                                    context.delete(result as NSManagedObject)
-                                }
-                                
-                            }
-                            
+                    for result in results as! [NSManagedObject] {
+                        if let id = result.value(forKey: "id") as? String {
+                            selectid = id
                         }
+                        if let name = result.value(forKey: "name") as? String {
+                            selectcounrty = name
+                        }
+                    }
+                    
+                } catch {
+                    print("error")
+                }
+                cell.lblSehir.text = selectcounrty
+                cell.imgUrun.sd_setImage(with: URL(string: "\(searchstoreList[indexPath.row].image.imageDefault)"))
+                
+                
+                ///--------------------------FAVORI BUTON CLICK----------------------------------------------------------------
+                cell.btnTapAction = { //favori buton
+                    () in
+                    
+                    let tagstatus = cell.btnFavori.tag
+                    
+                    if tagstatus == 0 { //favori degil ise
+                        
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        let context = appDelegate.persistentContainer.viewContext
+                        
+                        let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteStore", into: context)
+                        favoriteproduct.setValue("\(self.searchstoreList[indexPath.row].id)", forKey: "id")
+                        
+                        cell.btnFavori.tag = 1
+                        cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                        
+                        
                         do {
                             try context.save()
                         } catch {
                             print("bir hata var")
                         }
                         
-                    } catch {}
-                    
-                    cell1.btnFavori.tag = 0
-                    cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
-                    
-                }
-                
-            }
-            ///--------------------------FAVORI CONTROL----------------------------------------------------------------
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
-            fetchRequest.returnsObjectsAsFaults = false
-            
-            var favoriteproductcontrol = false
-            do {
-                let results = try context.fetch(fetchRequest)
-                
-                for result in results as! [NSManagedObject] {
-                    
-                    if let id = result.value(forKey: "id") as? String {
+                    }else{ //favori ise
                         
-                        if id == "\(self.productList[indexPath.row].id)" {
-                            favoriteproductcontrol = true
-                            break
-                        }else{
-                            favoriteproductcontrol = false
-                        }
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        let context = appDelegate.persistentContainer.viewContext
+                        
+                        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+                        fetchRequest.returnsObjectsAsFaults = false
+                        
+                        do {
+                            let results = try context.fetch(fetchRequest)
+                            
+                            for result in results as! [NSManagedObject] {
+                                
+                                if let id = result.value(forKey: "id") as? String {
+                                    
+                                    if id == "\(self.searchstoreList[indexPath.row].id)" {
+                                        context.delete(result as NSManagedObject)
+                                    }
+                                    
+                                }
+                                
+                            }
+                            do {
+                                try context.save()
+                            } catch {
+                                print("bir hata var")
+                            }
+                            
+                        } catch {}
+                        
+                        cell.btnFavori.tag = 0
+                        cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
                         
                     }
                     
                 }
-                if favoriteproductcontrol{
-                    cell1.btnFavori.tag = 1
-                    cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
-                }else{
-                    cell1.btnFavori.tag = 0
-                    cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                ///--------------------------URUN FAVORI MI CONTROL ----------------------------------------------------------------
+                let fetchRequestCityFavorite = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+                fetchRequestCityFavorite.returnsObjectsAsFaults = false
+                
+                var favoriteproductcontrol = false
+                do {
+                    let results = try context.fetch(fetchRequestCityFavorite)
+                    
+                    for result in results as! [NSManagedObject] {
+                        
+                        if let id = result.value(forKey: "id") as? String {
+                            
+                            if id == "\(self.searchstoreList[indexPath.row].id)" {
+                                favoriteproductcontrol = true
+                                break
+                            }else{
+                                favoriteproductcontrol = false
+                            }
+                            
+                        }
+                        
+                    }
+                    if favoriteproductcontrol{
+                        cell.btnFavori.tag = 1
+                        cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                    }else{
+                        cell.btnFavori.tag = 0
+                        cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                    }
+                    
+                    
+                } catch {}
+                
+                
+                
+                
+                return cell
+                
+                
+            }else {
+                
+                cell.lblIsim.text = storeList[indexPath.row].name
+                
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let context = appDelegate.persistentContainer.viewContext
+                
+                let fetchRequestCity = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+                fetchRequestCity.returnsObjectsAsFaults = false
+                
+                var selectcounrty = ""
+                var selectid = ""
+                
+                do {
+                    let results = try context.fetch(fetchRequestCity)
+                    
+                    for result in results as! [NSManagedObject] {
+                        if let id = result.value(forKey: "id") as? String {
+                            selectid = id
+                        }
+                        if let name = result.value(forKey: "name") as? String {
+                            selectcounrty = name
+                        }
+                    }
+                    
+                } catch {
+                    print("error")
                 }
+                cell.lblSehir.text = selectcounrty
+                cell.imgUrun.sd_setImage(with: URL(string: "\(storeList[indexPath.row].image.imageDefault)"))
                 
                 
-            } catch {}
+                ///--------------------------FAVORI BUTON CLICK----------------------------------------------------------------
+                cell.btnTapAction = { //favori buton
+                    () in
+                    
+                    let tagstatus = cell.btnFavori.tag
+                    
+                    if tagstatus == 0 { //favori degil ise
+                        
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        let context = appDelegate.persistentContainer.viewContext
+                        
+                        let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteStore", into: context)
+                        favoriteproduct.setValue("\(self.storeList[indexPath.row].id)", forKey: "id")
+                        
+                        cell.btnFavori.tag = 1
+                        cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                        
+                        
+                        do {
+                            try context.save()
+                        } catch {
+                            print("bir hata var")
+                        }
+                        
+                    }else{ //favori ise
+                        
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        let context = appDelegate.persistentContainer.viewContext
+                        
+                        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+                        fetchRequest.returnsObjectsAsFaults = false
+                        
+                        do {
+                            let results = try context.fetch(fetchRequest)
+                            
+                            for result in results as! [NSManagedObject] {
+                                
+                                if let id = result.value(forKey: "id") as? String {
+                                    
+                                    if id == "\(self.storeList[indexPath.row].id)" {
+                                        context.delete(result as NSManagedObject)
+                                    }
+                                    
+                                }
+                                
+                            }
+                            do {
+                                try context.save()
+                            } catch {
+                                print("bir hata var")
+                            }
+                            
+                        } catch {}
+                        
+                        cell.btnFavori.tag = 0
+                        cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                        
+                    }
+                    
+                }
+                ///--------------------------URUN FAVORI MI CONTROL ----------------------------------------------------------------
+                let fetchRequestCityFavorite = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
+                fetchRequestCityFavorite.returnsObjectsAsFaults = false
+                
+                var favoriteproductcontrol = false
+                do {
+                    let results = try context.fetch(fetchRequestCityFavorite)
+                    
+                    for result in results as! [NSManagedObject] {
+                        
+                        if let id = result.value(forKey: "id") as? String {
+                            
+                            if id == "\(self.storeList[indexPath.row].id)" {
+                                favoriteproductcontrol = true
+                                break
+                            }else{
+                                favoriteproductcontrol = false
+                            }
+                            
+                        }
+                        
+                    }
+                    if favoriteproductcontrol{
+                        cell.btnFavori.tag = 1
+                        cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                    }else{
+                        cell.btnFavori.tag = 0
+                        cell.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                    }
+                    
+                    
+                } catch {}
+                
+                
+                
+                
+                return cell
+                
+                
+            }
             
             
             
+            //----------------------------------------------------
+        } else {
+             let cell1 = urunlerTableView.dequeueReusableCell(withIdentifier: "UrunlerTableViewCell", for: indexPath) as! UrunlerTableViewCell
+            if isSearching {
+
+                          cell1.lblIsim.text = seacrhproductList[indexPath.row].name
+                          cell1.lblFiyat.text = seacrhproductList[indexPath.row].price
+                          cell1.imgUrun.sd_setImage(with: URL(string: "\(seacrhproductList[indexPath.row].image.imageDefault)"))
+                          cell1.lblTarih.text = seacrhproductList[indexPath.row].validDates[1]
+                          
+                          
+                          let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(seacrhproductList[indexPath.row].storeID)?format=json"
+                          let url = URL(string: jsonUrlString)
+                          
+                          URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                              //perhaps check err
+                              guard let data = data else {return}
+                              
+                              do {
+                                  let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
+                                  
+                                  DispatchQueue.main.async {
+                                      cell1.lblUrunIsim.text = welcomee.name
+                                      
+                                      
+                                      
+                                  }
+                                  
+                              } catch let jsonError {print("Error serializing json:", jsonError)}
+                          }.resume()
+                          
+                          
+                          
+                          ///--------------------------FAVORI BUTON CLICK---------------------------------------------------------------
+                          
+                          cell1.btnTapAction = { //favori buton
+                              () in
+                              
+                              let tagstatus = cell1.btnFavori.tag
+                              
+                              if tagstatus == 0 { //favori degil ise
+                                  
+                                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                  let context = appDelegate.persistentContainer.viewContext
+                                  
+                                  let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
+                                  favoriteproduct.setValue("\(self.seacrhproductList[indexPath.row].id)", forKey: "id")
+                                  
+                                  cell1.btnFavori.tag = 1
+                                  cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                                  
+                                  
+                                  do {
+                                      try context.save()
+                                  } catch {
+                                      print("bir hata var")
+                                  }
+                                  
+                              }else{ //favori ise
+                                  
+                                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                  let context = appDelegate.persistentContainer.viewContext
+                                  
+                                  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+                                  fetchRequest.returnsObjectsAsFaults = false
+                                  
+                                  do {
+                                      let results = try context.fetch(fetchRequest)
+                                      
+                                      for result in results as! [NSManagedObject] {
+                                          
+                                          if let id = result.value(forKey: "id") as? String {
+                                              
+                                              if id == "\(self.seacrhproductList[indexPath.row].id)" {
+                                                  context.delete(result as NSManagedObject)
+                                              }
+                                              
+                                          }
+                                          
+                                      }
+                                      do {
+                                          try context.save()
+                                      } catch {
+                                          print("bir hata var")
+                                      }
+                                      
+                                  } catch {}
+                                  
+                                  cell1.btnFavori.tag = 0
+                                  cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                                  
+                              }
+                              
+                          }
+                          ///--------------------------FAVORI CONTROL----------------------------------------------------------------
+                          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                          let context = appDelegate.persistentContainer.viewContext
+                          
+                          let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+                          fetchRequest.returnsObjectsAsFaults = false
+                          
+                          var favoriteproductcontrol = false
+                          do {
+                              let results = try context.fetch(fetchRequest)
+                              
+                              for result in results as! [NSManagedObject] {
+                                  
+                                  if let id = result.value(forKey: "id") as? String {
+                                      
+                                      if id == "\(self.seacrhproductList[indexPath.row].id)" {
+                                          favoriteproductcontrol = true
+                                          break
+                                      }else{
+                                          favoriteproductcontrol = false
+                                      }
+                                      
+                                  }
+                                  
+                              }
+                              if favoriteproductcontrol{
+                                  cell1.btnFavori.tag = 1
+                                  cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                              }else{
+                                  cell1.btnFavori.tag = 0
+                                  cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                              }
+                              
+                              
+                          } catch {}
+                          
+                          
+                          return cell1
+                
+            }else{
+                          cell1.lblIsim.text = productList[indexPath.row].name
+                          cell1.lblFiyat.text = productList[indexPath.row].price
+                          cell1.imgUrun.sd_setImage(with: URL(string: "\(productList[indexPath.row].image.imageDefault)"))
+                          cell1.lblTarih.text = productList[indexPath.row].validDates[1]
+                          
+                          
+                          let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(productList[indexPath.row].storeID)?format=json"
+                          let url = URL(string: jsonUrlString)
+                          
+                          URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                              //perhaps check err
+                              guard let data = data else {return}
+                              
+                              do {
+                                  let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
+                                  
+                                  DispatchQueue.main.async {
+                                      cell1.lblUrunIsim.text = welcomee.name
+                                      
+                                      
+                                      
+                                  }
+                                  
+                              } catch let jsonError {print("Error serializing json:", jsonError)}
+                          }.resume()
+                          
+                          
+                          
+                          ///--------------------------FAVORI BUTON CLICK---------------------------------------------------------------
+                          
+                          cell1.btnTapAction = { //favori buton
+                              () in
+                              
+                              let tagstatus = cell1.btnFavori.tag
+                              
+                              if tagstatus == 0 { //favori degil ise
+                                  
+                                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                  let context = appDelegate.persistentContainer.viewContext
+                                  
+                                  let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
+                                  favoriteproduct.setValue("\(self.productList[indexPath.row].id)", forKey: "id")
+                                  
+                                  cell1.btnFavori.tag = 1
+                                  cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                                  
+                                  
+                                  do {
+                                      try context.save()
+                                  } catch {
+                                      print("bir hata var")
+                                  }
+                                  
+                              }else{ //favori ise
+                                  
+                                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                  let context = appDelegate.persistentContainer.viewContext
+                                  
+                                  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+                                  fetchRequest.returnsObjectsAsFaults = false
+                                  
+                                  do {
+                                      let results = try context.fetch(fetchRequest)
+                                      
+                                      for result in results as! [NSManagedObject] {
+                                          
+                                          if let id = result.value(forKey: "id") as? String {
+                                              
+                                              if id == "\(self.productList[indexPath.row].id)" {
+                                                  context.delete(result as NSManagedObject)
+                                              }
+                                              
+                                          }
+                                          
+                                      }
+                                      do {
+                                          try context.save()
+                                      } catch {
+                                          print("bir hata var")
+                                      }
+                                      
+                                  } catch {}
+                                  
+                                  cell1.btnFavori.tag = 0
+                                  cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                                  
+                              }
+                              
+                          }
+                          ///--------------------------FAVORI CONTROL----------------------------------------------------------------
+                          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                          let context = appDelegate.persistentContainer.viewContext
+                          
+                          let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+                          fetchRequest.returnsObjectsAsFaults = false
+                          
+                          var favoriteproductcontrol = false
+                          do {
+                              let results = try context.fetch(fetchRequest)
+                              
+                              for result in results as! [NSManagedObject] {
+                                  
+                                  if let id = result.value(forKey: "id") as? String {
+                                      
+                                      if id == "\(self.productList[indexPath.row].id)" {
+                                          favoriteproductcontrol = true
+                                          break
+                                      }else{
+                                          favoriteproductcontrol = false
+                                      }
+                                      
+                                  }
+                                  
+                              }
+                              if favoriteproductcontrol{
+                                  cell1.btnFavori.tag = 1
+                                  cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellowselected"), for: .normal)
+                              }else{
+                                  cell1.btnFavori.tag = 0
+                                  cell1.btnFavori.setImage(UIImage(named: "ic_favoriteiconyellow"), for: .normal)
+                              }
+                              
+                              
+                          } catch {}
+                          
+                          
+                          
+                          
+                          return cell1
+                
+            }
             
-            return cell1
+          
         }
         
         
@@ -1013,9 +1436,6 @@ extension SearchBar : UIPickerViewDelegate,UIPickerViewDataSource {
     
     
     
-    
-    
-    
 }
  
 extension SearchBar : UISearchBarDelegate {
@@ -1023,56 +1443,69 @@ extension SearchBar : UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
+        activityIndicator.startAnimating()
+        
         if searchBar.text == nil || searchBar.text == "" {
             
+             isSearching = false
+            view.endEditing(true)
+             viewBulunmadi.isHidden = false
+            marketlerTableView.reloadData()
+            marketlerTableView.isHidden = true
+            urunlerTableView.reloadData()
+            urunlerTableView.isHidden = true
+            activityIndicator.stopAnimating()
             
-            switch self.sortsetting{
-                                case 0: //store
-                                    self.marketlerTableView.reloadData()
-                                    break
-                                case 1: //product
-                                    self.urunlerTableView.reloadData()
-                                    break
-                                default:
-                                    break
-                                }
-            
-                 
-                  view.endEditing(true)
-
-              }
-              else {
-            activityIndicator.startAnimating()
-            
-            switch self.sortsetting{
-            case 0: //store
+        }else{
+            switch sortsetting {
+            case 0:
+                isSearching = true
                 searchstoreList = storeList.filter({ value -> Bool in
                     guard let text =  searchBar.text else { return false}
                     return value.name.contains(text)
                     
                 })
+                if searchstoreList.count == 0 {
+                    viewBulunmadi.isHidden = false
+                    urunlerTableView.isHidden = true
+                    marketlerTableView.isHidden = true
+                }else {
+                    viewBulunmadi.isHidden = true
+                    urunlerTableView.isHidden = true
+                    marketlerTableView.isHidden = false
+                }
                 marketlerTableView.reloadData()
+                activityIndicator.stopAnimating()
                 break
-            case 1: //product
+            case 1: //he neye baxag zor neter oldu bu o terefdekı kımı eledım cox maraglidi bele olanda niye olmur brat deiremde temasi nedi burda filtirleme vare orda o yox idi deye olmurdu onu bildim brat prostaki biz search eliyende gedib dbdan cekib gosterirdiy filotre olmasada isdemelidi niye isdemir bilmirem  i dont know nese o biri niye olmuyub hansi urunler olub ? he ikiside oldubab aa men neye baglanmisam onda :D : D: D zor men neye baglanmisam ? :D budu temahee deyan biz indi searh olanda o veri cekme metodunu isletmirik he ? men yuxarıda verını cekırem marketıde urunude o yenif buidnec tbiı on yaz he marketbiıddee cekırem urunude gorsenmır onun ıcınde axtarıs elıyır mence he yyeni 1 defe cekirikde urunu  ?  deyan
+                isSearching = true
                 seacrhproductList = productList.filter({ value -> Bool in
                     guard let text =  searchBar.text else { return false}
                     return value.name.contains(text)
                     
                 })
-                self.urunlerTableView.reloadData()
+               if seacrhproductList.count == 0 {
+                    viewBulunmadi.isHidden = false
+                    urunlerTableView.isHidden = true
+                    marketlerTableView.isHidden = true
+                }else {
+                    viewBulunmadi.isHidden = true
+                    urunlerTableView.isHidden = false
+                    marketlerTableView.isHidden = true
+                }
+                urunlerTableView.reloadData()
+                 activityIndicator.stopAnimating()
                 break
             default:
                 break
             }
             
-            
-                
-              }
-              searchBar.resignFirstResponder()
+        }
+        searchBar.resignFirstResponder()
         
     }
     
 }
 
 
-//
+

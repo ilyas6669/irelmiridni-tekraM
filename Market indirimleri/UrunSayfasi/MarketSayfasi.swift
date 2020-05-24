@@ -155,6 +155,8 @@ class MarketSayfasi: UIViewController {
         searchBar.addSubview(activityIndicator)
         
         
+        
+        
         _ = topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = ortaView.anchor(top: imgUrun.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         _ = lblAciklama.anchor(top: ortaView.topAnchor, bottom: nil, leading: ortaView.leadingAnchor, trailing: ortaView.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
@@ -343,15 +345,14 @@ class MarketSayfasi: UIViewController {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             //perhaps check err
             guard let data = data else {return}
-            guard let string = String(data: data, encoding: String.Encoding.utf8) else {return}
-            guard let properData = string.data(using: .utf8, allowLossyConversion: true) else { return }
+         
             
             
             do {
                 
                 var welcomee : Welcomee!
                 
-                welcomee = try JSONDecoder().decode(Welcomee.self, from: properData)
+                welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
                 
                 DispatchQueue.main.async {
                     
@@ -750,30 +751,35 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
 extension MarketSayfasi : UISearchBarDelegate {
     
     
-   
     
-        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text == nil || searchBar.text == "" { //
             
-            if searchBar.text == nil || searchBar.text == "" { //
-                
-                
-                
-                isSearching = false
-                view.endEditing(true)
-                urunlerCollectionView.reloadData()
-            }
-            else {
-      
-                isSearching = true
-                searchcountryList2 = countryList2.filter({ value -> Bool in
-                    guard let text =  searchBar.text else { return false}
-                    return value.name.contains(text)
-                    
-                })
-                urunlerCollectionView.reloadData()
-            }
-            searchBar.resignFirstResponder()
+            
+            
+            isSearching = false
+            view.endEditing(true)
+            urunlerCollectionView.reloadData()
         }
+        else {
+            
+            isSearching = true
+            searchcountryList2 = countryList2.filter({ value -> Bool in
+                guard let text =  searchBar.text else { return false}
+                return value.name.contains(text)
+                
+            })
+            urunlerCollectionView.reloadData()
+        }
+        
+    }
     
 }
-// tema bisen nedi bu o biri seyfede biz belence filterelemiriy niee
+
