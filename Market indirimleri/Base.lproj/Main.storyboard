@@ -230,8 +230,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1y-7S-HCr">
                                                 <rect key="frame" x="10" y="43" width="32" height="32"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="32" id="dB6-tr-JZZ"/>
-                                                    <constraint firstAttribute="width" constant="32" id="oic-Cg-6Aw"/>
+                                                    <constraint firstAttribute="width" constant="32" id="tgf-Li-MNu"/>
                                                 </constraints>
                                                 <state key="normal" image="search-1"/>
                                                 <connections>
@@ -241,12 +240,12 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.97022134069999999" green="0.79585462809999996" blue="0.27872806789999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
+                                            <constraint firstItem="B1y-7S-HCr" firstAttribute="leading" secondItem="dzB-Xx-daF" secondAttribute="leading" constant="10" id="27P-Ib-2Ve"/>
                                             <constraint firstAttribute="trailing" secondItem="QV5-U0-XOM" secondAttribute="trailing" constant="10" id="7Zq-CI-xmm"/>
-                                            <constraint firstItem="QV5-U0-XOM" firstAttribute="leading" secondItem="B1y-7S-HCr" secondAttribute="trailing" constant="5" id="889-rP-DAu"/>
-                                            <constraint firstItem="B1y-7S-HCr" firstAttribute="leading" secondItem="dzB-Xx-daF" secondAttribute="leading" constant="10" id="BNd-kY-b1s"/>
-                                            <constraint firstAttribute="bottom" secondItem="B1y-7S-HCr" secondAttribute="bottom" constant="5" id="HT7-9f-gro"/>
+                                            <constraint firstItem="QV5-U0-XOM" firstAttribute="leading" secondItem="B1y-7S-HCr" secondAttribute="trailing" constant="5" id="MA0-el-xOR"/>
                                             <constraint firstAttribute="height" constant="80" id="Z1h-rS-tPn"/>
                                             <constraint firstAttribute="bottom" secondItem="QV5-U0-XOM" secondAttribute="bottom" constant="5" id="s5u-YH-vmb"/>
+                                            <constraint firstItem="B1y-7S-HCr" firstAttribute="bottom" secondItem="QV5-U0-XOM" secondAttribute="bottom" id="s8Y-Pw-Nf4"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1p1-wS-e6c">

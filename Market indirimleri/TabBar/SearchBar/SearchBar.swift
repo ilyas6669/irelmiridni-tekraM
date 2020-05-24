@@ -514,7 +514,7 @@ class SearchBar: UIViewController{
             }
             
             var url = ""
-            
+           
             switch sortsetting {
             case 0:
                 url = "https://marketindirimleri.com/api/v1/stores/?format=json&q=\(searchkeyword)"
@@ -525,21 +525,23 @@ class SearchBar: UIViewController{
             default:
                 break
             }
-            
-            print("Nicatalibli:\(sortallcity)")
+        
             
             if !sortallcity {
                 url = "\(url)&city=\(selectid)"
             }
             
             guard let url2 = URL(string: url) else {return}
-            
+          
+           
             
             URLSession.shared.dataTask(with: url2) { (data, response, error) in
                 //perhaps check err
                 guard let data = data else {return}
-                
+              
                 do {
+                    
+                    print("Nicatalibli:Data:\(data)")
                     
                     var welcome : Welcome!
                     var welcomee : Welcomee!
@@ -560,8 +562,8 @@ class SearchBar: UIViewController{
                         switch self.sortsetting{
                         case 0: //store
                             
-                            
                             self.storeList = welcome.results
+                            print("Nicatalibl:Storelist:\(welcome.results)")
                             
                             if !self.sortallcity {
                                 

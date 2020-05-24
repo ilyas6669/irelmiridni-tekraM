@@ -117,6 +117,15 @@ class MarketSayfasi: UIViewController {
            lbl.font = UIFont.boldSystemFont(ofSize: 30)
            return lbl
        }()
+    
+    var activityIndicator : UIActivityIndicatorView = {
+              var indicator = UIActivityIndicatorView()
+              indicator.hidesWhenStopped = true
+              indicator.style = .medium
+              indicator.color = .black
+              indicator.translatesAutoresizingMaskIntoConstraints = false
+              return indicator
+          }()
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,7 +148,7 @@ class MarketSayfasi: UIViewController {
         view.addSubview(viewBulunmadi)
         viewBulunmadi.addSubview(imgBulunmadi)
         viewBulunmadi.addSubview(lblBUlunmadi)
-        
+        searchBar.addSubview(activityIndicator)
         
         
         _ = topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -159,6 +168,9 @@ class MarketSayfasi: UIViewController {
         btnFavori.rightAnchor.constraint(equalTo: topView.rightAnchor,constant: -10).isActive = true
         imgUrun.centerYAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
         imgUrun.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: searchBar.centerYAnchor).isActive = true
+        activityIndicator.rightAnchor.constraint(equalTo: searchBar.rightAnchor,constant: -35).isActive = true
+        
         
         viewBulunmadi.isHidden = true
         
@@ -328,32 +340,35 @@ class MarketSayfasi: UIViewController {
             //perhaps check err
             guard let data = data else {return}
             
+            let jsonData = url.data(using: .utf8)!
+            
             do {
                 
                 
                 var welcomee : Welcomee!
                 
+              
                 
+                welcomee = try JSONDecoder().decode(Welcomee.self, from: jsonData)
                 
-                welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
                 
                 DispatchQueue.main.async {
                     
-                   //?? burda neyi eledim amma nese sehflik oldu baaa olmuyanda bulunmadi view gorsensin istirem
-                    //axtarmani byurda eliysen ? hee
                     self.countryList2 = welcomee.results
                     
                     if self.countryList2.count == 0 { //urun yoxdu
                         self.urunlerCollectionView.isHidden = true
                         self.viewBulunmadi.isHidden = false
-                    }else{ //urun var  yetme mende bele eledime poxu cixdi eke ele bidene men bisen neyi sehv elemisemm bu reloadin zadin yerin sehv qoymusam olabiler basqa nese qaldi yetim qalmiyibsa guncelle baxm testfli ghttan b idene favori yeri gotbas isdiyir nese profil seyfesinde elirem yaxshi
-                       
+                         self.activityIndicator.stopAnimating()
+                    }else{
+                        
                         self.urunlerCollectionView.isHidden = false
                         self.viewBulunmadi.isHidden = true
+                         self.activityIndicator.stopAnimating()
                     }
                     
                     self.urunlerCollectionView.reloadData()
-                  
+                   self.activityIndicator.stopAnimating()
                     
                 }
                 
@@ -609,6 +624,7 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
 extension MarketSayfasi : UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.activityIndicator.startAnimating()
         getitem(searchkeyword: searchBar.text!)
         searchBar.resignFirstResponder()
     }
