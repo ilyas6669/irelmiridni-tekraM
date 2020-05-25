@@ -53,7 +53,7 @@ class ProfilBar: UIViewController {
     let lblTop : UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
-        lbl.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 24)
+        lbl.font = UIFont.boldSystemFont(ofSize: 29)
         lbl.text = "Profilim"
         return lbl
     }()

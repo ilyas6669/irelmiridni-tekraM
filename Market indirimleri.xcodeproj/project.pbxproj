@@ -10,7 +10,6 @@
 		002772A92475F398003FB62F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002772A82475F398003FB62F /* Home.swift */; };
 		002772AE2475F64D003FB62F /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002772AC2475F64D003FB62F /* CollectionReusableView.swift */; };
 		002772AF2475F64D003FB62F /* CollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 002772AD2475F64D003FB62F /* CollectionReusableView.xib */; };
-		00687B2024774BB5001C19AF /* MarketlerSayfasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00687B1F24774BB5001C19AF /* MarketlerSayfasi.swift */; };
 		00687B3124774DCD001C19AF /* Home2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00687B3024774DCD001C19AF /* Home2.swift */; };
 		006D39F8245F78EC00BE4736 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006D39F7245F78EC00BE4736 /* Json.swift */; };
 		006D39FC24603C7400BE4736 /* AltUrunSayfasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006D39FB24603C7400BE4736 /* AltUrunSayfasi.swift */; };
@@ -47,14 +46,13 @@
 		008DEE3524523B23003ACEB2 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3424523B23003ACEB2 /* SearchBar.swift */; };
 		008DEE3724523BBB003ACEB2 /* CartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3624523BBB003ACEB2 /* CartBar.swift */; };
 		008DEE3924523BD7003ACEB2 /* ProfilBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3824523BD7003ACEB2 /* ProfilBar.swift */; };
-		009AF816246B1F60009AAD07 /* HeaderVieww.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009AF814246B1F60009AAD07 /* HeaderVieww.swift */; };
-		009AF817246B1F60009AAD07 /* HeaderVieww.xib in Resources */ = {isa = PBXBuildFile; fileRef = 009AF815246B1F60009AAD07 /* HeaderVieww.xib */; };
+		00943EBA247C4E350083718F /* HeaderVieww.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00943EB8247C4E350083718F /* HeaderVieww.swift */; };
+		00943EBB247C4E350083718F /* HeaderVieww.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00943EB9247C4E350083718F /* HeaderVieww.xib */; };
 		009B5DCD2463BA6000C2EE3D /* UrunlerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009B5DCB2463BA6000C2EE3D /* UrunlerTableViewCell.swift */; };
 		009B5DCE2463BA6000C2EE3D /* UrunlerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 009B5DCC2463BA6000C2EE3D /* UrunlerTableViewCell.xib */; };
 		00A85A9024534F000046E484 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85A8F24534F000046E484 /* UIScrollView.swift */; };
 		00A85A9D2453E2F00046E484 /* MarketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85A9B2453E2F00046E484 /* MarketCell.swift */; };
 		00A85A9E2453E2F00046E484 /* MarketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00A85A9C2453E2F00046E484 /* MarketCell.xib */; };
-		00BC1D2124778DE1008DC6FB /* MarketPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BC1D2024778DE1008DC6FB /* MarketPage.swift */; };
 		00CA3C5A2453EB6B00F76E49 /* FiyatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CA3C582453EB6B00F76E49 /* FiyatCell.swift */; };
 		00CA3C5B2453EB6B00F76E49 /* FiyatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00CA3C592453EB6B00F76E49 /* FiyatCell.xib */; };
 		E7898922F749761648B299A5 /* Pods_Market_indirimleri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C52F0BB40B6700FF74046F4 /* Pods_Market_indirimleri.framework */; };
@@ -285,7 +283,6 @@
 		00507D70246A0D900081F7CF /* FlexibleHeightBarDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleHeightBarDemoTests.swift; sourceTree = "<group>"; };
 		00507D71246A0D900081F7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00507D72246A0D900081F7CF /* FlexibleHeightBarDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = FlexibleHeightBarDemo.xcodeproj; sourceTree = "<group>"; };
-		00687B1F24774BB5001C19AF /* MarketlerSayfasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketlerSayfasi.swift; sourceTree = "<group>"; };
 		00687B3024774DCD001C19AF /* Home2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home2.swift; sourceTree = "<group>"; };
 		006D39F7245F78EC00BE4736 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		006D39FB24603C7400BE4736 /* AltUrunSayfasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltUrunSayfasi.swift; sourceTree = "<group>"; };
@@ -324,14 +321,13 @@
 		008DEE3424523B23003ACEB2 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		008DEE3624523BBB003ACEB2 /* CartBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBar.swift; sourceTree = "<group>"; };
 		008DEE3824523BD7003ACEB2 /* ProfilBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilBar.swift; sourceTree = "<group>"; };
-		009AF814246B1F60009AAD07 /* HeaderVieww.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderVieww.swift; sourceTree = "<group>"; };
-		009AF815246B1F60009AAD07 /* HeaderVieww.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderVieww.xib; sourceTree = "<group>"; };
+		00943EB8247C4E350083718F /* HeaderVieww.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderVieww.swift; sourceTree = "<group>"; };
+		00943EB9247C4E350083718F /* HeaderVieww.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderVieww.xib; sourceTree = "<group>"; };
 		009B5DCB2463BA6000C2EE3D /* UrunlerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrunlerTableViewCell.swift; sourceTree = "<group>"; };
 		009B5DCC2463BA6000C2EE3D /* UrunlerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UrunlerTableViewCell.xib; sourceTree = "<group>"; };
 		00A85A8F24534F000046E484 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		00A85A9B2453E2F00046E484 /* MarketCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCell.swift; sourceTree = "<group>"; };
 		00A85A9C2453E2F00046E484 /* MarketCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketCell.xib; sourceTree = "<group>"; };
-		00BC1D2024778DE1008DC6FB /* MarketPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPage.swift; sourceTree = "<group>"; };
 		00CA3C582453EB6B00F76E49 /* FiyatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiyatCell.swift; sourceTree = "<group>"; };
 		00CA3C592453EB6B00F76E49 /* FiyatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FiyatCell.xib; sourceTree = "<group>"; };
 		5BBC28772B70BEC10C5511CE /* Pods-Market indirimleri.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Market indirimleri.debug.xcconfig"; path = "Target Support Files/Pods-Market indirimleri/Pods-Market indirimleri.debug.xcconfig"; sourceTree = "<group>"; };
@@ -768,11 +764,9 @@
 			children = (
 				0073F4BF24557C9F00AD8095 /* UrunSayfasi.swift */,
 				006D39FB24603C7400BE4736 /* AltUrunSayfasi.swift */,
-				009AF814246B1F60009AAD07 /* HeaderVieww.swift */,
 				0073F4C12455886A00AD8095 /* MarketSayfasi.swift */,
-				009AF815246B1F60009AAD07 /* HeaderVieww.xib */,
-				00687B1F24774BB5001C19AF /* MarketlerSayfasi.swift */,
-				00BC1D2024778DE1008DC6FB /* MarketPage.swift */,
+				00943EB8247C4E350083718F /* HeaderVieww.swift */,
+				00943EB9247C4E350083718F /* HeaderVieww.xib */,
 			);
 			path = UrunSayfasi;
 			sourceTree = "<group>";
@@ -1094,13 +1088,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				008DEE202451F9EE003ACEB2 /* LaunchScreen.storyboard in Resources */,
-				009AF817246B1F60009AAD07 /* HeaderVieww.xib in Resources */,
 				009B5DCE2463BA6000C2EE3D /* UrunlerTableViewCell.xib in Resources */,
 				006DA74A246C2A490043DD3F /* CartBarCell.xib in Resources */,
 				002772AF2475F64D003FB62F /* CollectionReusableView.xib in Resources */,
 				008DEE1D2451F9EE003ACEB2 /* Assets.xcassets in Resources */,
 				008DEE182451F9E9003ACEB2 /* Main.storyboard in Resources */,
 				0073F4BD2455717100AD8095 /* SehirlerCel.xib in Resources */,
+				00943EBB247C4E350083718F /* HeaderVieww.xib in Resources */,
 				00A85A9E2453E2F00046E484 /* MarketCell.xib in Resources */,
 				00CA3C5B2453EB6B00F76E49 /* FiyatCell.xib in Resources */,
 				0073F4A2245519AB00AD8095 /* MarketlerCel.xib in Resources */,
@@ -1167,7 +1161,6 @@
 				0073F4942454AE3200AD8095 /* StatusBar.swift in Sources */,
 				002772AE2475F64D003FB62F /* CollectionReusableView.swift in Sources */,
 				008DEE1B2451F9E9003ACEB2 /* Market_indirimleri.xcdatamodeld in Sources */,
-				009AF816246B1F60009AAD07 /* HeaderVieww.swift in Sources */,
 				0073F49824550F2A00AD8095 /* Marketler.swift in Sources */,
 				0073F4C024557C9F00AD8095 /* UrunSayfasi.swift in Sources */,
 				006E374024533C9000E31FC6 /* TabBar.swift in Sources */,
@@ -1176,12 +1169,11 @@
 				008DEE3324523B12003ACEB2 /* HomeBar.swift in Sources */,
 				0073F4A1245519AB00AD8095 /* MarketlerCel.swift in Sources */,
 				008DEE2B2452028C003ACEB2 /* Constraints.swift in Sources */,
-				00687B2024774BB5001C19AF /* MarketlerSayfasi.swift in Sources */,
+				00943EBA247C4E350083718F /* HeaderVieww.swift in Sources */,
 				00687B3124774DCD001C19AF /* Home2.swift in Sources */,
 				008DEE3524523B23003ACEB2 /* SearchBar.swift in Sources */,
 				008DEE292451FBD7003ACEB2 /* UIColor.swift in Sources */,
 				006D39FC24603C7400BE4736 /* AltUrunSayfasi.swift in Sources */,
-				00BC1D2124778DE1008DC6FB /* MarketPage.swift in Sources */,
 				008DEE3724523BBB003ACEB2 /* CartBar.swift in Sources */,
 				008DEE2D24521DDA003ACEB2 /* Alert.swift in Sources */,
 				0073F4BC2455717100AD8095 /* SehirlerCel.swift in Sources */,
@@ -1406,7 +1398,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.6;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEVELOPMENT_TEAM = 3XLGNFVB8K;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1418,7 +1410,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilyas666.Marketindirimleri;
 				PRODUCT_NAME = "Market indirimleri";
 				SWIFT_VERSION = 5.0;
@@ -1432,7 +1424,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.6;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEVELOPMENT_TEAM = 3XLGNFVB8K;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1444,7 +1436,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilyas666.Marketindirimleri;
 				PRODUCT_NAME = "Market indirimleri";
 				SWIFT_VERSION = 5.0;

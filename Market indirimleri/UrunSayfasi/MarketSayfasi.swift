@@ -8,8 +8,8 @@
 
 import UIKit
 import CoreData
+import GoogleMobileAds
 
-//ge burdaki temani sene basa salim demeli o yazdigin funtion var idiye istifade eliyirdih o lazm deyil iki dene tanimliyirix listden eyni sey olur prosta birinin adin search nen qoymusam basdiqinda ele bil ki axtaranda search icin axtarir axtarmayanda normal olaninin
 
 class MarketSayfasi: UIViewController {
     
@@ -332,7 +332,7 @@ class MarketSayfasi: UIViewController {
     
     
     func getitem (searchkeyword: String) {
-        //bunu axtarisan? he burdada eyni koddu ordada prosta tabunu isletmirem burda neyi isdedsen be aaaaaaaa funcsion isletmirsende asagida elediyim kimi elirsen
+      
        
         
         let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?store=\(itemid)&q=\(searchkeyword)&format=json"
@@ -472,6 +472,9 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
+        
+      
+        
         if isSearching{
             cell.lblIsim.text = searchcountryList2[indexPath.row].name
             cell.lblFiyat.text = searchcountryList2[indexPath.row].price
@@ -588,9 +591,24 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
             
         }else{
             
-            cell.lblIsim.text = countryList2[indexPath.row].name
-            cell.lblFiyat.text = countryList2[indexPath.row].price
-            cell.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
+             let cell2 = urunlerCollectionView.dequeueReusableCell(withReuseIdentifier: "FiyatCell", for: indexPath) as! FiyatCell
+          if indexPath.row % 9 == 0 && indexPath.row != 0 {
+                    
+                    cell2.lblIsim.isHidden = true
+                    cell2.lblFiyat.isHidden = true
+                    cell2.lblIsim2.isHidden = true
+                    cell2.imgUrun.isHidden = true
+                    cell2.lblTarih.isHidden = true
+                    cell2.bannerVIew.isHidden = false
+                    cell2.bannerVIew.adUnitID = "ca-app-pub-3774834754218485/5943173506"
+                    cell2.bannerVIew.rootViewController = self
+                    cell2.bannerVIew.load(GADRequest())
+                    
+                        return cell2
+                   }else{
+            cell2.lblIsim.text = countryList2[indexPath.row].name
+            cell2.lblFiyat.text = countryList2[indexPath.row].price
+            cell2.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
             //"2020-05-13"
             let isoDate = countryList2[indexPath.row].validDates[1]
             let dateFormatter = DateFormatter()
@@ -602,11 +620,11 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
             
             var counter = datesRange(from: currentdate, to: date!).count
             if counter == 0 {
-                cell.lblTarih.text = "Bugün son gün!"
+                cell2.lblTarih.text = "Bugün son gün!"
             }else if counter > 0 {
-                cell.lblTarih.text = "\(counter) gün kaldı"
+                cell2.lblTarih.text = "\(counter) gün kaldı"
             }else {
-                cell.lblTarih.text = "Bitti"
+                cell2.lblTarih.text = "Bitti"
             }
             
             
@@ -622,7 +640,7 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
                     let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
                     
                     DispatchQueue.main.async {
-                        cell.lblIsim2.text = welcomee.name
+                        cell2.lblIsim2.text = welcomee.name
                         
                     }
                     
@@ -631,7 +649,7 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
             }.resume()
             
             
-            cell.btnTapAction = {
+            cell2.btnTapAction = {
                 () in
                 print("test")
                 
@@ -647,8 +665,8 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
                     //bu urunlerin oldugu list hansidi ? sen duzgun ad veremmirsende buna country nedi ala :D
                     favoriteproduct.setValue("\(self.countryList2[indexPath.row].id)", forKey: "id")
                     
-                    cell.imgLiked.tag = 1
-                    cell.imgLiked.isHidden = false
+                    cell2.imgLiked.tag = 1
+                    cell2.imgLiked.isHidden = false
                     
                     do {
                         try context.save()
@@ -679,8 +697,8 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
                             
                         }
                         
-                        cell.imgLiked.tag = 0
-                        cell.imgLiked.isHidden = true
+                        cell2.imgLiked.tag = 0
+                        cell2.imgLiked.isHidden = true
                         
                         do {
                             try context.save()
@@ -696,10 +714,9 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
                 
             }
             
+            return cell2
+            }
             
-            
-            
-            return cell
             
         }
         

@@ -52,7 +52,7 @@ class SearchBar: UIViewController{
     let lblTop : UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
-        lbl.font = UIFont(name: "AvenirNextCondensed-BoldItalic", size: 24)
+        lbl.font = UIFont.boldSystemFont(ofSize: 29)
         lbl.text = "Mağaza Ara"
         return lbl
     }()
@@ -795,7 +795,8 @@ class SearchBar: UIViewController{
                productList.removeAll(keepingCapacity: false)
                
         var jsonUrlString = "https://marketindirimleri.com/api/v1/products/?format=json"
-        
+        //                url = "https://marketindirimleri.com/api/v1/products/?format=json&q=\(searchkeyword)"
+
                 if !sortallcity {
                     jsonUrlString = "\(jsonUrlString)&city=\(selectid)"
                 }
@@ -1504,22 +1505,97 @@ extension SearchBar : UISearchBarDelegate {
                 break
             case 1:
                 isSearching = true
-                seacrhproductList = productList.filter({ value -> Bool in
-                    guard let text =  searchBar.text?.lowercased() else { return false}
-                    return value.name.lowercased().contains(text.lowercased())
+                
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let context = appDelegate.persistentContainer.viewContext
+                
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+                fetchRequest.returnsObjectsAsFaults = false
+                
+                var selectcounrty = ""
+                var selectid = ""
+                
+                do {
+                    let results = try context.fetch(fetchRequest)
                     
-                })
-               if seacrhproductList.count == 0 {
-                    viewBulunmadi.isHidden = false
-                    urunlerTableView.isHidden = true
-                    marketlerTableView.isHidden = true
-                }else {
-                    viewBulunmadi.isHidden = true
-                    urunlerTableView.isHidden = false
-                    marketlerTableView.isHidden = true
+                    for result in results as! [NSManagedObject] {
+                        if let id = result.value(forKey: "id") as? String {
+                            selectid = id
+                        }
+                        if let name = result.value(forKey: "name") as? String {
+                            selectcounrty = name
+                        }
+                    }
+                    
+                } catch {
+                    print("error")
                 }
-                urunlerTableView.reloadData()
-                 activityIndicator.stopAnimating()
+                
+                productList.removeAll(keepingCapacity: false)
+                self.urunlerTableView.reloadData()
+
+//                var jsonUrlString = "https://marketindirimleri.com/api/v1/products/?format=json"
+                
+                var jsonUrlString = "https://marketindirimleri.com/api/v1/products/?format=json&q=\(searchBar.text?.lowercased() ?? "")"
+                
+                if !sortallcity {
+                    jsonUrlString = "\(jsonUrlString)&city=\(selectid)"
+                }
+                
+                
+                               
+                let url = jsonUrlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            
+                guard let url3 = URL(string: url!) else {return}
+                
+                URLSession.shared.dataTask(with: url3) { (data, response, error) in
+                    //perhaps check err
+                    guard let data = data
+                        else {return}
+                    
+                    do {
+                        
+                        let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
+                        
+                        DispatchQueue.main.async {
+                            
+                            self.productList = welcomee.results
+                            self.productList.shuffle()
+                            self.urunlerTableView.reloadData()
+//                            self.activityIndicator.stopAnimating()
+                                                          
+                            
+                            self.seacrhproductList = self.productList.filter({ value -> Bool in
+                                guard let text =  searchBar.text?.lowercased() else { return false}
+                                return value.name.lowercased().contains(text.lowercased())
+                                
+                            })
+                            if self.seacrhproductList.count == 0 {
+                                self.viewBulunmadi.isHidden = false
+                                self.urunlerTableView.isHidden = true
+                                self.marketlerTableView.isHidden = true
+                            }else {
+                                self.viewBulunmadi.isHidden = true
+                                self.urunlerTableView.isHidden = false
+                                self.marketlerTableView.isHidden = true
+                            }
+                            self.urunlerTableView.reloadData()
+                            self.activityIndicator.stopAnimating()
+                            
+                        }
+                        
+                        
+                    } catch let jsonError {
+                        print("Error serializing json:", jsonError)
+                        
+                        
+                    }
+                    
+                    
+                    }.resume()
+                        
+                
+            
                 break
             default:
                 break
