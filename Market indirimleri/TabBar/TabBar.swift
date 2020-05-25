@@ -38,7 +38,7 @@ class TabBar: UITabBarController, UITabBarControllerDelegate{
                    
                     homebar.veriCekUrun()
                     homebar.veriCekMarket()
-                    
+//
                 
                     homebar.activityIndicator.startAnimating()
                    

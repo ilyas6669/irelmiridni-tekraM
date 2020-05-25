@@ -459,15 +459,11 @@ class SearchBar: UIViewController{
     @objc func btnTamamAction() {
         sortallcity = aramaPop.btnSwitch.isOn
         
-        if sortallcity { // butun sehirler ise yetim indi burda koh ne seyleri silip tezelerini yukluyeciy
 
+        veriCekUrun()
+        veriCekMarket()
             
-            
-            handleDismissal()
-        }else{
-
-            handleDismissal()
-        }
+        handleDismissal()
         
     }
     
@@ -694,21 +690,28 @@ class SearchBar: UIViewController{
           let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
           fetchRequest.returnsObjectsAsFaults = false
          
-          
+          var selectid = ""
+        
           do {
               let results = try context.fetch(fetchRequest)
               
               for result in results as! [NSManagedObject] {
                   if let id = result.value(forKey: "id") as? String {
-                      self.idArray.append(id)
+                     selectid = id
                   }
               }
               
           } catch {
               print("error")
           }
-          
-          let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
+          	
+          var jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
+        
+//        if !sortallcity {
+//            jsonUrlString = "\(jsonUrlString)&city=\(selectid)"
+//        }
+
+        
           guard let url = URL(string: jsonUrlString) else {return}
           
           storeList.removeAll(keepingCapacity: false)
@@ -722,13 +725,29 @@ class SearchBar: UIViewController{
                   
                   DispatchQueue.main.async {
                       
-                      for n in welcome.results {
-                          
-                          if n.cities.contains(Int(self.idArray.last!)!) {
-                              self.storeList.append(n)
-                          }
-                          
-                      }
+                    if self.sortallcity == false {
+                        
+                               for n in welcome.results {
+                                                
+                                                print("Nicatalibli:\(self.sortallcity)")
+                                                print("Nicatalibli:\(n.cities.contains(Int(selectid)!))")
+
+                                                if  n.cities.contains(Int(selectid)!) {
+                                                      self.storeList.append(n)
+                                                }
+                        //                          }else{
+                        //                            self.storeList.append(n)
+                        //                          }
+                                                  
+                                              }
+                        
+                    }else{
+                        
+                        self.storeList = welcome.results
+                        
+                    }
+                    
+             
                       
 //                      self.btnMarket.setTitle("\(self.countryList.count) Market", for: .normal)
                      
@@ -775,7 +794,13 @@ class SearchBar: UIViewController{
                
                productList.removeAll(keepingCapacity: false)
                
-               let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(selectid)&format=json"
+        var jsonUrlString = "https://marketindirimleri.com/api/v1/products/?format=json"
+        
+                if !sortallcity {
+                    jsonUrlString = "\(jsonUrlString)&city=\(selectid)"
+                }
+
+        
                guard let url = URL(string: jsonUrlString) else {return}
                
                URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -1462,7 +1487,7 @@ extension SearchBar : UISearchBarDelegate {
                 isSearching = true
                 searchstoreList = storeList.filter({ value -> Bool in
                     guard let text =  searchBar.text else { return false}
-                    return value.name.contains(text)
+                    return value.name.lowercased().contains(text.lowercased())
                     
                 })
                 if searchstoreList.count == 0 {
@@ -1477,11 +1502,11 @@ extension SearchBar : UISearchBarDelegate {
                 marketlerTableView.reloadData()
                 activityIndicator.stopAnimating()
                 break
-            case 1: //he neye baxag zor neter oldu bu o terefdekı kımı eledım cox maraglidi bele olanda niye olmur brat deiremde temasi nedi burda filtirleme vare orda o yox idi deye olmurdu onu bildim brat prostaki biz search eliyende gedib dbdan cekib gosterirdiy filotre olmasada isdemelidi niye isdemir bilmirem  i dont know nese o biri niye olmuyub hansi urunler olub ? he ikiside oldubab aa men neye baglanmisam onda :D : D: D zor men neye baglanmisam ? :D budu temahee deyan biz indi searh olanda o veri cekme metodunu isletmirik he ? men yuxarıda verını cekırem marketıde urunude o yenif buidnec tbiı on yaz he marketbiıddee cekırem urunude gorsenmır onun ıcınde axtarıs elıyır mence he yyeni 1 defe cekirikde urunu  ?  deyan
+            case 1:
                 isSearching = true
                 seacrhproductList = productList.filter({ value -> Bool in
-                    guard let text =  searchBar.text else { return false}
-                    return value.name.contains(text)
+                    guard let text =  searchBar.text?.lowercased() else { return false}
+                    return value.name.lowercased().contains(text.lowercased())
                     
                 })
                if seacrhproductList.count == 0 {

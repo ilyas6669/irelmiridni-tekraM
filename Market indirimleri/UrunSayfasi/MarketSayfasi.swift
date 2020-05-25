@@ -773,9 +773,16 @@ extension MarketSayfasi : UISearchBarDelegate {
             isSearching = true
             searchcountryList2 = countryList2.filter({ value -> Bool in
                 guard let text =  searchBar.text else { return false}
-                return value.name.contains(text)
+                return value.name.lowercased().contains(text.lowercased())
                 
             })
+            if searchcountryList2.count == 0 {
+                urunlerCollectionView.isHidden = true
+                viewBulunmadi.isHidden = false
+            }else {
+                urunlerCollectionView.isHidden = false
+                viewBulunmadi.isHidden = true
+            }
             urunlerCollectionView.reloadData()
         }
         

@@ -52,7 +52,7 @@ class Home2: UIViewController {
     var activityIndicator2 : UIActivityIndicatorView = {
         var indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
-        indicator.style = .medium
+        indicator.style = .large
         indicator.color = .black
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
