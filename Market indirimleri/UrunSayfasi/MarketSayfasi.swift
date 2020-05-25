@@ -23,15 +23,7 @@ class MarketSayfasi: UIViewController {
     }()
     
     
-    let ortaView : UIView = {
-        let view = UIView()
-        view.backgroundColor = .customWhite()
-         //view.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    
+  
   
     let btnLeft : UIButton = {
         let btn = UIButton(type: .system)
@@ -142,9 +134,8 @@ class MarketSayfasi: UIViewController {
        
        
         view.addSubview(topView)
-        view.addSubview(ortaView)
-        ortaView.addSubview(lblAciklama)
-        ortaView.addSubview(searchBar)
+        view.addSubview(lblAciklama)
+        view.addSubview(searchBar)
         topView.addSubview(btnLeft)
         topView.addSubview(btnFavori)
         view.addSubview(imgUrun)
@@ -158,14 +149,16 @@ class MarketSayfasi: UIViewController {
         
         
         _ = topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        _ = ortaView.anchor(top: imgUrun.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        _ = lblAciklama.anchor(top: ortaView.topAnchor, bottom: nil, leading: ortaView.leadingAnchor, trailing: ortaView.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
-        _ = searchBar.anchor(top: lblAciklama.bottomAnchor, bottom: ortaView.bottomAnchor, leading: ortaView.leadingAnchor, trailing: ortaView.trailingAnchor)
-        _ = viewBulunmadi.anchor(top: ortaView.bottomAnchor, bottom: view.bottomAnchor  , leading: view.leadingAnchor, trailing: view.trailingAnchor)
+       
+        
+        _ = viewBulunmadi.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor  , leading: view.leadingAnchor, trailing: view.trailingAnchor)
         imgBulunmadi.merkezKonumlamdirmaSuperView()
         imgBulunmadi.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -50).isActive = true
         _ = lblBUlunmadi.anchor(top: imgBulunmadi.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        _ = urunlerCollectionView.anchor(top: ortaView.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        
+        _ = lblAciklama.anchor(top: imgUrun.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
+        _ = searchBar.anchor(top: lblAciklama.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = urunlerCollectionView.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
         
         btnLeft.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
@@ -735,39 +728,65 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
     
     
     
-    //    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    //        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderVieww", for: indexPath) as! HeaderVieww
-    //        return header
-    //    }
-    //
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    //        return .init(width: view.frame.width, height: 57)
-    //    }
-    //
+//        func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderVieww", for: indexPath) as! HeaderVieww
+//            return header
+//        }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y < self.lastContentOffset) {
-            
-            imgUrun.heightAnchor.constraint(equalToConstant: 100).isActive = true
-            imgUrun.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            
+//        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//            return .init(width: view.frame.width, height: 50)
+//        }
+    
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        if let last = urunlerCollectionView.indexPathsForVisibleItems.first  {
+//            if indexPath == last {
+//                searchBar.isHidden = false
+//            }else {
+//                searchBar.isHidden = true
+//            }
+//        }
+//
+//    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+
+        
+        if (indexPath.row == 0 || indexPath.row == 1 ){
+           
+          
+            print("666+")
+        }else{
+           
         }
-        else if (scrollView.contentOffset.y > self.lastContentOffset) {
-            
-            
-            imgUrun.heightAnchor.constraint(equalToConstant: 100).isActive = true
-            imgUrun.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            
-        }
-        self.lastContentOffset = scrollView.contentOffset.y
+        
+        
+
     }
+   
+  
     
+//    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y < self.lastContentOffset) {
+//
+//            imgUrun.heightAnchor.constraint(equalToConstant: 120).isActive = true
+//            imgUrun.widthAnchor.constraint(equalToConstant: 120).isActive = true
+//
+//        }
+//        else if (scrollView.contentOffset.y > self.lastContentOffset) {
+//
+//
+//            imgUrun.heightAnchor.constraint(equalToConstant: 80).isActive = true
+//            imgUrun.widthAnchor.constraint(equalToConstant: 80).isActive = true
+//
+//        }
+//        self.lastContentOffset = scrollView.contentOffset.y
+//    }
+
     
 }
 
 extension MarketSayfasi : UISearchBarDelegate {
-    
-    
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

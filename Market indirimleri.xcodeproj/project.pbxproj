@@ -46,8 +46,7 @@
 		008DEE3524523B23003ACEB2 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3424523B23003ACEB2 /* SearchBar.swift */; };
 		008DEE3724523BBB003ACEB2 /* CartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3624523BBB003ACEB2 /* CartBar.swift */; };
 		008DEE3924523BD7003ACEB2 /* ProfilBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008DEE3824523BD7003ACEB2 /* ProfilBar.swift */; };
-		00943EBA247C4E350083718F /* HeaderVieww.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00943EB8247C4E350083718F /* HeaderVieww.swift */; };
-		00943EBB247C4E350083718F /* HeaderVieww.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00943EB9247C4E350083718F /* HeaderVieww.xib */; };
+		00943ED5247C55AD0083718F /* MarketPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00943ED4247C55AD0083718F /* MarketPage.swift */; };
 		009B5DCD2463BA6000C2EE3D /* UrunlerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009B5DCB2463BA6000C2EE3D /* UrunlerTableViewCell.swift */; };
 		009B5DCE2463BA6000C2EE3D /* UrunlerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 009B5DCC2463BA6000C2EE3D /* UrunlerTableViewCell.xib */; };
 		00A85A9024534F000046E484 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85A8F24534F000046E484 /* UIScrollView.swift */; };
@@ -321,8 +320,7 @@
 		008DEE3424523B23003ACEB2 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		008DEE3624523BBB003ACEB2 /* CartBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBar.swift; sourceTree = "<group>"; };
 		008DEE3824523BD7003ACEB2 /* ProfilBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilBar.swift; sourceTree = "<group>"; };
-		00943EB8247C4E350083718F /* HeaderVieww.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderVieww.swift; sourceTree = "<group>"; };
-		00943EB9247C4E350083718F /* HeaderVieww.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderVieww.xib; sourceTree = "<group>"; };
+		00943ED4247C55AD0083718F /* MarketPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPage.swift; sourceTree = "<group>"; };
 		009B5DCB2463BA6000C2EE3D /* UrunlerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrunlerTableViewCell.swift; sourceTree = "<group>"; };
 		009B5DCC2463BA6000C2EE3D /* UrunlerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UrunlerTableViewCell.xib; sourceTree = "<group>"; };
 		00A85A8F24534F000046E484 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
@@ -765,8 +763,7 @@
 				0073F4BF24557C9F00AD8095 /* UrunSayfasi.swift */,
 				006D39FB24603C7400BE4736 /* AltUrunSayfasi.swift */,
 				0073F4C12455886A00AD8095 /* MarketSayfasi.swift */,
-				00943EB8247C4E350083718F /* HeaderVieww.swift */,
-				00943EB9247C4E350083718F /* HeaderVieww.xib */,
+				00943ED4247C55AD0083718F /* MarketPage.swift */,
 			);
 			path = UrunSayfasi;
 			sourceTree = "<group>";
@@ -1094,7 +1091,6 @@
 				008DEE1D2451F9EE003ACEB2 /* Assets.xcassets in Resources */,
 				008DEE182451F9E9003ACEB2 /* Main.storyboard in Resources */,
 				0073F4BD2455717100AD8095 /* SehirlerCel.xib in Resources */,
-				00943EBB247C4E350083718F /* HeaderVieww.xib in Resources */,
 				00A85A9E2453E2F00046E484 /* MarketCell.xib in Resources */,
 				00CA3C5B2453EB6B00F76E49 /* FiyatCell.xib in Resources */,
 				0073F4A2245519AB00AD8095 /* MarketlerCel.xib in Resources */,
@@ -1164,12 +1160,12 @@
 				0073F49824550F2A00AD8095 /* Marketler.swift in Sources */,
 				0073F4C024557C9F00AD8095 /* UrunSayfasi.swift in Sources */,
 				006E374024533C9000E31FC6 /* TabBar.swift in Sources */,
+				00943ED5247C55AD0083718F /* MarketPage.swift in Sources */,
 				007D55452468DF5800F5DA58 /* LikeAnimator.swift in Sources */,
 				008DEE132451F9E9003ACEB2 /* SceneDelegate.swift in Sources */,
 				008DEE3324523B12003ACEB2 /* HomeBar.swift in Sources */,
 				0073F4A1245519AB00AD8095 /* MarketlerCel.swift in Sources */,
 				008DEE2B2452028C003ACEB2 /* Constraints.swift in Sources */,
-				00943EBA247C4E350083718F /* HeaderVieww.swift in Sources */,
 				00687B3124774DCD001C19AF /* Home2.swift in Sources */,
 				008DEE3524523B23003ACEB2 /* SearchBar.swift in Sources */,
 				008DEE292451FBD7003ACEB2 /* UIColor.swift in Sources */,
