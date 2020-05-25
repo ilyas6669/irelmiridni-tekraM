@@ -176,3 +176,7 @@ struct Market: Codable {
     let cities: [Int]
     let detail: String
 }
+
+
+// bi de tema bisen nedi nie marketi secende deyismirdi cunki tab bara basanda deyisir ordada cixib geri qayidirsan deye deyismirdi he tapdm ozum gozde indi erroru cixar da bilsey zor tema bisen nedi ana seyfeni deyismisem men qaytarm evvelkine? niye deyismisenki `/ duzdeeldtim belke coxntrindiydide duzeltmisen ana seyfeni `/ deirdim`k/i bidene atm app store sen bax gor geovde tegl ozyoxdu indi gozde simulatorden baxim 
+

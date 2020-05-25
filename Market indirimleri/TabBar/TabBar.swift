@@ -31,33 +31,7 @@ class TabBar: UITabBarController, UITabBarControllerDelegate{
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteStore")
             fetchRequest.returnsObjectsAsFaults = false
             
-            do {
-                let results = try context.fetch(fetchRequest)
-                
-                if results.count == 0 {
-                   
-                    homebar.veriCekUrun()
-                    homebar.veriCekMarket()
-//
-                
-                    homebar.activityIndicator.startAnimating()
-                   
-                    //refreshControlAction()
-                }else {
-                   
-                    homebar.favoriveriCekUrun()
-                    homebar.favoriveriCekMarket()
-                    
-                 
-                    
-                    homebar.activityIndicator.startAnimating()
-                   
-                    //refreshControlAction()
-                }
-                
-            } catch {
-                print("error")
-            }
+            
         }
       
         

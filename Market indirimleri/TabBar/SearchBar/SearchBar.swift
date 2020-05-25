@@ -533,8 +533,8 @@ class SearchBar: UIViewController{
 //                url = "https://marketindirimleri.com/api/v1/stores/?format=json"
                 break
             case 1:
-                url = "https://marketindirimleri.com/api/v1/products/?format=json&q=\(searchkeyword)"
-//                url = "https://marketindirimleri.com/api/v1/products/?format=json"
+//                url = "https://marketindirimleri.com/api/v1/products/?format=json&q=\(searchkeyword)"
+                url = "https://marketindirimleri.com/api/v1/products/?format=json"
                 break
             default:
                 break

@@ -19,6 +19,7 @@ class Home2: UIViewController {
     var countryList2 = [Resulttt]() //product
     
     var photoList = [Resullt]()
+    var swipecontrol = true
     
     @IBOutlet weak var ustView: UIView!
     
@@ -91,11 +92,15 @@ class Home2: UIViewController {
     
     @objc private func refresh(sender:UIRefreshControl) {
         sender.endRefreshing()
-        veriCekUrun()
-      
+        
+        if swipecontrol {
+            swipecontrol = false
+            favoriKontrol()
+        }
+        
     }
     
-    func favoriKontrol() {
+    func favoriKontrol() { //budu isidedirsen hemise favroi varsa ona alir yoxdusa o birsini he miasgdiazyair isdiyir ne ? isdiyirde deirem bu funskion refresh dede bunu caagirmaisan axi
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
                let context = appDelegate.persistentContainer.viewContext
 
@@ -154,6 +159,7 @@ class Home2: UIViewController {
                      layout.minimumLineSpacing = 10
                      layout.minimumInteritemSpacing = 5
                      layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+                    
                  }
 
         
@@ -239,6 +245,7 @@ class Home2: UIViewController {
                   let results = try context.fetch(fetchRequest)
                 
                   countryList.removeAll(keepingCapacity: false)
+                  marketCollectionView.reloadData()
 
                   for result in results as! [NSManagedObject] {
                     if let id = result.value(forKey: "id") as? String {
@@ -310,6 +317,7 @@ class Home2: UIViewController {
             }
             
             countryList.removeAll(keepingCapacity: false)
+            marketCollectionView.reloadData()
             
             let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/?format=json"
             guard let url = URL(string: jsonUrlString) else {return}
@@ -359,6 +367,8 @@ class Home2: UIViewController {
                 let results = try context.fetch(fetchRequest)
                 
                 countryList2.removeAll(keepingCapacity: false)
+                self.fiyatlarCollectionView.reloadData()
+
 
                 
                 for result in results as! [NSManagedObject] {
@@ -377,11 +387,12 @@ class Home2: UIViewController {
                                 let welcomee = try JSONDecoder().decode(Welcomee.self, from: data)
                                 
                                 DispatchQueue.main.async {
-                                                                    
+                                                            
                                     self.countryList2.append(contentsOf: welcomee.results)
                                     self.countryList2.shuffle()
                                     self.fiyatlarCollectionView.reloadData()
                                     self.activityIndicator.stopAnimating()
+                                    self.swipecontrol = true
                                 }
                                 
                                 
@@ -438,6 +449,7 @@ class Home2: UIViewController {
             }
             
             countryList2.removeAll(keepingCapacity: false)
+            self.fiyatlarCollectionView.reloadData()
             
             let jsonUrlString = "https://marketindirimleri.com/api/v1/products/?city=\(selectid)&format=json"
             guard let url = URL(string: jsonUrlString) else {return}
@@ -457,6 +469,8 @@ class Home2: UIViewController {
                         self.fiyatlarCollectionView.reloadData()
                         self.activityIndicator.stopAnimating()
                         self.lblFiyat.text = "\(selectcounrty) market indirimleri "
+                        self.swipecontrol = true
+
                     }
                     
                     
@@ -476,7 +490,7 @@ class Home2: UIViewController {
         }
         
     
-    
+
   
     
     
@@ -506,9 +520,11 @@ class Home2: UIViewController {
     }
     
     
+    
     @IBAction func searchButton(_ sender: Any) {
          tabBarController?.selectedIndex = 1
     }
+    
     
     
     
@@ -538,21 +554,16 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
             
            if indexPath.row % 9 == 0 && indexPath.row != 0 {
             
-                cell2.lblIsim.isHidden = true
-                cell2.lblFiyat.isHidden = true
-                cell2.lblIsim2.isHidden = true
-                cell2.imgUrun.isHidden = true
-                cell2.lblTarih.isHidden = true
-                cell2.bannerVIew.isHidden = false
-//                bannerView.translatesAutoresizingMaskIntoConstraints = false
-//                bannerView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-//                bannerView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-//                bannerView.centerXAnchor.constraint(equalTo: cell2.centerXAnchor).isActive = true
-//                bannerView.centerYAnchor.constraint(equalTo: cell2.centerYAnchor).isActive = true
+            cell2.lblIsim.isHidden = true
+            cell2.lblFiyat.isHidden = true
+            cell2.lblIsim2.isHidden = true
+            cell2.imgUrun.isHidden = true
+            cell2.lblTarih.isHidden = true
+            cell2.bannerVIew.isHidden = false
             cell2.bannerVIew.adUnitID = "ca-app-pub-3774834754218485/5943173506"
             cell2.bannerVIew.rootViewController = self
             cell2.bannerVIew.load(GADRequest())
-
+            
                 return cell2
            }else{
         
@@ -562,150 +573,156 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
                         cell2.imgUrun.isHidden = false
                         cell2.lblTarih.isHidden = false
                         cell2.bannerVIew.isHidden = true
+            
                 
-            cell2.lblIsim.text = countryList2[indexPath.row].name
-            cell2.lblFiyat.text = countryList2[indexPath.row].price
-            cell2.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
-            
-        
-            //"2020-05-13"
-            let isoDate = countryList2[indexPath.row].validDates[1]
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let date = dateFormatter.date(from:isoDate)
-                      
-            let currentdate = Date()
-          
-            var counter = datesRange(from: currentdate, to: date!).count
-            if counter == 0 {
-                cell2.lblTarih.text = "Bugün son gün!"
-            }else if counter > 0 {
-                cell2.lblTarih.text = "\(counter) gün kaldı"
-            }else {
-                cell2.lblTarih.text = "Bitti"
-            }
-            
-            let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
-            let url = URL(string: jsonUrlString)
-            
-            URLSession.shared.dataTask(with: url!) { (data, response, error) in
-                //perhaps check err
-                guard let data = data else {return}
-                
-                do {
-                    let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
+                    cell2.lblIsim.text = countryList2[indexPath.row].name //
+                    cell2.lblFiyat.text = countryList2[indexPath.row].price
+                    cell2.imgUrun.sd_setImage(with: URL(string: "\(countryList2[indexPath.row].image.imageDefault)"))
                     
-                    DispatchQueue.main.async {
-                        cell2.lblIsim2.text = welcomee.name
-                        
+                
+                    //"2020-05-13"
+                    let isoDate = countryList2[indexPath.row].validDates[1]
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    let date = dateFormatter.date(from:isoDate)
+                              
+                    let currentdate = Date()
+                
+                    
+                    var counter = datesRange(from: currentdate, to: date!).count
+                    if counter == 0 {
+                        cell2.lblTarih.text = "Bugün son gün!"
+                    }else if counter > 0 {
+                        cell2.lblTarih.text = "\(counter) gün kaldı"
+                    }else {
+                        cell2.lblTarih.text = "Bitti"
                     }
                     
-                } catch let jsonError {print("Error serializing json:", jsonError)}
-                
-                
-            }.resume()
-            
-            ///--------------------------FAVORI CONTROL----------------------------------------------------------------
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
-            fetchRequest.returnsObjectsAsFaults = false
-            
-            var favoriteproductcontrol = false
-            do {
-                let results = try context.fetch(fetchRequest)
-                
-                for result in results as! [NSManagedObject] {
+                    let jsonUrlString = "https://marketindirimleri.com/api/v1/stores/\(countryList2[indexPath.row].storeID)?format=json"
+                    let url = URL(string: jsonUrlString)
                     
-                    if let id = result.value(forKey: "id") as? String {
+                    URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                        //perhaps check err
+                        guard let data = data else {return}
                         
-                        if id == "\(self.countryList2[indexPath.row].id)" {
-                            favoriteproductcontrol = true
-                            break
-                        }else{
-                            favoriteproductcontrol = false
-                        }
+                        do {
+                            let welcomee = try JSONDecoder().decode(SingleStore.self, from: data)
+                            
+                            DispatchQueue.main.async {
+                                cell2.lblIsim2.text = welcomee.name
+                                
+                            }
+                            
+                        } catch let jsonError {print("Error serializing json:", jsonError)}
                         
-                    }
+                        
+                    }.resume()
                     
-                }
-                if favoriteproductcontrol{
-                    cell2.imgLiked.tag = 1
-                    cell2.imgLiked.isHidden = false
-                }else{
-                    cell2.imgLiked.tag = 0
-                    cell2.imgLiked.isHidden = true
-                }
-                
-                
-            } catch {}
-                      
-            
-            cell2.btnTapAction = {
-                   () in
-                print("test")
-
-
-                let tagstatus = cell2.imgLiked.tag
-
-                if tagstatus == 0 { //favori degil ise
-
+                    ///--------------------------FAVORI CONTROL----------------------------------------------------------------
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
                     let context = appDelegate.persistentContainer.viewContext
-
-                    let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
-                    //bu urunlerin oldugu list hansidi ? sen duzgun ad veremmirsende buna country nedi ala :D
-                    favoriteproduct.setValue("\(self.countryList2[indexPath.row].id)", forKey: "id")
-
-                    cell2.imgLiked.tag = 1
-                    cell2.imgLiked.isHidden = false
-
-                    do {
-                        try context.save()
-                    } catch {
-                        print("bir hata var")
-                    }
-
-                }else{ //favori ise
-
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let context = appDelegate.persistentContainer.viewContext
-
+                    
                     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
                     fetchRequest.returnsObjectsAsFaults = false
-
+                    
+                    var favoriteproductcontrol = false
                     do {
                         let results = try context.fetch(fetchRequest)
-
+                        
                         for result in results as! [NSManagedObject] {
-
+                            
                             if let id = result.value(forKey: "id") as? String {
-
+                                
                                 if id == "\(self.countryList2[indexPath.row].id)" {
-                                    context.delete(result as NSManagedObject)
+                                    favoriteproductcontrol = true
+                                    break
+                                }else{
+                                    favoriteproductcontrol = false
                                 }
+                                
+                            }
+                            
+                        }
+                        if favoriteproductcontrol{
+                            cell2.imgLiked.tag = 1
+                            cell2.imgLiked.isHidden = false
+                        }else{
+                            cell2.imgLiked.tag = 0
+                            cell2.imgLiked.isHidden = true
+                        }
+                        
+                        
+                    } catch {}
+                              
+                    
+                    cell2.btnTapAction = {
+                           () in
+                        print("test")
 
+
+                        let tagstatus = cell2.imgLiked.tag
+
+                        if tagstatus == 0 { //favori degil ise
+
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            let context = appDelegate.persistentContainer.viewContext
+
+                            let favoriteproduct = NSEntityDescription.insertNewObject(forEntityName: "FavoriteProduct", into: context)
+                            //bu urunlerin oldugu list hansidi ? sen duzgun ad veremmirsende buna country nedi ala :D
+                            favoriteproduct.setValue("\(self.countryList2[indexPath.row].id)", forKey: "id")
+
+                            cell2.imgLiked.tag = 1
+                            cell2.imgLiked.isHidden = false
+
+                            do {
+                                try context.save()
+                            } catch {
+                                print("bir hata var")
                             }
 
+                        }else{ //favori ise
+
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            let context = appDelegate.persistentContainer.viewContext
+
+                            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteProduct")
+                            fetchRequest.returnsObjectsAsFaults = false
+
+                            do {
+                                let results = try context.fetch(fetchRequest)
+
+                                for result in results as! [NSManagedObject] {
+
+                                    if let id = result.value(forKey: "id") as? String {
+
+                                        if id == "\(self.countryList2[indexPath.row].id)" {
+                                            context.delete(result as NSManagedObject)
+                                        }
+
+                                    }
+
+                                }
+
+                                cell2.imgLiked.tag = 0
+                                cell2.imgLiked.isHidden = true
+
+                                do {
+                                    try context.save()
+                                } catch {
+                                    print("bir hata var")
+                                }
+
+                            } catch {}
+
+                        
                         }
-
-                        cell2.imgLiked.tag = 0
-                        cell2.imgLiked.isHidden = true
-
-                        do {
-                            try context.save()
-                        } catch {
-                            print("bir hata var")
-                        }
-
-                    } catch {}
-
-                //qaqaqs burda basqa kod isdiyir ograsi
-                }
-          
+                  
+                    
+    
             }
+            
+
             return cell2
             }
         }
@@ -745,3 +762,6 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
     
     
 }
+
+
+// indi yoxla bashdan brat tema bisen endi senq aristirmisan deyesen men favori olanda veri cekmeyi yazmisdim axi o bu kod deyil sen onu isletmelisen bunu yox dinadna xiar gosterrem gozde o metudu billem gosterim men
