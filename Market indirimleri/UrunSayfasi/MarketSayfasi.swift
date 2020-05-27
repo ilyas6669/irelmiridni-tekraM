@@ -22,8 +22,6 @@ class MarketSayfasi: UIViewController {
         return view
     }()
     
-    
-  
   
     let btnLeft : UIButton = {
         let btn = UIButton(type: .system)
@@ -86,6 +84,7 @@ class MarketSayfasi: UIViewController {
     
     let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
         return searchBar
     }()
     
@@ -122,9 +121,22 @@ class MarketSayfasi: UIViewController {
               indicator.translatesAutoresizingMaskIntoConstraints = false
               return indicator
           }()
+    
+    var btnUp : UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(UIImage(named: "up-arrow"), for: .normal)
+        btn.addTarget(self, action: #selector(btnUpAction), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let stackView = UIStackView(arrangedSubviews: [lblAciklama,searchBar,urunlerCollectionView,viewBulunmadi])
+        stackView.axis = .vertical
+
+        
         view.backgroundColor = .customWhite()
         searchBar.delegate = self
              
@@ -134,31 +146,31 @@ class MarketSayfasi: UIViewController {
        
        
         view.addSubview(topView)
-        view.addSubview(lblAciklama)
-        view.addSubview(searchBar)
+       
+       
         topView.addSubview(btnLeft)
         topView.addSubview(btnFavori)
         view.addSubview(imgUrun)
-        view.addSubview(urunlerCollectionView)
-        view.addSubview(viewBulunmadi)
+        
+        
         viewBulunmadi.addSubview(imgBulunmadi)
         viewBulunmadi.addSubview(lblBUlunmadi)
         searchBar.addSubview(activityIndicator)
         
+        view.addSubview(stackView)
         
+        view.addSubview(btnUp)
         
         
         _ = topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
        
         
-        _ = viewBulunmadi.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor  , leading: view.leadingAnchor, trailing: view.trailingAnchor)
+      
         imgBulunmadi.merkezKonumlamdirmaSuperView()
         imgBulunmadi.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -50).isActive = true
         _ = lblBUlunmadi.anchor(top: imgBulunmadi.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
-        _ = lblAciklama.anchor(top: imgUrun.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
-        _ = searchBar.anchor(top: lblAciklama.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        _ = urunlerCollectionView.anchor(top: searchBar.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = stackView.anchor(top: imgUrun.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
         
         btnLeft.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
@@ -169,15 +181,16 @@ class MarketSayfasi: UIViewController {
         imgUrun.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: searchBar.centerYAnchor).isActive = true
         activityIndicator.rightAnchor.constraint(equalTo: searchBar.rightAnchor,constant: -35).isActive = true
-        
+        _ = lblAciklama.anchor(top: nil, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
         
         viewBulunmadi.isHidden = true
-        
         
         
         urunlerCollectionView.delegate = self
         urunlerCollectionView.dataSource = self
         urunlerCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
+        
+        _ = btnUp.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 7, right: 7))
         
        
 //        urunlerCollectionView.register(UINib(nibName: "HeaderVieww", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderVieww")
@@ -229,6 +242,11 @@ class MarketSayfasi: UIViewController {
         
         
         
+    }
+    
+    @objc func btnUpAction(){
+        let topOffest:CGPoint = CGPoint(x: 0,y: -self.urunlerCollectionView.contentInset.top)
+        urunlerCollectionView.setContentOffset(topOffest, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -752,16 +770,34 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
 
         
         if (indexPath.row == 0 || indexPath.row == 1 ){
-           
+            btnUp.isHidden = true
+            //lblAciklama.isHidden = false
+            //searchBar.isHidden = false
+          if lblAciklama.isHidden {
+                UIView.animate(withDuration: 0.35) { [unowned self] in
+                    self.lblAciklama.isHidden = false
+                    self.lblAciklama.alpha = 1
+                }
+            }
           
-            print("666+")
         }else{
-           
+            //lblAciklama.isHidden = true
+            //searchBar.isHidden = true
+            btnUp.isHidden = false
+           if !lblAciklama.isHidden {
+                UIView.animate(withDuration: 0.35) { [unowned self] in
+                    self.lblAciklama.isHidden = true
+                    self.lblAciklama.alpha = 0
+                }
+            }
+            
         }
         
         
 
     }
+    
+    
    
   
     

@@ -13,6 +13,8 @@ import SDWebImage
 
 class Home2: UIViewController {
     
+    
+    
     var countryList = [Resultt]() //market
     var idArray = [String]()
     
@@ -69,8 +71,18 @@ class Home2: UIViewController {
     
     
     var oldContentOffset = CGPoint.zero
+    
+    var btnUp : UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(UIImage(named: "up-arrow"), for: .normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("test", for: .normal)
+        return btn
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         layoutDuzenle()
         collectionViewDuzenle()
         favoriKontrol()
@@ -85,6 +97,8 @@ class Home2: UIViewController {
         activityIndicator2.startAnimating()
         
          fiyatlarCollectionView.refreshControl = refreshControl
+        
+      
       
         
         
@@ -100,7 +114,7 @@ class Home2: UIViewController {
         
     }
     
-    func favoriKontrol() { //budu isidedirsen hemise favroi varsa ona alir yoxdusa o birsini he miasgdiazyair isdiyir ne ? isdiyirde deirem bu funskion refresh dede bunu caagirmaisan axi
+    func favoriKontrol() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
                let context = appDelegate.persistentContainer.viewContext
 
@@ -758,10 +772,23 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
         
     }
     
+    
+
+    
    
     
     
 }
 
 
-// indi yoxla bashdan brat tema bisen endi senq aristirmisan deyesen men favori olanda veri cekmeyi yazmisdim axi o bu kod deyil sen onu isletmelisen bunu yox dinadna xiar gosterrem gozde o metudu billem gosterim men
+extension Home2 : TabBarReselectHandling {
+    func handleReselect() {
+      
+        let topOffest:CGPoint = CGPoint(x: 0,y: -self.fiyatlarCollectionView.contentInset.top)
+        fiyatlarCollectionView.setContentOffset(topOffest, animated: false)
+        
+    }
+    
+    
+}
+

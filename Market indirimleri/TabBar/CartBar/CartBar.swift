@@ -49,7 +49,7 @@ class CartBar: UIViewController {
     let lblTop : UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
-        lbl.font = UIFont.boldSystemFont(ofSize: 24)
+        lbl.font = UIFont(name: "AvenirNext-Bold", size: 20)
         lbl.text = "Beğendiğim Ürünler"
         return lbl
     }()

@@ -161,6 +161,13 @@ class HomeBar: UIViewController {
     
     var collectionReusableView = CollectionReusableView()
     
+    var btnUp : UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(UIImage(named: "up-arrow"), for: .normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customYellow()
@@ -202,12 +209,12 @@ class HomeBar: UIViewController {
 
         refreshControlAction()
 
-
-        
     }
     
     func layoutDuzenle() {
            
+        
+        
            view.addSubview(scrolView)
            scrolView.addSubview(containerView)
            containerView.addSubview(ustView)
@@ -223,6 +230,7 @@ class HomeBar: UIViewController {
            altView.addSubview(fiyatlarCollectionView)
            fiyatlarCollectionView.addSubview(activityIndicator)
            marketCollectionView.addSubview(activityIndicator2)
+        view.addSubview(btnUp)
 
 
            //MARK: constraint
@@ -241,6 +249,8 @@ class HomeBar: UIViewController {
 
            _ = lblFiyat.anchor(top: ortaView2.bottomAnchor, bottom: nil, leading: altView.leadingAnchor, trailing: nil,padding: .init(top: 5, left: 5, bottom: 0, right: 0))
            _ = fiyatlarCollectionView.anchor(top: lblFiyat.bottomAnchor, bottom: containerView.bottomAnchor, leading: altView.leadingAnchor, trailing: altView.trailingAnchor)
+        
+        _ = btnUp.anchor(top: nil, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: nil,padding: .init(top: 0, left: 5, bottom: 5, right: 0))
 
 
            activityIndicator.centerXAnchor.constraint(equalTo: fiyatlarCollectionView.centerXAnchor).isActive = true
