@@ -54,6 +54,7 @@
 		00A85A9E2453E2F00046E484 /* MarketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00A85A9C2453E2F00046E484 /* MarketCell.xib */; };
 		00CA3C5A2453EB6B00F76E49 /* FiyatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CA3C582453EB6B00F76E49 /* FiyatCell.swift */; };
 		00CA3C5B2453EB6B00F76E49 /* FiyatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00CA3C592453EB6B00F76E49 /* FiyatCell.xib */; };
+		00E0656E248145D200AA13E9 /* Homebar1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E0656D248145D200AA13E9 /* Homebar1.swift */; };
 		E7898922F749761648B299A5 /* Pods_Market_indirimleri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C52F0BB40B6700FF74046F4 /* Pods_Market_indirimleri.framework */; };
 /* End PBXBuildFile section */
 
@@ -328,6 +329,7 @@
 		00A85A9C2453E2F00046E484 /* MarketCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketCell.xib; sourceTree = "<group>"; };
 		00CA3C582453EB6B00F76E49 /* FiyatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiyatCell.swift; sourceTree = "<group>"; };
 		00CA3C592453EB6B00F76E49 /* FiyatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FiyatCell.xib; sourceTree = "<group>"; };
+		00E0656D248145D200AA13E9 /* Homebar1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homebar1.swift; sourceTree = "<group>"; };
 		5BBC28772B70BEC10C5511CE /* Pods-Market indirimleri.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Market indirimleri.debug.xcconfig"; path = "Target Support Files/Pods-Market indirimleri/Pods-Market indirimleri.debug.xcconfig"; sourceTree = "<group>"; };
 		6C52F0BB40B6700FF74046F4 /* Pods_Market_indirimleri.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Market_indirimleri.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63256A7421F652E9FD8419B /* Pods-Market indirimleri.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Market indirimleri.release.xcconfig"; path = "Target Support Files/Pods-Market indirimleri/Pods-Market indirimleri.release.xcconfig"; sourceTree = "<group>"; };
@@ -863,6 +865,7 @@
 				00687B3024774DCD001C19AF /* Home2.swift */,
 				002772AC2475F64D003FB62F /* CollectionReusableView.swift */,
 				002772AD2475F64D003FB62F /* CollectionReusableView.xib */,
+				00E0656D248145D200AA13E9 /* Homebar1.swift */,
 			);
 			path = HomeBar;
 			sourceTree = "<group>";
@@ -1164,6 +1167,7 @@
 				007D55452468DF5800F5DA58 /* LikeAnimator.swift in Sources */,
 				008DEE132451F9E9003ACEB2 /* SceneDelegate.swift in Sources */,
 				008DEE3324523B12003ACEB2 /* HomeBar.swift in Sources */,
+				00E0656E248145D200AA13E9 /* Homebar1.swift in Sources */,
 				0073F4A1245519AB00AD8095 /* MarketlerCel.swift in Sources */,
 				008DEE2B2452028C003ACEB2 /* Constraints.swift in Sources */,
 				00687B3124774DCD001C19AF /* Home2.swift in Sources */,

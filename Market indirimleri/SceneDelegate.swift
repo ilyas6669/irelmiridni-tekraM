@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //              layout.scrollDirection = .horizontal
 //              let signUp = GecisController(collectionViewLayout: layout)
 //              window?.rootViewController = signUp
+        
 
 
         let viewController = SplashView()

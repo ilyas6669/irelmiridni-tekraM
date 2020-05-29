@@ -49,6 +49,7 @@ class MarketSayfasi: UIViewController {
         img.layer.cornerRadius = 10
         img.layer.borderColor = UIColor.customYellow().cgColor
         img.layer.borderWidth = 2
+        img.isUserInteractionEnabled = true
         return img
     }()
     
@@ -122,13 +123,6 @@ class MarketSayfasi: UIViewController {
               return indicator
           }()
     
-    var btnUp : UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setImage(UIImage(named: "up-arrow"), for: .normal)
-        btn.addTarget(self, action: #selector(btnUpAction), for: .touchUpInside)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
-    }()
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,7 +153,7 @@ class MarketSayfasi: UIViewController {
         
         view.addSubview(stackView)
         
-        view.addSubview(btnUp)
+       
         
         
         _ = topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
@@ -183,6 +177,10 @@ class MarketSayfasi: UIViewController {
         activityIndicator.rightAnchor.constraint(equalTo: searchBar.rightAnchor,constant: -35).isActive = true
         _ = lblAciklama.anchor(top: nil, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5))
         
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imgUrunAction))
+        imgUrun.isUserInteractionEnabled = true
+        imgUrun .addGestureRecognizer(tapGestureRecognizer)
+        
         viewBulunmadi.isHidden = true
         
         
@@ -190,7 +188,7 @@ class MarketSayfasi: UIViewController {
         urunlerCollectionView.dataSource = self
         urunlerCollectionView.register(UINib(nibName: "FiyatCell", bundle: nil), forCellWithReuseIdentifier: "FiyatCell")
         
-        _ = btnUp.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: nil, trailing: view.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 7, right: 7))
+       
         
        
 //        urunlerCollectionView.register(UINib(nibName: "HeaderVieww", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderVieww")
@@ -244,10 +242,13 @@ class MarketSayfasi: UIViewController {
         
     }
     
-    @objc func btnUpAction(){
+    @objc func imgUrunAction() {
         let topOffest:CGPoint = CGPoint(x: 0,y: -self.urunlerCollectionView.contentInset.top)
-        urunlerCollectionView.setContentOffset(topOffest, animated: true)
+        urunlerCollectionView.setContentOffset(topOffest, animated: false)
+        
     }
+    
+  
     
     override func viewDidAppear(_ animated: Bool) {
         if #available(iOS 13, *)
@@ -770,7 +771,7 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
 
         
         if (indexPath.row == 0 || indexPath.row == 1 ){
-            btnUp.isHidden = true
+          
             //lblAciklama.isHidden = false
             //searchBar.isHidden = false
           if lblAciklama.isHidden {
@@ -779,11 +780,12 @@ extension MarketSayfasi : UICollectionViewDataSource,UICollectionViewDelegateFlo
                     self.lblAciklama.alpha = 1
                 }
             }
+            
           
         }else{
             //lblAciklama.isHidden = true
             //searchBar.isHidden = true
-            btnUp.isHidden = false
+           
            if !lblAciklama.isHidden {
                 UIView.animate(withDuration: 0.35) { [unowned self] in
                     self.lblAciklama.isHidden = true

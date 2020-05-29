@@ -772,11 +772,21 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
         
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+
+           
+           if (indexPath.row == 0 || indexPath.row == 1 ){
+          
+          
+             
+           }else{
+           
+
+       }
 
     
    
-    
+    }
     
 }
 
@@ -784,11 +794,25 @@ extension Home2 : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout 
 extension Home2 : TabBarReselectHandling {
     func handleReselect() {
       
-        let topOffest:CGPoint = CGPoint(x: 0,y: -self.fiyatlarCollectionView.contentInset.top)
-        fiyatlarCollectionView.setContentOffset(topOffest, animated: false)
+        
+//        let topOffest:CGPoint = CGPoint(x: 0,y: -self.fiyatlarCollectionView.contentInset.top-412)
+//        fiyatlarCollectionView.setContentOffset(CGPoint, animated: true)
+//        self.fiyatlarCollectionView.resetScrollPositionToTop()
+        self.fiyatlarCollectionView?.scrollToItem(at: NSIndexPath(item: 0, section: 0) as IndexPath,
+                                                  at: .top,
+                animated: true)
         
     }
     
     
+    
+    
+}
+
+extension UIScrollView {
+    /// Sets content offset to the top.
+    func resetScrollPositionToTop() {
+        self.contentOffset = CGPoint(x: -contentInset.left, y: -contentInset.top)
+    }
 }
 

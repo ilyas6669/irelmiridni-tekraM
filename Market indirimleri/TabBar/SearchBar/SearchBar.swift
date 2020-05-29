@@ -483,6 +483,7 @@ class SearchBar: UIViewController{
     
     @objc func btnTopSettingAction() {
         viewSetting.isHidden = false
+        
     }
     
     @objc func handleDismissal() {
